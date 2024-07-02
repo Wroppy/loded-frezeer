@@ -1,0 +1,14 @@
+.AuthComponent {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap: 16px;
+
+  .Heading {
+    font-size: 2rem;
+  }
+
+  .ButtonContainer {
+    margin-top: 8px;
+  }
+}
