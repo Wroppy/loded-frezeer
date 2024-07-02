@@ -6,11 +6,12 @@ type Props = {};
 const EmailInput = (props: Props) => {
   return (
     <TextInput
-      minLength={5}
       label="Email"
       placeholder="Your email"
       required
       name="email"
+      title="Please enter a valid email address"
+      type="email"
     />
   );
 };
