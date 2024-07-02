@@ -8,7 +8,15 @@ import PasswordInput from "../PasswordInput";
 type Props = {};
 
 const SignInPage = (props: Props) => {
-  const onSubmit = (event: FormEvent) => {};
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    // Gets the email and password from the form
+    const email = (event.target as any).email.value as string;
+    const password = (event.target as any).password.value as string
+
+    
+  };
 
   return (
     <AuthComponent heading="Sign In" onSubmit={onSubmit}>
