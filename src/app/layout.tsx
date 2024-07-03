@@ -14,6 +14,7 @@ import type { Metadata } from "next";
 import "./globals.scss";
 import { theme } from "./theme/theme";
 import { Notifications } from "@mantine/notifications";
+import NavBar from "./components/navbar/NavBar";
 
 export const metadata: Metadata = {
   title: "Loded Frezeer",
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body>
         <MantineProvider defaultColorScheme="dark" theme={theme}>
           <Notifications />
+          <NavBar /> 
           {children}
         </MantineProvider>
       </body>
