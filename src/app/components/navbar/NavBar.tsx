@@ -2,25 +2,30 @@
 
 import { Burger } from "@mantine/core";
 import React, { useState } from "react";
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure } from "@mantine/hooks";
 import styles from "./navbar.module.scss";
+import NavBarDrawer from "../navbar-drawer/NavBarDrawer";
 
 type Props = {};
 
 const NavBar = (props: Props) => {
-  const[navOpen, setNavOpen] = useState(false);
-  const [ opened, {toggle} ] = useDisclosure();
-
+  const [burgerOpened, { toggle: burgerToggle }] = useDisclosure();
+  const [drawerOpened, { open, close }] = useDisclosure();
   const openNavBar = () => {
-    toggle();
-  }
+    burgerToggle();
+    open();
+  };
+
+  const closeNavBar = () => {
+    burgerToggle();
+    close();
+  };
 
   return (
     <div className={styles.NavBar}>
-      <Burger opened={opened} onClick={openNavBar} size="lg"/>
-      <div>
-        Loded Frezeer
-      </div>
+      <NavBarDrawer opened={drawerOpened} close={closeNavBar} />
+      <Burger opened={burgerOpened} onClick={openNavBar} size="lg"/>
+        <div>Loded Frezeer</div>
     </div>
   );
 };
