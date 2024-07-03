@@ -13,6 +13,7 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
 import "./globals.scss";
 import { theme } from "./theme/theme";
+import { Notifications } from "@mantine/notifications";
 
 export const metadata: Metadata = {
   title: "Loded Frezeer",
@@ -31,6 +32,7 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider defaultColorScheme="dark" theme={theme}>
+          <Notifications />
           {children}
         </MantineProvider>
       </body>
