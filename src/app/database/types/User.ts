@@ -4,6 +4,7 @@ type User = {
   password: string;
   userId: string; 
   inFlat: boolean;
+  setUp: boolean;
 };  
 
 export { type User };

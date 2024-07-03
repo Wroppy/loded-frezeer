@@ -7,6 +7,7 @@ const UserSchema = new Schema<User>({
   password: { type: String, required: true },
   userId: { type: String, required: true },
   inFlat: { type: Boolean, required: true },
+  setUp: { type: Boolean, required: true },
 });
 
 const UserModel = mongoose.models.User || model<User>("User", UserSchema);
