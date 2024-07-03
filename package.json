@@ -26,6 +26,8 @@
     "@tiptap/extension-link": "^2.4.0",
     "@tiptap/react": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
+    "@types/mongoose": "^5.11.97",
+    "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.1.6",
     "mongoose": "^8.4.4",
@@ -37,6 +39,7 @@
     "sass": "^1.77.6"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
