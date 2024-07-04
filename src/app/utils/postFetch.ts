@@ -2,7 +2,7 @@
 
 export const postFetch = async (url: string, data: any) => {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(process.env.URL + url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
