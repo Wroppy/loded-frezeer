@@ -2,10 +2,14 @@
 
 export const postFetch = async (url: string, data: any) => {
   try {
-    const response = await fetch(process.env.URL + url, {
-      method: 'POST',
+    // Checks if the fetch is being done on the client or server
+    if (process.env.URL) {
+      url = process.env.URL + url;
+    }
+    const response = await fetch(url, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
