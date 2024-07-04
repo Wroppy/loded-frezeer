@@ -1,7 +1,7 @@
 "use client";
 
 import { useDisclosure } from "@mantine/hooks";
-import { Drawer, NavLink } from "@mantine/core";
+import { Box, Drawer, Flex, NavLink } from "@mantine/core";
 import {
   IconBasket,
   IconDashboard,
@@ -12,6 +12,7 @@ import {
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import LogOutButton from "../logout-button/LogOutButton";
 
 type Props = {
   opened: boolean;
@@ -31,17 +32,24 @@ const NavBarDrawer = ({ opened, close }: Props) => {
 
   return (
     <Drawer opened={opened} onClose={close} title={"Loded Frezeer"}>
-      {links.map(({ title, href, Icon }) => (
-        <NavLink
-          key={title}
-          leftSection={<Icon />}
-          onClick={close}
-          href={href}
-          label={title}
-          variant="light"
-          active={path === href}
-        />
-      ))}
+      <Flex direction="column" justify={"space-between"} style={{height: "100%"}}>
+        <Box style={{flexGrow: "1"}}>
+          {links.map(({ title, href, Icon }) => (
+            <NavLink
+              key={title}
+              leftSection={<Icon />}
+              onClick={close}
+              href={href}
+              label={title}
+              variant="light"
+              active={path === href}
+            />
+          ))}
+        </Box>
+        <Box>
+          <LogOutButton />
+        </Box>
+      </Flex>
     </Drawer>
   );
 };

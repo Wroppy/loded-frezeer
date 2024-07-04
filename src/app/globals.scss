@@ -10,3 +10,13 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
+
+
+// Mantine overrides
+.mantine-Paper-root {
+  display: flex;
+  flex-direction: column;
+}
+.mantine-Drawer-body {
+  flex-grow: 1;
+}
