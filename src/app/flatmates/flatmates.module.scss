@@ -1,0 +1,30 @@
+.FlatPage {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.FlatCard {
+  width: 600px;
+}
+
+.NotInFlatComponent {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  .NotInFlatHeading {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .FlatOption {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

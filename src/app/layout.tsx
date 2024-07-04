@@ -8,7 +8,7 @@ import "@mantine/nprogress/styles.css";
 import "@mantine/spotlight/styles.css";
 import "@mantine/tiptap/styles.css";
 
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { ColorSchemeScript, Flex, MantineProvider } from "@mantine/core";
 
 import type { Metadata } from "next";
 import "./globals.scss";
@@ -33,9 +33,11 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider defaultColorScheme="dark" theme={theme}>
+          <Flex direction="column" style={{height: "100%"}}>
           <Notifications />
           <NavBar /> 
           {children}
+          </Flex>
         </MantineProvider>
       </body>
     </html>
