@@ -7,6 +7,7 @@ import styles from "./flatmates.module.scss";
 import { Card } from "@mantine/core";
 import NotInFlatComponent from "./NotInFlatComponent/NotInFlatComponent";
 import { GetFlatResponse } from "../types/GetFlatResponse";
+import InFlatComponent from "./InFlatComponent/InFlatComponent";
 
 type Props = {};
 
@@ -25,7 +26,7 @@ const FlatMatesPage = async (props: Props) => {
     <div className={styles.FlatPage}>
       <Card className={styles.FlatCard} shadow="lg">
         {flat.flat ? (
-          <>Hello</>
+          <InFlatComponent flat={flat.flat}/>
         ) : (
           <NotInFlatComponent email={session!.user!.email as string} />
         )}
