@@ -11,6 +11,7 @@ type Props = {
 const NavBarDrawer = ({opened, close}: Props) => {
   return <Drawer opened={opened} onClose={close} title={"Loded Frezeer"}>
     <div>Drawer content</div>
+    
   </Drawer>
 };
 
