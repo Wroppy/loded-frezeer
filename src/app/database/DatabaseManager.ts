@@ -71,14 +71,28 @@ export default class DatabaseManager {
   public async getUserFlat(email: string): Promise<Flat | null> {
     const flats = (await FlatModel.find()) as Flat[];
 
+    let userFlat: Flat = null as any;
     // Loops through all the flats and checks if the user is in the flat
     for (let flat of flats) {
       if (flat.tenants.includes(email)) {
-        return flat;
+        userFlat = flat;
       }
     }
 
-    return null;
+    if (!userFlat) {
+      return null;
+    }
+
+    // Changes the tenants array to include the names of the tenants
+    let tenants: string[] = [];
+    for (let tenant of userFlat.tenants) {
+      const user = await this.getUser(tenant);
+      tenants.push(user?.name as string);
+    }
+
+    userFlat.tenants = tenants;
+
+    return userFlat;
   }
 
   /**
