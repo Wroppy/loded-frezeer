@@ -1,3 +1,4 @@
+import { Flat } from "../types/Flat";
 import { User } from "../types/User";
 import { getRandomId } from "../Utils";
 
@@ -14,4 +15,13 @@ export const UserTemplate = (
     inFlat: false,
     setUp: false,
   };
+};
+
+export const FlatTemplate = (name: string, userEmail: string): Flat => {
+  return {
+    name,
+    tenants: [userEmail],
+    joinId: getRandomId(),
+    flatId: getRandomId(),
+  }
 };

@@ -1,6 +1,6 @@
 import mongoose, { connect } from "mongoose";
 import { UserModel } from "./models/UserSchema";
-import { UserTemplate } from "./models/ModelTemplates";
+import { FlatTemplate, UserTemplate } from "./models/ModelTemplates";
 import { comparePassword, hashPassword } from "./Utils";
 import { User } from "./types/User";
 import { Flat } from "./types/Flat";
@@ -79,5 +79,20 @@ export default class DatabaseManager {
     }
 
     return null;
+  }
+
+  /**
+   * Given an email and a flat name, creates a new flat
+   * and adds the user to the flat
+   *
+   * @param email the email of the user
+   * @param name the name of the flat
+   * @returns the flat
+   */
+  public async createFlat(name: string, email: string): Promise<Flat> {
+    const flatTemplate = FlatTemplate(name, email);
+    const flat = new FlatModel(flatTemplate);
+    await flat.save();
+    return flat;
   }
 }

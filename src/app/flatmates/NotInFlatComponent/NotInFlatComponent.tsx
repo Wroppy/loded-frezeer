@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { FormEvent } from "react";
 import styles from "./../flatmates.module.scss";
 import { Button, Flex, TextInput } from "@mantine/core";
+import { postFetch } from "@/app/utils/postFetch";
 
 type Props = { email: string };
 
@@ -10,7 +11,17 @@ const NotInFlatComponent = ({ email }: Props) => {
   const [flatName, setFlatName] = React.useState("");
   const [flatCode, setFlatCode] = React.useState("");
 
-  const createFlat = async () => {};
+  const createFlat = async (event: FormEvent) => {
+    event.preventDefault();
+
+    // Create a new flat
+    const response = await postFetch("/api/flat/create-flat", {
+      email,
+      name: flatName,
+    });
+
+    console.log(response)
+  };
 
   return (
     <div className={styles.NotInFlatComponent}>
@@ -18,17 +29,18 @@ const NotInFlatComponent = ({ email }: Props) => {
         You are currently not in a flat
       </div>
 
-      <div className={styles.FlatOption}>
-        <TextInput
-          label="Create a new flat"
-          placeholder="Enter the name of your flat"
-          value={flatName}
-          onChange={(event) => setFlatName(event.currentTarget.value)}
-        />
-        <Flex justify="right">
-          <Button>Create flat</Button>
-        </Flex>
-      </div>
+      <form className={styles.FlatOption} onSubmit={createFlat}>
+          <TextInput
+            required
+            label="Create a new flat"
+            placeholder="Enter the name of your flat"
+            value={flatName}
+            onChange={(event) => setFlatName(event.currentTarget.value)}
+          />
+          <Flex justify="right">
+            <Button type="submit">Create flat</Button>
+          </Flex>
+      </form>
       <div className={styles.FlatOption}>
         <TextInput
           label="Join a flat by code"
