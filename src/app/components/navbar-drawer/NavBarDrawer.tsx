@@ -63,9 +63,9 @@ const NavBarDrawer = ({ opened, close }: Props) => {
             />
           ))}
         </Box>
-        <Box>
-          <LogOutButton />
-        </Box>
+        <Flex justify={"right"}>
+          <LogOutButton disabled={!isPathValid()}/>
+        </Flex>
       </Flex>
     </Drawer>
   );

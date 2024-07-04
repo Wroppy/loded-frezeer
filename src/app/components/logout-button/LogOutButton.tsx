@@ -1,20 +1,22 @@
 "use client";
 
-import { Button } from '@mantine/core'
-import React from 'react'
+import { Button } from "@mantine/core";
+import { signOut } from "next-auth/react";
+import React from "react";
 
-type Props = {}
+type Props = { disabled: boolean };
 
-const LogOutButton = (props: Props) => {
-  const logout = () => {
+const LogOutButton = ({ disabled }: Props) => {
+  const logout = async () => {
     console.log("Log out");
+    await signOut({callbackUrl: "/auth/signin"});
   };
+
   return (
-    <Button onClick={logout} color="red">
+    <Button disabled={disabled} onClick={logout} color="red">
       Log out
     </Button>
+  );
+};
 
-  )
-}
-
-export default LogOutButton
+export default LogOutButton;
