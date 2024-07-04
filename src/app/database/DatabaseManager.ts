@@ -3,6 +3,8 @@ import { UserModel } from "./models/UserSchema";
 import { UserTemplate } from "./models/ModelTemplates";
 import { comparePassword, hashPassword } from "./Utils";
 import { User } from "./types/User";
+import { Flat } from "./types/Flat";
+import { FlatModel } from "./models/FlatSchema";
 
 export default class DatabaseManager {
   constructor() {
@@ -58,5 +60,24 @@ export default class DatabaseManager {
    */
   public async getUser(email: string): Promise<User | null> {
     return await UserModel.findOne({ email });
+  }
+
+  /**
+   * Given an email, returns the flat the user is in
+   *
+   * @param email the email of the user
+   * @returns the flat the user is in
+   */
+  public async getUserFlat(email: string): Promise<Flat | null> {
+    const flats = (await FlatModel.find()) as Flat[];
+
+    // Loops through all the flats and checks if the user is in the flat
+    for (let flat of flats) {
+      if (flat.tenants.includes(email)) {
+        return flat;
+      }
+    }
+
+    return null;
   }
 }
