@@ -107,6 +107,7 @@ export default class DatabaseManager {
     const flatTemplate = FlatTemplate(name, email);
     const flat = new FlatModel(flatTemplate);
     await flat.save();
-    return flat;
+
+    return (await this.getUserFlat(email))!;
   }
 }
