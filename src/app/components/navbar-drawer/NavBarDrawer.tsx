@@ -22,18 +22,34 @@ type Props = {
 const NavBarDrawer = ({ opened, close }: Props) => {
   const links = [
     { title: "Dashboard", href: "/", Icon: IconDashboard },
-    { title: "Shop", href: "/shoppinglist", Icon: IconBasket },
+    { title: "Shopping List", href: "/shoppinglist", Icon: IconBasket },
     { title: "Expenses", href: "/expenses", Icon: IconPigMoney },
     { title: "Chores", href: "/chores", Icon: IconWash },
     { title: "Flatmates", href: "/flatmates", Icon: IconHome },
   ];
 
+  const validLinks: string[] = [];
+  links.forEach((link) => {
+    if (link.href !== "/") {
+      validLinks.push(link.href);
+    }
+  });
+
   const path = usePathname();
+
+  const isPathValid = () => {
+    // Returns if the path starts with any of the valid links, or if the path is the root path
+    return validLinks.some((link) => path.startsWith(link)) || path === "/"; 
+  };
 
   return (
     <Drawer opened={opened} onClose={close} title={"Loded Frezeer"}>
-      <Flex direction="column" justify={"space-between"} style={{height: "100%"}}>
-        <Box style={{flexGrow: "1"}}>
+      <Flex
+        direction="column"
+        justify={"space-between"}
+        style={{ height: "100%" }}
+      >
+        <Box style={{ flexGrow: "1" }}>
           {links.map(({ title, href, Icon }) => (
             <NavLink
               key={title}
@@ -43,6 +59,7 @@ const NavBarDrawer = ({ opened, close }: Props) => {
               label={title}
               variant="light"
               active={path === href}
+              disabled={!isPathValid()}
             />
           ))}
         </Box>
