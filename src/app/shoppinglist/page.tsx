@@ -6,6 +6,7 @@ import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShoppingListPageHeader from "../components/ShoppingListPageHeader/ShoppingListPageHeader";
 import { ShoppingListContext } from "../context/ShoppingListContext";
 import { ShoppingItem } from "../types/ShoppingItem";
+import ShoppingItemDetailedView from "../components/ShoppingItemDetailedViewer/ShoppingItemDetailedView";
 
 type Props = {};
 
@@ -66,8 +67,11 @@ const ShoppingListPage = (props: Props) => {
       }}
     >
       <div className={styles.ShoppingListPage}>
-        <ShoppingListPageHeader />
-        <ShoppingList />
+        <div className={styles.ShoppingListContainer}>
+          <ShoppingListPageHeader />
+          <ShoppingList />
+        </div>
+        <ShoppingItemDetailedView />
       </div>
     </ShoppingListContext.Provider>
   );

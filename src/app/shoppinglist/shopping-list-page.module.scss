@@ -2,6 +2,13 @@
   padding: 32px;
 
   display: flex;
+  gap: 32px;
+  flex-grow: 1;
+}
+
+.ShoppingListContainer {
+  display: flex;
   flex-direction: column;
   gap: 16px;
+  flex-grow: 1;
 }
