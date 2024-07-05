@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { usePathname } from "next/navigation";
 import LogOutButton from "../logout-button/LogOutButton";
+import Link from "next/link";
 
 type Props = {
   opened: boolean;
@@ -60,6 +61,7 @@ const NavBarDrawer = ({ opened, close }: Props) => {
               variant="light"
               active={path === href}
               disabled={!isPathValid()}
+              component={Link}
             />
           ))}
         </Box>
