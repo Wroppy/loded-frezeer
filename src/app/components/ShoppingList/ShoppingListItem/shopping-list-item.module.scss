@@ -1,0 +1,21 @@
+.ShoppingListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  flex-direction: row;
+  gap: 16px;
+} 
+
+
+
+
+
+.CheckBoxContainer {
+  display: flex;
+  align-items: center;
+}
+
+.ShoppingListItemName {
+  flex-grow: 1;
+}

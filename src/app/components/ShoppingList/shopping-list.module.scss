@@ -1,0 +1,19 @@
+.ShoppingList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+}
+
+.ShoppingListBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.ShoppingListHeader {
+  margin-left: 52px;
+  display: flex;
+  
+}

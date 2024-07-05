@@ -1,6 +1,5 @@
 "use client";
 
-import { useDisclosure } from "@mantine/hooks";
 import { Box, Drawer, Flex, NavLink } from "@mantine/core";
 import {
   IconBasket,
@@ -40,7 +39,7 @@ const NavBarDrawer = ({ opened, close }: Props) => {
 
   const isPathValid = () => {
     // Returns if the path starts with any of the valid links, or if the path is the root path
-    return validLinks.some((link) => path.startsWith(link)) || path === "/"; 
+    return validLinks.some((link) => path.startsWith(link)) || path === "/";
   };
 
   return (
@@ -66,7 +65,7 @@ const NavBarDrawer = ({ opened, close }: Props) => {
           ))}
         </Box>
         <Flex justify={"right"}>
-          <LogOutButton disabled={!isPathValid()}/>
+          <LogOutButton disabled={!isPathValid()} />
         </Flex>
       </Flex>
     </Drawer>
