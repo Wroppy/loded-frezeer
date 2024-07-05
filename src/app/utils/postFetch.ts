@@ -16,5 +16,6 @@ export const postFetch = async (url: string, data: any) => {
     return response.json();
   } catch (error) {
     console.error(error);
+    return {error: "An error occurred while fetching the data"}
   }
 };
