@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import styles from "./../flatmates.module.scss";
 import { Button, Flex, TextInput } from "@mantine/core";
 import { postFetch } from "@/app/utils/postFetch";
@@ -11,26 +11,27 @@ import { showErrorMessage } from "@/app/utils/showErrorMessage";
 type Props = { email: string };
 
 const NotInFlatComponent = ({ email }: Props) => {
-  const [flatName, setFlatName] = React.useState("");
-  const [flatCode, setFlatCode] = React.useState("");
+  const [flatName, setFlatName] = useState("");
+  const [flatCode, setFlatCode] = useState("");
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
 
   const createFlat = async (event: FormEvent) => {
     event.preventDefault();
-
+    setLoading(true);
     // Create a new flat
     const response = await postFetch("/api/flat/create-flat", {
       email,
       name: flatName,
     });
 
-    console.log(response);
     router.refresh();
   };
 
   const joinFlat = async (event: FormEvent) => {
     event.preventDefault();
-
+    setLoading(true);
     // Join a flat
     const { error, flat } = (await postFetch("/api/flat/join-flat", {
       email,
@@ -39,10 +40,10 @@ const NotInFlatComponent = ({ email }: Props) => {
 
     if (error) {
       showErrorMessage("Error joining flat", error);
+      setLoading(false);
       return;
     }
 
-    console.log(flat);
     router.refresh();
   };
 
@@ -61,7 +62,9 @@ const NotInFlatComponent = ({ email }: Props) => {
           onChange={(event) => setFlatName(event.currentTarget.value)}
         />
         <Flex justify="right">
-          <Button type="submit">Create flat</Button>
+          <Button disabled={loading} type="submit">
+            Create flat
+          </Button>
         </Flex>
       </form>
       <form className={styles.FlatOption} onSubmit={joinFlat}>
@@ -73,7 +76,9 @@ const NotInFlatComponent = ({ email }: Props) => {
           required
         />
         <Flex justify="right">
-          <Button type="submit">Join flat</Button>
+          <Button disabled={loading} type="submit">
+            Join flat
+          </Button>
         </Flex>
       </form>
     </div>
