@@ -26,6 +26,12 @@ const NotInFlatComponent = ({ email }: Props) => {
       name: flatName,
     });
 
+    if (response.error) {
+      showErrorMessage("Error creating flat", response.error);
+      setLoading(false);
+      return;
+    }
+
     router.refresh();
   };
 
