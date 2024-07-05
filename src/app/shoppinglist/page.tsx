@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./shopping-list-page.module.scss";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
 import ShoppingListPageHeader from "../components/ShoppingListPageHeader/ShoppingListPageHeader";
@@ -10,11 +10,11 @@ import { ShoppingItem } from "../types/ShoppingItem";
 type Props = {};
 
 const ShoppingListPage = (props: Props) => {
-  const shoppingList: ShoppingItem[] = [
+  const [shoppingList, setShoppingList] = useState([
     {
       itemName: "Apples",
       quantity: 5,
-      for: ["John"],
+      itemFor: ["John"],
       id: "1",
       addedBy: "John",
       boughtBy: null,
@@ -22,14 +22,26 @@ const ShoppingListPage = (props: Props) => {
     {
       itemName: "Bananas",
       quantity: 7,
-      for: ["John", "Jane"],
+      itemFor: ["John", "Jane"],
       id: "2",
       addedBy: "John",
       boughtBy: "Jane",
     },
-  ];
+  ]);
 
-  const addItem = (item: ShoppingItem) => {};
+  const addItem = (itemName: string, quantity: number, itemFor: string[]) => {
+    setShoppingList([
+      ...shoppingList,
+      {
+        itemName: itemName,
+        quantity: quantity,
+        itemFor,
+        id: Math.random().toString(),
+        addedBy: "John",
+        boughtBy: null,
+      },
+    ]);
+  };
 
   const removeItem = (id: string) => {};
 

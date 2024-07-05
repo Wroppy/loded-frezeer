@@ -1,7 +1,7 @@
 type ShoppingItem = {
   itemName: string;
   quantity: number;
-  for: string[];
+  itemFor: string[];
   id: string;
   addedBy: string;
   boughtBy: string | null;
