@@ -1,5 +1,6 @@
 "use client";
-import React, { useContext } from "react";
+
+import React, { useContext, useState } from "react";
 import ShoppingListItem from "./ShoppingListItem/ShoppingListItem";
 import styles from "./shopping-list.module.scss";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
@@ -12,7 +13,19 @@ const ShoppingList = (props: Props) => {
     ShoppingListContext
   ) as ShoppingListContextType;
 
-  
+  const [selected, setSelected] = useState<string | null>("2");
+
+  // Set the selected item to the id of the clicked item
+  // And deselect it if it's already selected
+  const handleClick = (id: string) => {
+    if (selected === id) {
+      setSelected(null);
+      return;
+    }
+
+    setSelected(id);
+  };
+
   return (
     <div className={styles.ShoppingList}>
       <div className={styles.ShoppingListHeader}>
@@ -22,7 +35,12 @@ const ShoppingList = (props: Props) => {
 
       <div className={styles.ShoppingListBody}>
         {shoppingList.map((item) => (
-          <ShoppingListItem key={item.id} shoppingItem={item} />
+          <ShoppingListItem
+            key={item.id}
+            shoppingItem={item}
+            selected={selected}
+            handleClick={handleClick}
+          />
         ))}
       </div>
     </div>
