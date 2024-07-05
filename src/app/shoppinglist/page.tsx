@@ -47,9 +47,23 @@ const ShoppingListPage = (props: Props) => {
 
   const updateItem = (newItem: ShoppingItem) => {};
 
+  const [selectedItem, setSelectedItem] = useState<ShoppingItem | null>(null);
+
+  const clearSelectedItem = () => {
+    setSelectedItem(null);
+  };
+
   return (
     <ShoppingListContext.Provider
-      value={{ shoppingList, addItem, removeItem, updateItem }}
+      value={{
+        shoppingList,
+        addItem,
+        removeItem,
+        updateItem,
+        selectedItem,
+        setSelectedItem,
+        clearSelectedItem,
+      }}
     >
       <div className={styles.ShoppingListPage}>
         <ShoppingListPageHeader />

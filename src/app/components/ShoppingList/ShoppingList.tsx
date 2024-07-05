@@ -10,11 +10,10 @@ import { ShoppingItem } from "@/app/types/ShoppingItem";
 type Props = {};
 
 const ShoppingList = (props: Props) => {
-  const { shoppingList } = useContext(
+  const { shoppingList, selectedItem: selected, setSelectedItem: setSelected } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
-  const [selected, setSelected] = useState<ShoppingItem | null>(null);
 
   // Set the selected item to the id of the clicked item
   // And deselect it if it's already selected
