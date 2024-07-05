@@ -5,6 +5,7 @@ import ShoppingListItem from "./ShoppingListItem/ShoppingListItem";
 import styles from "./shopping-list.module.scss";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
+import { ShoppingItem } from "@/app/types/ShoppingItem";
 
 type Props = {};
 
@@ -13,17 +14,17 @@ const ShoppingList = (props: Props) => {
     ShoppingListContext
   ) as ShoppingListContextType;
 
-  const [selected, setSelected] = useState<string | null>("2");
+  const [selected, setSelected] = useState<ShoppingItem | null>(null);
 
   // Set the selected item to the id of the clicked item
   // And deselect it if it's already selected
-  const handleClick = (id: string) => {
-    if (selected === id) {
+  const handleClick = (shoppingItem: ShoppingItem) => {
+    if (selected && selected.id === shoppingItem.id) {
       setSelected(null);
       return;
     }
 
-    setSelected(id);
+    setSelected(shoppingItem);
   };
 
   return (

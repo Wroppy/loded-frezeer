@@ -5,8 +5,8 @@ import { Card, Checkbox, Table } from "@mantine/core";
 
 type Props = {
   shoppingItem: ShoppingItem;
-  selected: string | null;
-  handleClick: (id: string) => void;
+  selected: ShoppingItem | null;
+  handleClick: (id: ShoppingItem) => void;
 };
 
 const ShoppingListItem = ({ shoppingItem, selected, handleClick }: Props) => {
@@ -14,9 +14,11 @@ const ShoppingListItem = ({ shoppingItem, selected, handleClick }: Props) => {
     // Is selected if the selected prop matches the id of the shopping item
     <Card
       className={`${styles.ShoppingListItem} ${
-        selected === shoppingItem.id && styles.ShoppingListItemSelected
+        selected &&
+        selected.id === shoppingItem.id &&
+        styles.ShoppingListItemSelected
       }`}
-      onClick={() => handleClick(shoppingItem.id)}
+      onClick={() => handleClick(shoppingItem)}
     >
       <div className={styles.CheckBoxContainer}>
         <Checkbox
