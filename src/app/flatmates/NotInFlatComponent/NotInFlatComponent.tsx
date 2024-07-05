@@ -4,12 +4,16 @@ import React, { FormEvent } from "react";
 import styles from "./../flatmates.module.scss";
 import { Button, Flex, TextInput } from "@mantine/core";
 import { postFetch } from "@/app/utils/postFetch";
+import { JoinFlatResponse } from "@/app/types/JoinFlatResponse";
+import { useRouter } from "next/navigation";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
 type Props = { email: string };
 
 const NotInFlatComponent = ({ email }: Props) => {
   const [flatName, setFlatName] = React.useState("");
   const [flatCode, setFlatCode] = React.useState("");
+  const router = useRouter();
 
   const createFlat = async (event: FormEvent) => {
     event.preventDefault();
@@ -20,7 +24,26 @@ const NotInFlatComponent = ({ email }: Props) => {
       name: flatName,
     });
 
-    console.log(response)
+    console.log(response);
+    router.refresh();
+  };
+
+  const joinFlat = async (event: FormEvent) => {
+    event.preventDefault();
+
+    // Join a flat
+    const { error, flat } = (await postFetch("/api/flat/join-flat", {
+      email,
+      flatJoinCode: flatCode,
+    })) as JoinFlatResponse;
+
+    if (error) {
+      showErrorMessage("Error joining flat", error);
+      return;
+    }
+
+    console.log(flat);
+    router.refresh();
   };
 
   return (
@@ -30,28 +53,29 @@ const NotInFlatComponent = ({ email }: Props) => {
       </div>
 
       <form className={styles.FlatOption} onSubmit={createFlat}>
-          <TextInput
-            required
-            label="Create a new flat"
-            placeholder="Enter the name of your flat"
-            value={flatName}
-            onChange={(event) => setFlatName(event.currentTarget.value)}
-          />
-          <Flex justify="right">
-            <Button type="submit">Create flat</Button>
-          </Flex>
-      </form>
-      <div className={styles.FlatOption}>
         <TextInput
-          label="Join a flat by code"
-          placeholder="Enter the flat ID"
-          value={flatCode}
-          onChange={(event) => setFlatCode(event.currentTarget.value)}
+          required
+          label="Create a new flat"
+          placeholder="Enter the name of your flat"
+          value={flatName}
+          onChange={(event) => setFlatName(event.currentTarget.value)}
         />
         <Flex justify="right">
-          <Button>Join flat</Button>
+          <Button type="submit">Create flat</Button>
         </Flex>
-      </div>
+      </form>
+      <form className={styles.FlatOption} onSubmit={joinFlat}>
+        <TextInput
+          label="Join a flat by code"
+          placeholder="Enter the flat join code"
+          value={flatCode}
+          onChange={(event) => setFlatCode(event.currentTarget.value)}
+          required
+        />
+        <Flex justify="right">
+          <Button type="submit">Join flat</Button>
+        </Flex>
+      </form>
     </div>
   );
 };

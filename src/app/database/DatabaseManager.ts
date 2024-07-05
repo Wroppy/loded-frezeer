@@ -110,4 +110,24 @@ export default class DatabaseManager {
 
     return (await this.getUserFlat(email))!;
   }
+
+  /**
+   * Given an email and a flat join code, adds the user to the flat
+   *
+   * @param email the email of the user
+   * @param flatJoinCode the flat join code
+   * @returns the flat
+   */
+  public async joinFlat(email: string, flatJoinCode: string): Promise<Flat> {
+    const flat = (await FlatModel.findOne({ joinId: flatJoinCode })) as Flat;
+
+    if (!flat) {
+      throw new Error("Invalid flat join code");
+    }
+
+    flat.tenants.push(email);
+    await (flat as any).save();
+
+    return (await this.getUserFlat(email))!;
+  }
 }
