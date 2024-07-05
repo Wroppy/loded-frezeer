@@ -1,3 +1,22 @@
 .ShoppingItemDetailedView {
-  width: 300px;
+  width: 400px;
+  background-color: var(--mantine-color-dark-8);
+
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+  flex-direction: column;
+}
+.ShoppingItemDetailedCard {
+  width: 100%;
+}
+
+.SelectedItemHeading {
+  font-size: 24px;
+  font-weight: 500;
+  
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }

@@ -2,11 +2,13 @@ import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import React, { useContext } from "react";
 import styles from "./shopping-item-detailed-view.module.scss";
+import { ActionIcon, Card, Flex, Paper } from "@mantine/core";
+import { IconShoppingCart, IconX } from "@tabler/icons-react";
 
 type Props = {};
 
 const ShoppingItemDetailedView = (props: Props) => {
-  const { selectedItem } = useContext(
+  const { selectedItem, setSelectedItem } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -14,10 +16,33 @@ const ShoppingItemDetailedView = (props: Props) => {
     <>
       {selectedItem && (
         <div className={styles.ShoppingItemDetailedView}>
-          <h2>{selectedItem.itemName}</h2>
-          <p>Quantity: {selectedItem.quantity}</p>
-          <p>Added by: {selectedItem.addedBy}</p>
-          <p>Bought by: {selectedItem.boughtBy}</p>
+          {/* Exit button  */}
+          <Flex justify="end" style={{ width: "100%" }}>
+            <ActionIcon variant="outline" onClick={() => setSelectedItem(null)}>
+              <IconX style={{ width: "70%", height: "70%" }} stroke={1.5} />
+            </ActionIcon>
+          </Flex>
+          <Card className={styles.ShoppingItemDetailedCard}>
+            <div className={styles.SelectedItemHeading}>
+              <ActionIcon variant="outline">
+                <IconShoppingCart
+                  style={{ width: "70%", height: "70%" }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+              {selectedItem.itemName}
+            </div>
+            <div>Quantity: {selectedItem.quantity}</div>
+          </Card>
+          <Card className={styles.ShoppingItemDetailedCard}>
+            Added by: {selectedItem.addedBy}
+          </Card>
+          <Card className={styles.ShoppingItemDetailedCard}>
+            Item for: {selectedItem.itemFor.join(", ")}
+          </Card>
+          <Card className={styles.ShoppingItemDetailedCard}>
+            Bought by: {selectedItem.boughtBy}
+          </Card>
         </div>
       )}
     </>
