@@ -8,6 +8,7 @@ type ShoppingListContextType = {
   selectedItem: ShoppingItem | null;
   setSelectedItem: (item: ShoppingItem | null) => void;
   clearSelectedItem: () => void;
+  email: string;
 };
 
 export { type ShoppingListContextType };

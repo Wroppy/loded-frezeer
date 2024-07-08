@@ -56,6 +56,7 @@ const ShoppingListPage = ({
   return (
     <ShoppingListContext.Provider
       value={{
+        email,
         shoppingList,
         addItem,
         removeItem,
