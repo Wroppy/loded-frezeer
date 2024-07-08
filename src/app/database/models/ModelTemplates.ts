@@ -23,5 +23,6 @@ export const FlatTemplate = (name: string, userEmail: string): Flat => {
     tenants: [userEmail],
     joinId: getRandomId(),
     flatId: getRandomId(),
+    shoppingList: [],
   }
 };

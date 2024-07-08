@@ -18,6 +18,10 @@ const FlatSchema = new Schema<Flat>({
     type: String,
     required: true,
   },
+  shoppingList: {
+    type: [Object],
+    required: true,
+  },
 });
 
 const FlatModel = mongoose.models.Flat || model<Flat>("Flat", FlatSchema);

@@ -5,6 +5,7 @@ import { comparePassword, hashPassword } from "./Utils";
 import { User } from "./types/User";
 import { Flat } from "./types/Flat";
 import { FlatModel } from "./models/FlatSchema";
+import { ShoppingItem } from "../types/ShoppingItem";
 
 export default class DatabaseManager {
   constructor() {
@@ -129,5 +130,16 @@ export default class DatabaseManager {
     await (flat as any).save();
 
     return (await this.getUserFlat(email))!;
+  }
+
+  public async addShoppingItem(email: string, shoppingItem: ShoppingItem) {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    flat.shoppingList.push(shoppingItem);
+    await (flat as any).save();
   }
 }
