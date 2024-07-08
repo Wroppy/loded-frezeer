@@ -99,15 +99,29 @@ export default class DatabaseManager {
     if (!userFlat) {
       return null;
     }
-    let tenants = [];
-    for (let tenant of userFlat!.tenants) {
-      let user = await this.getUser(tenant);
-      tenants.push(user!.name);
+
+    // Gets the names of the tenants
+    let tenants: {[key: string]: string} = {};
+    for (let tenantEmail of userFlat!.tenants) {
+      let user = await this.getUser(tenantEmail);
+      tenants[tenantEmail] = user!.name;
     }
+
 
     // Copies the flat object and changes the tenants to names
     let flat = JSON.parse(JSON.stringify(userFlat));
-    flat.tenants = tenants;
+    flat.tenants = Object.values(tenants);
+
+    // Changes the bought by and added by to names
+    for (let item of flat.shoppingList) {
+      if (item.boughtBy) {
+        item.boughtBy = tenants[item.boughtBy];
+      }
+
+      if (item.addedBy) {
+        item.addedBy = tenants[item.addedBy];
+      }
+    }
 
     return flat;
   }
