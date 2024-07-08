@@ -8,7 +8,7 @@ import { IconShoppingCart, IconX } from "@tabler/icons-react";
 type Props = {};
 
 const ShoppingItemDetailedView = (props: Props) => {
-  const { selectedItem, setSelectedItem } = useContext(
+  const { selectedItem, setSelectedItem, name } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -35,7 +35,7 @@ const ShoppingItemDetailedView = (props: Props) => {
             <div>Quantity: {selectedItem.quantity}</div>
           </Card>
           <Card className={styles.ShoppingItemDetailedCard}>
-            Added by: {selectedItem.addedBy}
+            Added by: {name == selectedItem.addedBy ? "You" : selectedItem.addedBy}
           </Card>
           <Card className={styles.ShoppingItemDetailedCard}>
             Item for: {selectedItem.itemFor.join(", ")}

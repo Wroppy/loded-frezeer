@@ -101,12 +101,11 @@ export default class DatabaseManager {
     }
 
     // Gets the names of the tenants
-    let tenants: {[key: string]: string} = {};
+    let tenants: { [key: string]: string } = {};
     for (let tenantEmail of userFlat!.tenants) {
       let user = await this.getUser(tenantEmail);
       tenants[tenantEmail] = user!.name;
     }
-
 
     // Copies the flat object and changes the tenants to names
     let flat = JSON.parse(JSON.stringify(userFlat));
@@ -199,13 +198,12 @@ export default class DatabaseManager {
     if (!flat) {
       throw new Error("User is not in a flat");
     }
-    console.log(checkedItems)
+    console.log(checkedItems);
     // Loops through all the items in the shopping list and sets the boughtBy
     for (let item of flat.shoppingList) {
       if (checkedItems.includes(item.id)) {
         item.boughtBy = email;
       }
-
     }
     await (flat as any).markModified("shoppingList");
     await (flat as any).save();

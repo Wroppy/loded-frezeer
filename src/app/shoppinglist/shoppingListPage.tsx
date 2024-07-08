@@ -13,6 +13,7 @@ import { showErrorMessage } from "../utils/showErrorMessage";
 import { showSuccessMessage } from "../utils/showSucessMessage";
 
 const ShoppingListPage = ({
+  userName,
   names,
   shoppingList: list,
   email,
@@ -56,6 +57,7 @@ const ShoppingListPage = ({
   return (
     <ShoppingListContext.Provider
       value={{
+        name: userName!,
         email,
         shoppingList,
         addItem,
