@@ -1,3 +1,4 @@
+import { ShoppingItem } from "@/app/types/ShoppingItem";
 import { Flat } from "../types/Flat";
 import { User } from "../types/User";
 import { getRandomId } from "../Utils";
@@ -26,3 +27,15 @@ export const FlatTemplate = (name: string, userEmail: string): Flat => {
     shoppingList: [],
   }
 };
+
+
+export const ShoppingItemTemplate = (name: string, quantity: number, itemFor: string[], userEmail: string): ShoppingItem => {
+  return {
+    itemName: name,
+    quantity,
+    itemFor,
+    id: getRandomId(),
+    addedBy: userEmail,
+    boughtBy: null,
+  };
+}
