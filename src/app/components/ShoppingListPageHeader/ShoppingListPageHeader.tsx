@@ -1,38 +1,65 @@
 "use client";
 
-import { Button, NumberInput, TextInput, rem } from "@mantine/core";
+import {
+  Button,
+  MultiSelect,
+  NumberInput,
+  TextInput,
+  rem,
+} from "@mantine/core";
 import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
 import styles from "./../ShoppingList/shopping-list.module.scss";
 import { IconDumpling, IconHash } from "@tabler/icons-react";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
 type Props = {};
 
 const ShoppingListHeader = (props: Props) => {
+  const users = ["User 1", "User 2", "User 3", "User 4"];
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState<string | number>(1);
+  const [itemFor, setItemFor] = useState<string[]>([]);
 
   const { addItem, shoppingList } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
+  const showShoppingListError = (message: string) => {
+    showErrorMessage("Error creating a new shopping list item", message);
+  };
+
   // Add item to the shopping list
   const handleAddItem = (event: FormEvent) => {
     event.preventDefault();
-    console.log("Handl;ing")
 
     if (itemName.trim() === "") {
       setItemName("");
+      showShoppingListError("Please input an item name");
       return;
     }
 
     let itemQuantity = parseInt(quantity.toString());
 
-    addItem(itemName, itemQuantity, []);
+    // Validate the quantity
+    if (isNaN(itemQuantity)) {
+      setQuantity(1);
+      showShoppingListError("Please input a valid quantity");
+      return;
+    }
+
+    // Validates the item for
+    if (itemFor.length === 0) {
+      showShoppingListError("Please select a user");
+      return;
+    }
+
+    addItem(itemName, itemQuantity, itemFor);
 
     setItemName("");
     setQuantity(1);
+    setItemFor([]);
   };
 
   return (
@@ -48,6 +75,14 @@ const ShoppingListHeader = (props: Props) => {
         }
         placeholder="Add an item"
       />
+      <MultiSelect
+        data={users}
+        value={itemFor}
+        clearable
+        onChange={setItemFor}
+        placeholder="For?"
+        style={{ width: "300px" }}
+      />
       <NumberInput
         value={quantity}
         onChange={setQuantity}
@@ -55,8 +90,11 @@ const ShoppingListHeader = (props: Props) => {
         placeholder="Quantity"
         min={1}
         max={20}
+        style={{ width: "120px" }}
       />
-      <Button type="submit" variant="light">Add</Button>
+      <Button type="submit" variant="light">
+        Add
+      </Button>
     </form>
   );
 };
