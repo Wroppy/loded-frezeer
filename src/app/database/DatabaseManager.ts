@@ -100,8 +100,8 @@ export default class DatabaseManager {
    * Given an email and a flat name, creates a new flat
    * and adds the user to the flat
    *
-   * @param email the email of the user
    * @param name the name of the flat
+   * @param email the email of the user
    * @returns the flat
    */
   public async createFlat(name: string, email: string): Promise<Flat> {
