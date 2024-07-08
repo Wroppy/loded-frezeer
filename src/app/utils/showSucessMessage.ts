@@ -1,6 +1,6 @@
 import { notifications } from "@mantine/notifications";
 
-export const showSucecssMessage = (title: string, message: string) => {
+export const showSuccessMessage = (message: string, title?: string) => {
   notifications.show({
     color: "green",
     title,

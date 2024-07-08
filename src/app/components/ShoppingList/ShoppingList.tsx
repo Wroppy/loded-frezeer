@@ -9,7 +9,7 @@ import { ShoppingItem } from "@/app/types/ShoppingItem";
 import { Button } from "@mantine/core";
 import { postFetch } from "@/app/utils/postFetch";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
-import { showSucecssMessage } from "@/app/utils/showSucessMessage";
+import { showSuccessMessage } from "@/app/utils/showSucessMessage";
 
 type Props = {};
 
@@ -39,6 +39,7 @@ const ShoppingList = (props: Props) => {
     }
 
     setCheckedItems([]);
+    showSuccessMessage("Items successfully purchased");
   };
 
   // Set the selected item to the id of the clicked item
