@@ -13,14 +13,12 @@ const page = async (props: Props) => {
 
   // Checks that the user is logged in
   checkAuth(session);
+  console.log({ email: session!.user!.email });
+  let pageProps = await postFetch("/api/shoppinglist/get-page-props", {
+    email: session!.user!.email!,
+  });
 
-  let pageProps = (await postFetch(
-    "/api/shoppinglist/get-page-props",
-    {email: session!.user!.email}
-  )) as ShoppingListPageProps;  
-  pageProps.email = session!.user!.email!;
-  
-  return <ShoppingListPage {...pageProps } />;
+  return <ShoppingListPage {...pageProps} />;
 };
 
 export default page;

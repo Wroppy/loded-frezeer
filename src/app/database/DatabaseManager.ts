@@ -156,6 +156,7 @@ export default class DatabaseManager {
     return {
       shoppingList: flat.shoppingList,
       names: flat.tenants,
+      email,
     };
   }
 }

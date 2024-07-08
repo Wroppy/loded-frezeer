@@ -10,6 +10,7 @@ import ShoppingItemDetailedView from "../components/ShoppingItemDetailedViewer/S
 import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import { postFetch } from "../utils/postFetch";
 import { showErrorMessage } from "../utils/showErrorMessage";
+import { showSucecssMessage } from "../utils/showSucessMessage";
 
 const ShoppingListPage = ({
   names,
@@ -35,6 +36,8 @@ const ShoppingListPage = ({
       showErrorMessage("Error adding item to shopping list", response.error);
       return;
     }
+
+    showSucecssMessage("Item successfully added", "Item added to shopping list");
 
     // Updates the shopping list
     setShoppingList([...shoppingList, response.shoppingItem!]);
