@@ -7,6 +7,9 @@ import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { ShoppingItem } from "@/app/types/ShoppingItem";
 import { Button } from "@mantine/core";
+import { postFetch } from "@/app/utils/postFetch";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import { showSucecssMessage } from "@/app/utils/showSucessMessage";
 
 type Props = {};
 
@@ -17,7 +20,26 @@ const ShoppingList = (props: Props) => {
     shoppingList,
     selectedItem: selected,
     setSelectedItem: setSelected,
+    email,
   } = useContext(ShoppingListContext) as ShoppingListContextType;
+
+  const handlePurchase = async () => {
+    if (checkedItems.length == 0) {
+      return;
+    }
+
+    const res = await postFetch("/api/shoppinglist/set-purchased", {
+      email,
+      checkedItems,
+    });
+
+    if (res.error) {
+      showErrorMessage("An error occured while purchasing items", res.error);
+      return;
+    }
+
+    setCheckedItems([]);
+  };
 
   // Set the selected item to the id of the clicked item
   // And deselect it if it's already selected
@@ -50,7 +72,7 @@ const ShoppingList = (props: Props) => {
         ))}
       </div>
       <div className={styles.ShoppingListFooter}>
-        <Button disabled={checkedItems.length == 0}>
+        <Button onClick={handlePurchase} disabled={checkedItems.length == 0}>
           Set Purchased
         </Button>
       </div>

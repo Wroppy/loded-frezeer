@@ -73,16 +73,12 @@ export default class DatabaseManager {
   private async getUserFlat(email: string): Promise<Flat | null> {
     const flats = (await FlatModel.find()) as Flat[];
 
-    let userFlat: Flat = null as any;
+    let userFlat: Flat | null = null;
     // Loops through all the flats and checks if the user is in the flat
     for (let flat of flats) {
       if (flat.tenants.includes(email)) {
         userFlat = flat;
       }
-    }
-
-    if (!userFlat) {
-      return null;
     }
 
     return userFlat;
@@ -177,5 +173,27 @@ export default class DatabaseManager {
       names: flat.tenants,
       email,
     };
+  }
+
+  /**
+   * Given an email and a list of checked items, sets the items as purchased
+   * in the flat
+   */
+  public async setPurchased(email: string, checkedItems: string[]) {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+    console.log(checkedItems)
+    // Loops through all the items in the shopping list and sets the boughtBy
+    for (let item of flat.shoppingList) {
+      if (checkedItems.includes(item.id)) {
+        item.boughtBy = email;
+      }
+
+    }
+    await (flat as any).markModified("shoppingList");
+    await (flat as any).save();
   }
 }
