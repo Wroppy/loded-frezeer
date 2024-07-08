@@ -14,6 +14,7 @@ type Props = {};
 const FlatMatesPage = async (props: Props) => {
   const session = await getServerSession(authOptions);
 
+  
   checkAuth(session);
 
   console.log(session);
