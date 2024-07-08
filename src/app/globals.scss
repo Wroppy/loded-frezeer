@@ -20,3 +20,11 @@ body {
 .mantine-Drawer-body {
   flex-grow: 1;
 }
+
+:where([data-mantine-color-scheme='dark']) .m_26063560:disabled {
+  border-color: var(--mantine-color-dark-4);
+}
+
+:where([data-mantine-color-scheme='dark']) .m_26063560 {
+  border-color: var(--mantine-color-dark-2);
+}
