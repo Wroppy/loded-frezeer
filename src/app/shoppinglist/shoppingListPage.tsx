@@ -8,23 +8,36 @@ import { ShoppingListContext } from "../context/ShoppingListContext";
 import { ShoppingItem } from "../types/ShoppingItem";
 import ShoppingItemDetailedView from "../components/ShoppingItemDetailedViewer/ShoppingItemDetailedView";
 import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
+import { postFetch } from "../utils/postFetch";
+import { showErrorMessage } from "../utils/showErrorMessage";
 
-
-const ShoppingListPage = ({names, shoppingList: list}: ShoppingListPageProps) => {
+const ShoppingListPage = ({
+  names,
+  shoppingList: list,
+  email,
+}: ShoppingListPageProps) => {
   const [shoppingList, setShoppingList] = useState(list);
 
-  const addItem = (itemName: string, quantity: number, itemFor: string[]) => {
-    setShoppingList([
-      ...shoppingList,
-      {
-        itemName: itemName,
-        quantity: quantity,
-        itemFor,
-        id: Math.random().toString(),
-        addedBy: "John",
-        boughtBy: null,
-      },
-    ]);
+  const addItem = async (
+    itemName: string,
+    quantity: number,
+    itemFor: string[]
+  ) => {
+    // sends the item to the server
+    const response = await postFetch("/api/shoppinglist/add-item", {
+      itemName,
+      quantity,
+      itemFor,
+      email,
+    }) as { shoppingItem: ShoppingItem | null; error: string | null };
+
+    if (response.error) {
+      showErrorMessage("Error adding item to shopping list", response.error);
+      return;
+    }
+
+    // Updates the shopping list
+    setShoppingList([...shoppingList, response.shoppingItem!]);
   };
 
   const removeItem = (id: string) => {};
@@ -51,7 +64,7 @@ const ShoppingListPage = ({names, shoppingList: list}: ShoppingListPageProps) =>
     >
       <div className={styles.ShoppingListPage}>
         <div className={styles.ShoppingListContainer}>
-          <ShoppingListPageHeader names={names}/>
+          <ShoppingListPageHeader names={names} />
           <ShoppingList />
         </div>
         <ShoppingItemDetailedView />

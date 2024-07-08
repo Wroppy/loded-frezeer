@@ -18,10 +18,9 @@ const page = async (props: Props) => {
     "/api/shoppinglist/get-page-props",
     {email: session!.user!.email}
   )) as ShoppingListPageProps;  
-
-  console.log(pageProps);
-
-  return <ShoppingListPage {...pageProps} />;
+  pageProps.email = session!.user!.email!;
+  
+  return <ShoppingListPage {...pageProps } />;
 };
 
 export default page;
