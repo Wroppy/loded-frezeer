@@ -41,7 +41,7 @@ const ShoppingItemDetailedView = (props: Props) => {
             Item for: {selectedItem.itemFor.join(", ")}
           </Card>
           <Card className={styles.ShoppingItemDetailedCard}>
-            Bought by: {selectedItem.boughtBy}
+            {selectedItem.boughtBy ? (`Bought by: ${selectedItem.boughtBy}`) : "Not bought yet"}
           </Card>
         </div>
       )}
