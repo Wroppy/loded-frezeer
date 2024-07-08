@@ -10,10 +10,15 @@ import { ShoppingItem } from "@/app/types/ShoppingItem";
 type Props = {};
 
 const ShoppingList = (props: Props) => {
-  const { shoppingList, selectedItem: selected, setSelectedItem: setSelected } = useContext(
-    ShoppingListContext
-  ) as ShoppingListContextType;
 
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+
+
+  const {
+    shoppingList,
+    selectedItem: selected,
+    setSelectedItem: setSelected,
+  } = useContext(ShoppingListContext) as ShoppingListContextType;
 
   // Set the selected item to the id of the clicked item
   // And deselect it if it's already selected
@@ -36,10 +41,12 @@ const ShoppingList = (props: Props) => {
       <div className={styles.ShoppingListBody}>
         {shoppingList.map((item) => (
           <ShoppingListItem
+            checkedItems={checkedItems}
             key={item.id}
             shoppingItem={item}
             selected={selected}
             handleClick={handleClick}
+            setCheckedItems={setCheckedItems}
           />
         ))}
       </div>
