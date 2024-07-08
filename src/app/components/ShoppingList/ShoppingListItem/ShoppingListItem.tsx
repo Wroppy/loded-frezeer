@@ -43,13 +43,16 @@ const ShoppingListItem = ({
         <Checkbox
           onClick={(event) => event.stopPropagation()} // Prevent the click event from bubbling up to the parent
           type="checkbox"
-          checked={checkedItems.includes(shoppingItem.id)}
+          checked={
+            checkedItems.includes(shoppingItem.id) ||
+            shoppingItem.boughtBy !== null
+          }
           onChange={onChange}
           disabled={shoppingItem.boughtBy !== null}
         />
       </div>
       <Text
-        td={shoppingItem.boughtBy !== null ? "line-through": "none"}
+        td={shoppingItem.boughtBy !== null ? "line-through" : "none"}
         className={styles.ShoppingListItemName}
       >
         {shoppingItem.itemName}
