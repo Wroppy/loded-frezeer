@@ -6,6 +6,7 @@ import { User } from "./types/User";
 import { Flat } from "./types/Flat";
 import { FlatModel } from "./models/FlatSchema";
 import { ShoppingItem } from "../types/ShoppingItem";
+import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 
 export default class DatabaseManager {
   constructor() {
@@ -141,5 +142,20 @@ export default class DatabaseManager {
 
     flat.shoppingList.push(shoppingItem);
     await (flat as any).save();
+  }
+
+  public async getShoppingPageProps(
+    email: string
+  ): Promise<ShoppingListPageProps> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    return {
+      shoppingList: flat.shoppingList,
+      names: flat.tenants,
+    };
   }
 }

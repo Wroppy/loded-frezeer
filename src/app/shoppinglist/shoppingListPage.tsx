@@ -7,28 +7,11 @@ import ShoppingListPageHeader from "../components/ShoppingListPageHeader/Shoppin
 import { ShoppingListContext } from "../context/ShoppingListContext";
 import { ShoppingItem } from "../types/ShoppingItem";
 import ShoppingItemDetailedView from "../components/ShoppingItemDetailedViewer/ShoppingItemDetailedView";
+import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 
-type Props = {};
 
-const ShoppingListPage = (props: Props) => {
-  const [shoppingList, setShoppingList] = useState([
-    {
-      itemName: "Apples",
-      quantity: 5,
-      itemFor: ["John"],
-      id: "1",
-      addedBy: "John",
-      boughtBy: null,
-    },
-    {
-      itemName: "Bananas",
-      quantity: 7,
-      itemFor: ["John", "Jane"],
-      id: "2",
-      addedBy: "John",
-      boughtBy: "Jane",
-    },
-  ]);
+const ShoppingListPage = ({names, shoppingList: list}: ShoppingListPageProps) => {
+  const [shoppingList, setShoppingList] = useState(list);
 
   const addItem = (itemName: string, quantity: number, itemFor: string[]) => {
     setShoppingList([
@@ -68,7 +51,7 @@ const ShoppingListPage = (props: Props) => {
     >
       <div className={styles.ShoppingListPage}>
         <div className={styles.ShoppingListContainer}>
-          <ShoppingListPageHeader />
+          <ShoppingListPageHeader names={names}/>
           <ShoppingList />
         </div>
         <ShoppingItemDetailedView />

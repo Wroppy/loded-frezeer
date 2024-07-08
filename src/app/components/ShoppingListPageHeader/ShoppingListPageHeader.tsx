@@ -14,10 +14,9 @@ import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
-type Props = {};
+type Props = {names: string[]};
 
-const ShoppingListHeader = (props: Props) => {
-  const users = ["User 1", "User 2", "User 3", "User 4"];
+const ShoppingListHeader = ({names}: Props) => {
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState<string | number>(1);
   const [itemFor, setItemFor] = useState<string[]>([]);
@@ -76,7 +75,7 @@ const ShoppingListHeader = (props: Props) => {
         placeholder="Add an item"
       />
       <MultiSelect
-        data={users}
+        data={names}
         value={itemFor}
         clearable
         onChange={setItemFor}
