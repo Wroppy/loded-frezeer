@@ -6,13 +6,12 @@ import styles from "./shopping-list.module.scss";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { ShoppingItem } from "@/app/types/ShoppingItem";
+import { Button } from "@mantine/core";
 
 type Props = {};
 
 const ShoppingList = (props: Props) => {
-
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
-
 
   const {
     shoppingList,
@@ -49,6 +48,11 @@ const ShoppingList = (props: Props) => {
             setCheckedItems={setCheckedItems}
           />
         ))}
+      </div>
+      <div className={styles.ShoppingListFooter}>
+        <Button disabled={checkedItems.length == 0}>
+          Set Purchased
+        </Button>
       </div>
     </div>
   );
