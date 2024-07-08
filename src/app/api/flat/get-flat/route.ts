@@ -6,7 +6,7 @@ export async function POST(req: Request, res: Response) {
 
   try {
     const db = new DatabaseManager();
-    const flat = await db.getUserFlat(email);
+    const flat = await db.getUserFlatClient(email);
 
     return NextResponse.json({ flat });
   } catch (error) {

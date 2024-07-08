@@ -70,7 +70,7 @@ export default class DatabaseManager {
    * @param email the email of the user
    * @returns the flat the user is in
    */
-  public async getUserFlat(email: string): Promise<Flat | null> {
+  private async getUserFlat(email: string): Promise<Flat | null> {
     const flats = (await FlatModel.find()) as Flat[];
 
     let userFlat: Flat = null as any;
@@ -85,16 +85,35 @@ export default class DatabaseManager {
       return null;
     }
 
-    // Changes the tenants array to include the names of the tenants
-    let tenants: string[] = [];
-    for (let tenant of userFlat.tenants) {
-      const user = await this.getUser(tenant);
-      tenants.push(user?.name as string);
+    return userFlat;
+  }
+
+  /**
+   * Given an email, returns the flat the user is in with the tenants as a list of names
+   * instead of emails
+   *
+   * getUserFlat(email:string) should only be used in the backend
+   *
+   * @param email the email of the user
+   * @returns the flat the user is in
+   */
+  public async getUserFlatClient(email: string): Promise<Flat | null> {
+    let userFlat = await this.getUserFlat(email);
+
+    if (!userFlat) {
+      return null;
+    }
+    let tenants = [];
+    for (let tenant of userFlat!.tenants) {
+      let user = await this.getUser(tenant);
+      tenants.push(user!.name);
     }
 
-    userFlat.tenants = tenants;
+    // Copies the flat object and changes the tenants to names
+    let flat = JSON.parse(JSON.stringify(userFlat));
+    flat.tenants = tenants;
 
-    return userFlat;
+    return flat;
   }
 
   /**
@@ -147,7 +166,7 @@ export default class DatabaseManager {
   public async getShoppingPageProps(
     email: string
   ): Promise<ShoppingListPageProps> {
-    const flat = await this.getUserFlat(email);
+    const flat = await this.getUserFlatClient(email);
 
     if (!flat) {
       throw new Error("User is not in a flat");
