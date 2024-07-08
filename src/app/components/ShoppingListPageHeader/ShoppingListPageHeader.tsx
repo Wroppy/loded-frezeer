@@ -14,14 +14,15 @@ import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
-type Props = {names: string[]};
+type Props = { names: string[] };
 
-const ShoppingListHeader = ({names}: Props) => {
+const ShoppingListHeader = ({ names }: Props) => {
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState<string | number>(1);
   const [itemFor, setItemFor] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const { addItem, shoppingList } = useContext(
+  const { addItem } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -30,7 +31,7 @@ const ShoppingListHeader = ({names}: Props) => {
   };
 
   // Add item to the shopping list
-  const handleAddItem = (event: FormEvent) => {
+  const handleAddItem = async (event: FormEvent) => {
     event.preventDefault();
 
     if (itemName.trim() === "") {
@@ -54,8 +55,12 @@ const ShoppingListHeader = ({names}: Props) => {
       return;
     }
 
-    addItem(itemName, itemQuantity, itemFor);
+    setLoading(true);
+    await addItem(itemName, itemQuantity, itemFor);
 
+    setLoading(false);
+
+    // Reset the form
     setItemName("");
     setQuantity(1);
     setItemFor([]);
@@ -91,7 +96,7 @@ const ShoppingListHeader = ({names}: Props) => {
         max={20}
         style={{ width: "120px" }}
       />
-      <Button type="submit" variant="light">
+      <Button disabled={loading} type="submit" variant="light">
         Add
       </Button>
     </form>
