@@ -4,14 +4,14 @@ import React, { FormEvent } from "react";
 import AuthComponent from "../AuthComponent/AuthComponent";
 import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
-import { Button, MantineProvider, Notification } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const SignInPage = (props: Props) => {
+  const router = useRouter();
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -29,6 +29,9 @@ const SignInPage = (props: Props) => {
     if (!result!.ok) {
       showErrorMessage("Invalid Credentials", "Please try again.");
     }
+
+    router.push("/");
+
   };
 
   return (
