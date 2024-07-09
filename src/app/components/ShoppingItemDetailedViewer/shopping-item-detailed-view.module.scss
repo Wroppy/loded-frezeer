@@ -15,8 +15,23 @@
 .SelectedItemHeading {
   font-size: 24px;
   font-weight: 500;
-  
+
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.ShoppingItemDetailedBody {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.ShoppingItemDetailedViewFooter {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: flex-end;
 }
