@@ -35,13 +35,18 @@ const ShoppingItemDetailedView = (props: Props) => {
             <div>Quantity: {selectedItem.quantity}</div>
           </Card>
           <Card className={styles.ShoppingItemDetailedCard}>
-            Added by: {name == selectedItem.addedBy ? "You" : selectedItem.addedBy}
+            Added by:{" "}
+            {name == selectedItem.addedBy ? "You" : selectedItem.addedBy}
           </Card>
           <Card className={styles.ShoppingItemDetailedCard}>
             Item for: {selectedItem.itemFor.join(", ")}
           </Card>
           <Card className={styles.ShoppingItemDetailedCard}>
-            {selectedItem.boughtBy ? (`Bought by: ${selectedItem.boughtBy}`) : "Not bought yet"}
+            {selectedItem.boughtBy
+              ? `Bought by: ${
+                  selectedItem.boughtBy == name ? "You" : selectedItem.boughtBy
+                }`
+              : "Not bought yet"}
           </Card>
         </div>
       )}
