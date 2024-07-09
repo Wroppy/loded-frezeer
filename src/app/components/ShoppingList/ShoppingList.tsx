@@ -6,7 +6,7 @@ import styles from "./shopping-list.module.scss";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { ShoppingItem } from "@/app/types/ShoppingItem";
-import { Button } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 import { postFetch } from "@/app/utils/postFetch";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
 import { showSuccessMessage } from "@/app/utils/showSucessMessage";
@@ -59,18 +59,19 @@ const ShoppingList = (props: Props) => {
         <div style={{ flexGrow: 1 }}>Name</div>
         <div>Quantity</div>
       </div>
-
       <div className={styles.ShoppingListBody}>
-        {shoppingList.map((item) => (
-          <ShoppingListItem
-            checkedItems={checkedItems}
-            key={item.id}
-            shoppingItem={item}
-            selected={selected}
-            handleClick={handleClick}
-            setCheckedItems={setCheckedItems}
-          />
-        ))}
+        <Flex direction={"column-reverse"} gap={"12px"}>
+          {shoppingList.map((item) => (
+            <ShoppingListItem
+              checkedItems={checkedItems}
+              key={item.id}
+              shoppingItem={item}
+              selected={selected}
+              handleClick={handleClick}
+              setCheckedItems={setCheckedItems}
+            />
+          ))}
+        </Flex>
       </div>
       <div className={styles.ShoppingListFooter}>
         <Button onClick={handlePurchase} disabled={checkedItems.length == 0}>
