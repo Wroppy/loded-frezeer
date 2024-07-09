@@ -26,12 +26,12 @@ const ShoppingListPage = ({
     itemFor: string[]
   ) => {
     // sends the item to the server
-    const response = await postFetch("/api/shoppinglist/add-item", {
+    const response = (await postFetch("/api/shoppinglist/add-item", {
       itemName,
       quantity,
       itemFor,
       email,
-    }) as { shoppingItem: ShoppingItem | null; error: string | null };
+    })) as { shoppingItem: ShoppingItem | null; error: string | null };
 
     if (response.error) {
       showErrorMessage("Error adding item to shopping list", response.error);
@@ -46,7 +46,49 @@ const ShoppingListPage = ({
 
   const removeItem = (id: string) => {};
 
-  const updateItem = (newItem: ShoppingItem) => {};
+  // Loops through the shopping list and updates the item with the new item
+  const updateItem = (newItem: ShoppingItem) => {
+    let newShoppingList = shoppingList.map((item) => {
+      if (item.id === newItem.id) {
+        // console.log(newItem);
+        return newItem;
+      }
+
+      return item;
+    });
+
+    // console.log(newShoppingList);
+
+    setShoppingList(newShoppingList);
+
+    // If the selected item is the one being updated, update it
+    if (selectedItem && selectedItem.id === newItem.id) {
+      setSelectedItem(newItem);
+    }
+  };
+
+  // Updates the shopping list with the new items
+  const updateItems = (newItems: ShoppingItem[]) => {
+    const newShoppingList = shoppingList.map((item) => {
+      const newItem = newItems.find((newItem) => newItem.id === item.id);
+
+      if (newItem) {
+        return newItem;
+      }
+
+      return item;
+    });
+
+    setShoppingList(newShoppingList);
+
+    // If the selected item is the one being updated, update it
+    if (selectedItem) {
+      const newItem = newItems.find((item) => item.id === selectedItem.id);
+      if (newItem) {
+        setSelectedItem(newItem);
+      }
+    }
+  };
 
   const [selectedItem, setSelectedItem] = useState<ShoppingItem | null>(null);
 
@@ -54,9 +96,14 @@ const ShoppingListPage = ({
     setSelectedItem(null);
   };
 
+  React.useEffect(() => {
+    console.log(shoppingList);
+  }, [shoppingList]);
+
   return (
     <ShoppingListContext.Provider
       value={{
+        updateItems,
         name: userName!,
         email,
         shoppingList,

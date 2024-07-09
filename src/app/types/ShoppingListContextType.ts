@@ -5,6 +5,7 @@ type ShoppingListContextType = {
   addItem: (itemName: string, quantity: number, itemFor: string[]) => void;
   removeItem: (id: string) => void;
   updateItem: (newItem: ShoppingItem) => void;
+  updateItems: (newItems: ShoppingItem[]) => void;
   selectedItem: ShoppingItem | null;
   setSelectedItem: (item: ShoppingItem | null) => void;
   clearSelectedItem: () => void;

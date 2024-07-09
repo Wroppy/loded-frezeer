@@ -21,6 +21,8 @@ const ShoppingList = (props: Props) => {
     selectedItem: selected,
     setSelectedItem: setSelected,
     email,
+    name,
+    updateItems,
   } = useContext(ShoppingListContext) as ShoppingListContextType;
 
   const handlePurchase = async () => {
@@ -37,6 +39,16 @@ const ShoppingList = (props: Props) => {
       showErrorMessage("An error occured while purchasing items", res.error);
       return;
     }
+
+    // Update the items in the shopping list
+    const updatedItems = checkedItems.map((id) => {
+      return {
+        ...shoppingList.find((item) => item.id === id)!,
+        boughtBy: name,
+      };
+    });
+
+    updateItems(updatedItems);
 
     setCheckedItems([]);
     showSuccessMessage("Items successfully purchased");

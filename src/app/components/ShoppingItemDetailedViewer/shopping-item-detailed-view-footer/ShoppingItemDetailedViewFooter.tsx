@@ -11,7 +11,7 @@ import { showSuccessMessage } from "@/app/utils/showSucessMessage";
 type Props = {};
 
 const ShoppingItemDetailedViewFooter = (props: Props) => {
-  const { email, selectedItem } = useContext(
+  const { name, email, selectedItem, updateItem } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -34,7 +34,12 @@ const ShoppingItemDetailedViewFooter = (props: Props) => {
 
     showSuccessMessage("Items successfully purchased");
     setLoading(false);
+    updateItem({ ...selectedItem!, boughtBy: name });
+
   };
+
+
+
 
   const buttons = [
     { tip: "Buy", icon: IconShoppingCart, onClick: handleBuy },
