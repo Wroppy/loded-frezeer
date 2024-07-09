@@ -17,14 +17,15 @@ import { showErrorMessage } from "@/app/utils/showErrorMessage";
 type Props = { names: string[] };
 
 const ShoppingListHeader = ({ names }: Props) => {
-  const [itemName, setItemName] = useState("");
-  const [quantity, setQuantity] = useState<string | number>(1);
-  const [itemFor, setItemFor] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const { addItem } = useContext(
+  const { addItem, name } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
+
+  const [itemName, setItemName] = useState("");
+  const [quantity, setQuantity] = useState<string | number>(1);
+  const [itemFor, setItemFor] = useState<string[]>([name]); // Default to the user's name
+  const [loading, setLoading] = useState(false);
+
 
   const showShoppingListError = (message: string) => {
     showErrorMessage("Error creating a new shopping list item", message);
