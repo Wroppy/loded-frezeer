@@ -252,7 +252,7 @@ export default class DatabaseManager {
       // Updates the item
       item.itemName = newItemName;
       item.quantity = newItemQuantity;
-      item.for = newItemFor;
+      item.itemFor = newItemFor;
       
 
       await (flat as any).markModified("shoppingList");
