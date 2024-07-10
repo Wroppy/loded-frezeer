@@ -262,4 +262,37 @@ export default class DatabaseManager {
 
     throw new Error("Item not found");
   }
+
+  /**
+   * Given an email and a shopping item id, deletes the shopping item
+   * in the flat
+   * 
+   * @param email the email of the user
+   * @param id the id of the shopping item
+   * @returns the deleted shopping item
+   */
+  public async deleteShoppingItem(email: string, id: string) {
+    // Gets the flat the user is in
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    // Loops through all the items in the shopping list and deletes the item
+    for (let i = 0; i < flat.shoppingList.length; i++) {
+      if (flat.shoppingList[i].id !== id) {
+        continue;
+      }
+      
+      flat.shoppingList.splice(i, 1);
+
+      await (flat as any).markModified("shoppingList");
+      await (flat as any).save();
+      return;
+    }
+
+      // Items is not found, so throws an error
+      throw new Error("Item not found");
+  }
 }
