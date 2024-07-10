@@ -1,7 +1,7 @@
 import mongoose, { connect } from "mongoose";
 import { UserModel } from "./models/UserSchema";
 import { FlatTemplate, UserTemplate } from "./models/ModelTemplates";
-import { comparePassword, hashPassword } from "./Utils";
+import { comparePassword, hashPassword, copyObject } from "./Utils";
 import { User } from "./types/User";
 import { Flat } from "./types/Flat";
 import { FlatModel } from "./models/FlatSchema";
@@ -207,5 +207,59 @@ export default class DatabaseManager {
     }
     await (flat as any).markModified("shoppingList");
     await (flat as any).save();
+  }
+
+  /**
+   * Given an email, a shopping item id, and new values, updates the shopping item
+   * in the flat
+   *
+   * @param email the email of the user
+   * @param id the id of the shopping item
+   * @param newItemName the new name of the shopping item
+   * @param newItemQuantity the new quantity of the shopping item
+   * @param newItemFor the new list of tenants the shopping item is for
+   * @returns the updated shopping item
+   */
+  public async updateShoppingItem(
+    email: string,
+    id: string,
+    newItemName: string,
+    newItemQuantity: number,
+    newItemFor: string[]
+  ): Promise<ShoppingItem> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    for (let item of flat.shoppingList) {
+      // Finds the item with the id and updates it
+      if (item.id !== id) {
+        continue;
+      }
+
+      // Checks that the item is not already bought
+      if (item.boughtBy) {
+        throw new Error("Item is already bought");
+      }
+
+      // Checks that the user is the one who added the item
+      if (item.addedBy !== email) {
+        throw new Error("User did not add the item");
+      }
+
+      // Updates the item
+      item.itemName = newItemName;
+      item.quantity = newItemQuantity;
+      item.for = newItemFor;
+      
+
+      await (flat as any).markModified("shoppingList");
+      await (flat as any).save();
+      return copyObject(item);
+    }
+
+    throw new Error("Item not found");
   }
 }

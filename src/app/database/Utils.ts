@@ -17,3 +17,8 @@ export const comparePassword = async (
   // Compares the hashed password with the stored password
   return await bcrypt.compareSync(password, hashedPassword);
 };
+
+export const copyObject = (obj: any) => {
+  return JSON.parse(JSON.stringify(obj));
+}
+
