@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useState } from "react";
-import ShoppingListItem from "./ShoppingListItem/ShoppingListItem";
+import ShoppingListItem from "./shopping-list-item/ShoppingListItem";
 import styles from "./shopping-list.module.scss";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";

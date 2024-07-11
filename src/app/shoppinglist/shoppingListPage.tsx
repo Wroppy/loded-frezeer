@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import styles from "./shopping-list-page.module.scss";
-import ShoppingList from "../components/ShoppingList/ShoppingList";
-import ShoppingListPageHeader from "../components/ShoppingListPageHeader/ShoppingListPageHeader";
+import ShoppingList from "../components/shopping-list/ShoppingList";
+import ShoppingListPageHeader from "../components/shopping-list-page-header/ShoppingListPageHeader";
 import { ShoppingListContext } from "../context/ShoppingListContext";
 import { ShoppingItem } from "../types/ShoppingItem";
-import ShoppingItemDetailedView from "../components/ShoppingItemDetailedViewer/ShoppingItemDetailedView";
+import ShoppingItemDetailedView from "../components/shopping-item-detailed-viewer/ShoppingItemDetailedView";
 import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import { postFetch } from "../utils/postFetch";
 import { showErrorMessage } from "../utils/showErrorMessage";

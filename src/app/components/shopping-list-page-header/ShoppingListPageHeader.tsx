@@ -8,7 +8,7 @@ import {
   rem,
 } from "@mantine/core";
 import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
-import styles from "./../ShoppingList/shopping-list.module.scss";
+import styles from "./../shopping-list/shopping-list.module.scss";
 import { IconDumpling, IconHash } from "@tabler/icons-react";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";

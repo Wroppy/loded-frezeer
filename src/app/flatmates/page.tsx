@@ -5,9 +5,9 @@ import { checkAuth } from "../utils/checkAuth";
 import { postFetch } from "../utils/postFetch";
 import styles from "./flatmates.module.scss";
 import { Card } from "@mantine/core";
-import NotInFlatComponent from "./NotInFlatComponent/NotInFlatComponent";
+import NotInFlatComponent from "./not-in-flat-component/NotInFlatComponent";
 import { GetFlatResponse } from "../types/GetFlatResponse";
-import InFlatComponent from "./InFlatComponent/InFlatComponent";
+import InFlatComponent from "./in-flat-component/InFlatComponent";
 
 type Props = {};
 
