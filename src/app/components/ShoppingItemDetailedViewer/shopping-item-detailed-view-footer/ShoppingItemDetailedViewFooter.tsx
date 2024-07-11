@@ -41,6 +41,17 @@ const ShoppingItemDetailedViewFooter = (props: Props) => {
   const deleteItem = async () => {
     setLoading(true);
 
+    const res = await postFetch("/api/shoppinglist/delete-item", {
+      email,
+      id: selectedItem!.id,
+    });
+
+    if (res.error) {
+      showErrorMessage("An error occured while deleting the item", res.error);
+      return;
+    }
+
+    showSuccessMessage("Item successfully deleted");
     removeItem(selectedItem!.id);
     setLoading(false);
 
