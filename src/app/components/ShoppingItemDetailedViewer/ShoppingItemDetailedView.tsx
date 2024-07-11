@@ -30,12 +30,6 @@ const ShoppingItemDetailedView = (props: Props) => {
           <div className={styles.ShoppingItemDetailedBody}>
             <Card className={styles.ShoppingItemDetailedCard}>
               <div className={styles.SelectedItemHeading}>
-                <ActionIcon variant="outline">
-                  <IconShoppingCart
-                    style={{ width: "70%", height: "70%" }}
-                    stroke={1.5}
-                  />
-                </ActionIcon>
                 {selectedItem.itemName}
               </div>
               <div>Quantity: {selectedItem.quantity}</div>
