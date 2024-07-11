@@ -20,6 +20,7 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
   const [newItemName, setNewItemName] = useState(selectedItem!.itemName);
   const [newItemFor, setNewItemFor] = useState(selectedItem!.itemFor);
   const [newQuantity, setNewQuantity] = useState<string | number>(selectedItem!.quantity);
+  const [loading, setLoading] = useState(false);
 
   // Updates the states when the selected item changes
   useEffect(() => {
@@ -59,6 +60,8 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
     updatedItem.itemFor = newItemFor;
     updatedItem.quantity = itemQuantity;
 
+    setLoading(true);
+
     // Send the updated item to the server
     const res = await postFetch("/api/shoppinglist/edit-item", {
       email,
@@ -67,6 +70,8 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
       newItemQuantity: itemQuantity,
       newItemFor,
     });
+
+    setLoading(false);
 
     // Check for errors
     if (res.error) {
@@ -83,6 +88,7 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
 
   return (
     <>
+      <LoadingOverlay visible={loading} />
       <Modal opened={opened} onClose={close} title="Edit Shopping Item">
         <form onSubmit={handleEdit}>
           <Flex direction={"column"} gap="lg">
