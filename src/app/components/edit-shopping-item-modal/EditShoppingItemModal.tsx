@@ -5,6 +5,7 @@ import { IconHash } from "@tabler/icons-react";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { copyObject } from "@/app/database/Utils";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import { postFetch } from "@/app/utils/postFetch";
 
 type Props = {
   opened: boolean;
@@ -12,7 +13,7 @@ type Props = {
 };
 
 const EditShoppingItemModal = ({ opened, close }: Props) => {
-  const { selectedItem, tenantNames, updateItem } = useContext(
+  const { selectedItem, tenantNames, updateItem, email } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -27,7 +28,7 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
     setNewQuantity(selectedItem!.quantity);
   }, [selectedItem]);
 
-  const handleEdit = (event: FormEvent) => {
+  const handleEdit = async (event: FormEvent) => {
     event.preventDefault();
 
     // Validates the item name
@@ -58,7 +59,26 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
     updatedItem.itemFor = newItemFor;
     updatedItem.quantity = itemQuantity;
 
+    // Send the updated item to the server
+    const res = await postFetch("/api/shoppinglist/edit-item", {
+      email,
+      id: updatedItem.id,
+      newItemName,
+      newItemQuantity: itemQuantity,
+      newItemFor,
+    });
+
+    // Check for errors
+    if (res.error) {
+      showErrorMessage("Error editing shopping item", res.error);
+      return;
+    }
+
+    // Update the item in the context
     updateItem(updatedItem);
+    close();
+
+
   }
 
   return (
