@@ -7,6 +7,8 @@ import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
 import { showSuccessMessage } from "@/app/utils/showSucessMessage";
+import { useDisclosure } from "@mantine/hooks";
+import EditShoppingItemModal from "../../edit-shopping-item-modal/EditShoppingItemModal";
 
 type Props = {};
 
@@ -16,6 +18,7 @@ const ShoppingItemDetailedViewFooter = (props: Props) => {
   ) as ShoppingListContextType;
 
   const [loading, setLoading] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   // Updates the item to be bought in the shopping list
   const handleBuy = async () => {
@@ -35,7 +38,6 @@ const ShoppingItemDetailedViewFooter = (props: Props) => {
     showSuccessMessage("Items successfully purchased");
     setLoading(false);
     updateItem({ ...selectedItem!, boughtBy: name });
-
   };
 
   const deleteItem = async () => {
@@ -54,25 +56,31 @@ const ShoppingItemDetailedViewFooter = (props: Props) => {
     showSuccessMessage("Item successfully deleted");
     removeItem(selectedItem!.id);
     setLoading(false);
+  };
 
-  }
-
-
-
+  // Opens the edit modal
+  const handleEdit = () => {
+    open();
+  };
 
   const buttons = [
     { tip: "Buy", icon: IconShoppingCart, onClick: handleBuy },
-    { tip: "Edit", icon: IconEdit, onClick: () => console.log("Edit") },
+    { tip: "Edit", icon: IconEdit, onClick: handleEdit },
     { tip: "Delete", icon: IconTrash, onClick: deleteItem },
   ];
 
   return (
     <div className={styles.ShoppingItemDetailedViewFooter}>
+      <EditShoppingItemModal opened={opened} close={close} />
       {buttons.map((button, index) => {
         const Icon = button.icon;
         return (
           <Tooltip label={button.tip} key={index}>
-            <ActionIcon variant="outline" onClick={button.onClick} disabled={loading}>
+            <ActionIcon
+              variant="outline"
+              onClick={button.onClick}
+              disabled={loading}
+            >
               <Icon style={{ width: "70%", height: "70%" }} stroke={1.5} />
             </ActionIcon>
           </Tooltip>

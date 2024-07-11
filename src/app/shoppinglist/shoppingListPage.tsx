@@ -119,6 +119,7 @@ const ShoppingListPage = ({
         selectedItem,
         setSelectedItem,
         clearSelectedItem,
+        tenantNames: names,
       }}
     >
       <div className={styles.ShoppingListPage}>

@@ -11,6 +11,7 @@ type ShoppingListContextType = {
   clearSelectedItem: () => void;
   email: string;
   name: string;
+  tenantNames: string[];
 };
 
 export { type ShoppingListContextType };
