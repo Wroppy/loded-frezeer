@@ -1,8 +1,10 @@
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
-import { Button, Flex, Modal, MultiSelect, NumberInput, rem, TextInput } from "@mantine/core";
+import { Button, Flex, LoadingOverlay, Modal, MultiSelect, NumberInput, rem, TextInput } from "@mantine/core";
 import { IconHash } from "@tabler/icons-react";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
+import { copyObject } from "@/app/database/Utils";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
 type Props = {
   opened: boolean;
@@ -10,7 +12,7 @@ type Props = {
 };
 
 const EditShoppingItemModal = ({ opened, close }: Props) => {
-  const { selectedItem, tenantNames } = useContext(
+  const { selectedItem, tenantNames, updateItem } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -30,23 +32,33 @@ const EditShoppingItemModal = ({ opened, close }: Props) => {
 
     // Validates the item name
     if (newItemName.trim() === "") {
+      showErrorMessage("Error editing shopping item", "Item name cannot be empty");
       setNewItemName("");
       return;
     }
 
     // Validates the quantity
     let itemQuantity = parseInt(newQuantity.toString());
+    
     if (isNaN(itemQuantity) || itemQuantity < 1 || itemQuantity > 20) {
+      showErrorMessage("Error editing shopping item", "Quantity must be between 1 and 20");
       setNewQuantity(1);
       return;
     }
 
     // Validates the item for
     if (newItemFor.length === 0) {
+      showErrorMessage("Error editing shopping item", "Item for cannot be empty");
       return;
     }
 
     // TODO: Update and edit the item in the shopping list
+    let updatedItem = copyObject(selectedItem!);
+    updatedItem.itemName = newItemName;
+    updatedItem.itemFor = newItemFor;
+    updatedItem.quantity = itemQuantity;
+
+    updateItem(updatedItem);
   }
 
   return (
