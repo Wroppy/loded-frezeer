@@ -11,7 +11,7 @@ import { showSuccessMessage } from "@/app/utils/showSucessMessage";
 type Props = {};
 
 const ShoppingItemDetailedViewFooter = (props: Props) => {
-  const { name, email, selectedItem, updateItem } = useContext(
+  const { name, email, selectedItem, updateItem, removeItem } = useContext(
     ShoppingListContext
   ) as ShoppingListContextType;
 
@@ -38,13 +38,21 @@ const ShoppingItemDetailedViewFooter = (props: Props) => {
 
   };
 
+  const deleteItem = async () => {
+    setLoading(true);
+
+    removeItem(selectedItem!.id);
+    setLoading(false);
+
+  }
+
 
 
 
   const buttons = [
     { tip: "Buy", icon: IconShoppingCart, onClick: handleBuy },
     { tip: "Edit", icon: IconEdit, onClick: () => console.log("Edit") },
-    { tip: "Delete", icon: IconTrash, onClick: () => console.log("Delete") },
+    { tip: "Delete", icon: IconTrash, onClick: deleteItem },
   ];
 
   return (

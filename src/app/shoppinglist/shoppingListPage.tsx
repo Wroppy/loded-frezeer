@@ -11,6 +11,7 @@ import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import { postFetch } from "../utils/postFetch";
 import { showErrorMessage } from "../utils/showErrorMessage";
 import { showSuccessMessage } from "../utils/showSucessMessage";
+import { set } from "mongoose";
 
 const ShoppingListPage = ({
   userName,
@@ -44,7 +45,12 @@ const ShoppingListPage = ({
     setShoppingList([...shoppingList, response.shoppingItem!]);
   };
 
-  const removeItem = (id: string) => {};
+  const removeItem = (id: string) => {
+    const newShoppingList = shoppingList.filter((item) => item.id !== id);
+    setShoppingList(newShoppingList);
+
+    setSelectedItem(null);
+  };
 
   // Loops through the shopping list and updates the item with the new item
   const updateItem = (newItem: ShoppingItem) => {
