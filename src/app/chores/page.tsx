@@ -17,7 +17,8 @@ const page = (props: Props) => {
       lastCompleted: new Date(2021, 8, 1),
       expectedUser: "John Doe",
       nextExpectedUser: "Jane Doe",
-      id: "1"
+      id: "1",
+      previousUser: "Jack Doe"
     },
     {
       name: "Trash",
@@ -26,7 +27,7 @@ const page = (props: Props) => {
       lastCompleted: new Date(2021, 8, 1),
       expectedUser: "John Doe",
       nextExpectedUser: "Jane Doe",
-      id: "2"
+      id: "2",
     }
   ]
   return <div className={styles.ChorePage}>

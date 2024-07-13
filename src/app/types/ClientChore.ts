@@ -6,6 +6,7 @@ type Chore = {
   description: string;
   expectedCycle: ChoreCycles;
   lastCompleted: Date;
+  previousUser?: string;
   expectedUser: string;
   nextExpectedUser: string;
 };

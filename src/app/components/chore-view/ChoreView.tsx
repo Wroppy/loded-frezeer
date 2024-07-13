@@ -4,6 +4,8 @@ import React from "react";
 import ChoreBox from "../chore-box/ChoreBox";
 import styles from "./chore-view.module.scss";
 import ChoreViewFooter from "./ChoreViewFooter";
+import ChoreTimeLine from "./ChoreTimeLine";
+import { Flex } from "@mantine/core";
 
 type Props = {
   chore: Chore;
@@ -12,14 +14,13 @@ type Props = {
 const ChoreView = ({ chore }: Props) => {
   return (
     <ChoreBox className={styles.ChoreView}>
-      <div style={{ flexGrow: 1 }}>
+      <Flex style={{ flexGrow: 1 }} gap={8} direction={"column"}>
         <h2>{chore.name}</h2>
-        <p>{chore.description}</p>
-        <p>Expected cycle: {chore.expectedCycle}</p>
-        <p>Last completed: {chore.lastCompleted.toDateString()}</p>
-        <p>Expected user: {chore.expectedUser}</p>
-        <p>Next expected user: {chore.nextExpectedUser}</p>
-      </div>
+        <span>{chore.description}</span>
+        <span>Expected cycle: {chore.expectedCycle}</span>
+        <ChoreTimeLine chore={chore}/>
+        
+      </Flex>
         {/* Buttons for editing, completing, or deleting chores */}
         <ChoreViewFooter/>
     </ChoreBox>
