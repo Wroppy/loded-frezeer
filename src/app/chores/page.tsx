@@ -2,15 +2,18 @@ import React from "react";
 import ChoreBox from "../components/chore-box/ChoreBox";
 import AddChoreBox from "../components/add-chore-box/AddChoreBox";
 import styles from "./chore-page.module.scss";
+import ChoreView from "../components/chore-view/ChoreView";
+import Chore from "../types/ClientChore";
+import ChoreCycles from "../Enums/ChoreCycles";
 
 type Props = {};
 
 const page = (props: Props) => {
-  const chores = [
+  const chores: Chore[] = [
     {
       name: "Clean the house",
       description: "Vacuum and mop the floors",
-      expectedCycle: "Weekly",
+      expectedCycle: ChoreCycles.Weekly,
       lastCompleted: new Date(2021, 8, 1),
       expectedUser: "John Doe",
       nextExpectedUser: "Jane Doe",
@@ -19,7 +22,7 @@ const page = (props: Props) => {
     {
       name: "Trash",
       description: "Take out the trash",
-      expectedCycle: "Daily",
+      expectedCycle: ChoreCycles.Daily,
       lastCompleted: new Date(2021, 8, 1),
       expectedUser: "John Doe",
       nextExpectedUser: "Jane Doe",
@@ -28,6 +31,7 @@ const page = (props: Props) => {
   ]
   return <div className={styles.ChorePage}>
     <AddChoreBox />
+    {chores.map(chore => <ChoreView key={chore.id} chore={chore} />)}
   </div>;
 };
 
