@@ -1,6 +1,7 @@
 import { ActionIcon, Flex, Tooltip } from "@mantine/core";
 import { IconChecks, IconEdit, IconTrash } from "@tabler/icons-react";
 import React from "react";
+import ConfirmButton from "../confirm-button/ConfirmButton";
 
 type Props = {};
 
@@ -8,9 +9,9 @@ const ChoreViewFooter = (props: Props) => {
   return (
     <Flex gap={8} justify={"flex-end"}>
       <Tooltip label="Mark as completed">
-        <ActionIcon variant="outline">
+        <ConfirmButton text="Are you sure?">
           <IconChecks style={{ width: "70%", height: "70%" }} stroke={1.5} />
-        </ActionIcon>
+        </ConfirmButton>
       </Tooltip>
       <Tooltip label="Edit chore">
         <ActionIcon variant="outline">
@@ -18,9 +19,9 @@ const ChoreViewFooter = (props: Props) => {
         </ActionIcon>
       </Tooltip>
       <Tooltip label="Delete chore">
-        <ActionIcon variant="outline">
+        <ConfirmButton text="Are you sure?">
           <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
-        </ActionIcon>
+        </ConfirmButton>
       </Tooltip>
     </Flex>
   );
