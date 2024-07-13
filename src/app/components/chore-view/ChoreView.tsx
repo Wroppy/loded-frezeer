@@ -9,9 +9,16 @@ import { Flex } from "@mantine/core";
 
 type Props = {
   chore: Chore;
+  openModal: (chore: Chore) => void;
 };
 
-const ChoreView = ({ chore }: Props) => {
+const ChoreView = ({ chore, openModal }: Props) => {
+  const onEditItem = () => {
+    openModal(chore);
+  }
+
+
+
   return (
     <ChoreBox className={styles.ChoreView}>
       <Flex style={{ flexGrow: 1 }} gap={8} direction={"column"}>
@@ -22,7 +29,7 @@ const ChoreView = ({ chore }: Props) => {
         
       </Flex>
         {/* Buttons for editing, completing, or deleting chores */}
-        <ChoreViewFooter/>
+        <ChoreViewFooter onEditItem={onEditItem}/>
     </ChoreBox>
   );
 };

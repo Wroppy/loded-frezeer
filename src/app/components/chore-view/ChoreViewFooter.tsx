@@ -1,11 +1,16 @@
+"use client";
+
 import { ActionIcon, Flex, Tooltip } from "@mantine/core";
 import { IconChecks, IconEdit, IconTrash } from "@tabler/icons-react";
 import React from "react";
 import ConfirmButton from "../confirm-button/ConfirmButton";
+import Chore from "@/app/types/ClientChore";
 
-type Props = {};
+type Props = {
+  onEditItem: () => void;
+};
 
-const ChoreViewFooter = (props: Props) => {
+const ChoreViewFooter = ({onEditItem}: Props) => {
   return (
     <Flex gap={8} justify={"flex-end"}>
       <Tooltip label="Mark as completed">
@@ -14,7 +19,7 @@ const ChoreViewFooter = (props: Props) => {
         </ConfirmButton>
       </Tooltip>
       <Tooltip label="Edit chore">
-        <ActionIcon variant="outline">
+        <ActionIcon variant="outline" onClick={onEditItem}>
           <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ActionIcon>
       </Tooltip>

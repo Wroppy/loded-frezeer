@@ -6,6 +6,8 @@ import Chore from "../types/ClientChore";
 import ChoreCycles from "../Enums/ChoreCycles";
 import ChoreView from "../components/chore-view/ChoreView";
 import AddChoreBox from "../components/add-chore-box/AddChoreBox";
+import { useDisclosure } from "@mantine/hooks";
+import EditChoreModal from "../components/edit-chore-modal/EditChoreModal";
 
 const CHORES: Chore[] = [
   {
@@ -34,6 +36,7 @@ type Props = {};
 const ChoresViewer = (props: Props) => {
   const [chores, setChores] = useState(CHORES);
   const [toEditChore, setToEditChore] = useState<Chore | null>(null);
+  const [opened, { open, close }] = useDisclosure(false);
 
   // Adds a new chore to the state
   const addCore = (chore: Chore) => {};
@@ -46,13 +49,21 @@ const ChoresViewer = (props: Props) => {
 
   const updateChore = (chore: Chore) => {};
 
+  const openModal = (chore: Chore) => {
+    setToEditChore(chore);
+    open();
+  };
+
   return (
-    <div className={styles.ChoresViewer}>
-      {chores.map((chore) => (
-        <ChoreView key={chore.id} chore={chore} />
-      ))}
-      <AddChoreBox />
-    </div>
+    <>
+      <EditChoreModal chore={toEditChore} opened={opened} onClose={close} />
+      <div className={styles.ChoresViewer}>
+        {chores.map((chore) => (
+          <ChoreView openModal={openModal} key={chore.id} chore={chore} />
+        ))}
+        <AddChoreBox />
+      </div>
+    </>
   );
 };
 
