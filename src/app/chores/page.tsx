@@ -31,8 +31,8 @@ const page = (props: Props) => {
     }
   ]
   return <div className={styles.ChorePage}>
-    <AddChoreBox />
     {chores.map(chore => <ChoreView key={chore.id} chore={chore} />)}
+    <AddChoreBox />
   </div>;
 };
 
