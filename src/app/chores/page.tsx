@@ -1,6 +1,7 @@
 import React from "react";
 import ChoreBox from "../components/chore-box/ChoreBox";
 import AddChoreBox from "../components/add-chore-box/AddChoreBox";
+import styles from "./chore-page.module.scss";
 
 type Props = {};
 
@@ -25,7 +26,7 @@ const page = (props: Props) => {
       id: "2"
     }
   ]
-  return <div>
+  return <div className={styles.ChorePage}>
     <AddChoreBox />
   </div>;
 };
