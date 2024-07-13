@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core";
+import { Card } from "@mantine/core";
 import React, { ReactNode } from "react";
 import styles from "./chore-box.module.scss";
 
@@ -9,9 +9,9 @@ type Props = {
 };
 
 const ChoreBox = ({ className, children, dotted = false }: Props) => {
-  return <Box  style={{
+  return <Card  style={{
     borderStyle: dotted ? "dotted" : "solid",
-  }} className={`${styles.ChoreBox} ${className}`}>{children}</Box>;
+  }} className={`${styles.ChoreBox} ${className}`}>{children}</Card>;
 };
 
 export default ChoreBox;
