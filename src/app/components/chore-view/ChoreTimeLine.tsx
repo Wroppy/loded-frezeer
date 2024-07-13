@@ -1,4 +1,5 @@
 import Chore from "@/app/types/ClientChore";
+import formatDate from "@/app/utils/formatDate";
 import { Timeline, TimelineItem, Text } from "@mantine/core";
 import React from "react";
 
@@ -12,7 +13,7 @@ const ChoreTimeLine = ({ chore }: Props) => {
       {/* Checks if the chore has a previous user */}
       {chore.previousUser && (
         <TimelineItem
-          title={`Last Completed on ${chore.lastCompleted.toDateString()}`}
+          title={`Last Completed on ${formatDate(chore.lastCompleted)}`}
         >
           <Text c="dimmed">By {chore.previousUser}</Text>
         </TimelineItem>
