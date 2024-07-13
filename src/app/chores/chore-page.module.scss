@@ -1,17 +1,24 @@
 .ChorePage {
-  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Changes flex direction when the page is small  */
+@media (max-width: 800px) {
+  .ChoresViewer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.ChoresViewer {
+  width: 100%;
+  height: 100%;
+
   padding: 32px;
+  display: flex;
 
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 32px;
-}
-
-
-/* Changes flex direction when the page is small  */
-@media (max-width: 800px) {
-  .ChorePage {
-    flex-direction: column;
-    align-items: center;
-  }
 }
