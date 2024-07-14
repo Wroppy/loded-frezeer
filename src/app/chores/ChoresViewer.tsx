@@ -37,7 +37,7 @@ const ChoresViewer = (props: Props) => {
   const [chores, setChores] = useState(CHORES);
   const [toEditChore, setToEditChore] = useState<Chore | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
-
+  const names = ["John Doe", "Jane Doe", "Jack Doe"];
   // Adds a new chore to the state
   const addCore = (chore: Chore) => {};
 
@@ -56,7 +56,7 @@ const ChoresViewer = (props: Props) => {
 
   return (
     <>
-      <EditChoreModal chore={toEditChore} opened={opened} onClose={close} />
+      <EditChoreModal users={names} chore={toEditChore} opened={opened} onClose={close} />
       <div className={styles.ChoresViewer}>
         {chores.map((chore) => (
           <ChoreView openModal={openModal} key={chore.id} chore={chore} />
