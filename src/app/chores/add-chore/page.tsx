@@ -12,7 +12,7 @@ const page = (props: Props) => {
   ];
   return (
     <Flex justify={"center"} align={"center"} style={{height: "100%"}}>
-      <ManageChoreComponent users={users} />
+      <ManageChoreComponent title={"Add Chore"} buttonText="Create Chore" users={users} />
     </Flex>
   );
 };

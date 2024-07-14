@@ -4,7 +4,7 @@ import ChoreCycles, { getAllChoreCycles } from "@/app/Enums/ChoreCycles";
 import Chore from "@/app/types/ClientChore";
 import styles from "./manage-chore-component.module.scss";
 
-import { Button, Card, Flex, InputLabel, TextInput } from "@mantine/core";
+import { Button, Card, Flex, InputLabel, Text, TextInput } from "@mantine/core";
 import React, { useState } from "react";
 import ManageChoreComboBox from "./ManageChoreComboBox";
 import User from "@/app/types/ClientUser";
@@ -14,9 +14,11 @@ import { useListState } from "@mantine/hooks";
 type Props = {
   chore?: Chore | null;
   users: User[];
+  title: string;
+  buttonText: string;
 };
 
-const ManageChoreComponent = ({ chore, users }: Props) => {
+const ManageChoreComponent = ({title, buttonText, chore, users }: Props) => {
   // States for the chore
   const [newName, setNewName] = useState(chore?.name);
   const [newDescription, setNewDescription] = useState(chore?.description);
@@ -30,6 +32,9 @@ const ManageChoreComponent = ({ chore, users }: Props) => {
   return (
     <Card shadow="lg" className={styles.ManageChoreComponent}>
       <Flex direction={"column"} gap="lg">
+        <Text >
+          {title}          
+        </Text>
         <TextInput
           label="Name"
           placeholder="Enter chore name"
@@ -76,7 +81,7 @@ const ManageChoreComponent = ({ chore, users }: Props) => {
           <UserDND state={order} handlers={orderHandlers} />
         </Flex>
         <Flex justify={"flex-end"}>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{buttonText}</Button>
         </Flex>
       </Flex>
     </Card>
