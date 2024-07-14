@@ -4,10 +4,12 @@ import ChoreCycles, { getAllChoreCycles } from "@/app/Enums/ChoreCycles";
 import Chore from "@/app/types/ClientChore";
 import styles from "./manage-chore-component.module.scss";
 
-import { Card, Flex, InputLabel, TextInput } from "@mantine/core";
+import { Button, Card, Flex, InputLabel, TextInput } from "@mantine/core";
 import React, { useState } from "react";
 import ManageChoreComboBox from "./ManageChoreComboBox";
 import User from "@/app/types/ClientUser";
+import UserDND from "../users-drag-and-drop/UserDND";
+import { useListState } from "@mantine/hooks";
 
 type Props = {
   chore?: Chore | null;
@@ -23,7 +25,7 @@ const ManageChoreComponent = ({ chore, users }: Props) => {
 
   const [newExpectedUser, setNewExpectedUser] = useState(chore?.expectedUser);
 
-  const [order, setOrder] = useState();
+  const [order, orderHandlers] = useListState(chore ? chore.order : users);
 
   return (
     <Card shadow="lg" className={styles.ManageChoreComponent}>
@@ -67,6 +69,14 @@ const ManageChoreComponent = ({ chore, users }: Props) => {
             value={newExpectedUser}
             setValue={setNewExpectedUser}
           />
+        </Flex>
+        <Flex direction={"column"}>
+          <InputLabel required>
+          Select chore order:</InputLabel>
+          <UserDND state={order} handlers={orderHandlers} />
+        </Flex>
+        <Flex justify={"flex-end"}>
+          <Button type="submit">Submit</Button>
         </Flex>
       </Flex>
     </Card>
