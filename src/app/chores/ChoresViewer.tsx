@@ -7,7 +7,6 @@ import ChoreCycles from "../Enums/ChoreCycles";
 import ChoreView from "../components/chore-view/ChoreView";
 import AddChoreBox from "../components/add-chore-box/AddChoreBox";
 import { useDisclosure } from "@mantine/hooks";
-import EditChoreModal from "../components/edit-chore-modal/EditChoreModal";
 
 const CHORES: Chore[] = [
   {
@@ -70,12 +69,6 @@ const ChoresViewer = (props: Props) => {
 
   return (
     <>
-      <EditChoreModal
-        users={users}
-        chore={toEditChore}
-        opened={opened}
-        onClose={close}
-      />
       <div className={styles.ChoresViewer}>
         {chores.map((chore) => (
           <ChoreView openModal={openModal} key={chore.id} chore={chore} />
