@@ -7,7 +7,7 @@ import styles from "./manage-chore-component.module.scss";
 import { Button, Card, Flex, InputLabel, Text, TextInput } from "@mantine/core";
 import React, { FormEvent, useState } from "react";
 import ManageChoreComboBox from "./ManageChoreComboBox";
-import User from "@/app/types/ClientUser";
+import ClientUser from "@/app/types/ClientUser";
 import UserDND from "../users-drag-and-drop/UserDND";
 import { useListState } from "@mantine/hooks";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
@@ -15,7 +15,7 @@ import BareBonesChore from "@/app/types/BareBonesChore";
 
 type Props = {
   chore?: Chore | null;
-  users: User[];
+  users: ClientUser[];
   title: string;
   buttonText: string;
   onSubmit: (chore: BareBonesChore) => void;

@@ -3,7 +3,7 @@ import { useListState, UseListStateHandlers } from "@mantine/hooks";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { IconGripVertical } from "@tabler/icons-react";
 import styles from "./user-dnd.module.scss";
-import User from "@/app/types/ClientUser";
+import ClientUser from "@/app/types/ClientUser";
 
 const data = [
   { position: 6, mass: 12.011, symbol: "C", name: "Carbon" },
@@ -14,8 +14,8 @@ const data = [
 ];
 
 type Props = {
-  state: User[],
-  handlers: UseListStateHandlers<User>
+  state: ClientUser[],
+  handlers: UseListStateHandlers<ClientUser>
 }
 
 

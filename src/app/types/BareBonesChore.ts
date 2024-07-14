@@ -1,12 +1,12 @@
 import ChoreCycles from "../Enums/ChoreCycles";
-import User from "./ClientUser";
+import ClientUser from "./ClientUser";
 
 type BareBonesChore = {
   name: string;
   description: string;
   expectedCycle: ChoreCycles;
   expectedUser: string;
-  order: User[];
+  order: ClientUser[];
 };
 
 export default BareBonesChore;

@@ -1,6 +1,6 @@
-type User = {
+type ClientUser = {
   name: string;
   email: string;
 };
 
-export default User ;
+export default ClientUser ;

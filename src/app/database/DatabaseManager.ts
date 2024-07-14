@@ -7,6 +7,7 @@ import { Flat } from "./types/Flat";
 import { FlatModel } from "./models/FlatSchema";
 import { ShoppingItem } from "../types/ShoppingItem";
 import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
+import ClientUser from "../types/ClientUser";
 
 export default class DatabaseManager {
   constructor() {
@@ -253,7 +254,6 @@ export default class DatabaseManager {
       item.itemName = newItemName;
       item.quantity = newItemQuantity;
       item.itemFor = newItemFor;
-      
 
       await (flat as any).markModified("shoppingList");
       await (flat as any).save();
@@ -266,7 +266,7 @@ export default class DatabaseManager {
   /**
    * Given an email and a shopping item id, deletes the shopping item
    * in the flat
-   * 
+   *
    * @param email the email of the user
    * @param id the id of the shopping item
    * @returns the deleted shopping item
@@ -284,7 +284,7 @@ export default class DatabaseManager {
       if (flat.shoppingList[i].id !== id) {
         continue;
       }
-      
+
       flat.shoppingList.splice(i, 1);
 
       await (flat as any).markModified("shoppingList");
@@ -292,7 +292,30 @@ export default class DatabaseManager {
       return;
     }
 
-      // Items is not found, so throws an error
-      throw new Error("Item not found");
+    // Items is not found, so throws an error
+    throw new Error("Item not found");
+  }
+
+  /**
+   * Given an email, returns the tenants of the flat the user is in
+   */
+  public async getFlatTenants(email: string): Promise<ClientUser[]> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    let tenants: ClientUser[] = [];
+
+    for (let tenant of flat.tenants) {
+      let user = await this.getUser(tenant);
+      tenants.push({
+        name: user!.name,
+        email: user!.email,
+      });
+    }
+
+    return tenants;
   }
 }
