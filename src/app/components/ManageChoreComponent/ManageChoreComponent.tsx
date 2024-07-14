@@ -5,85 +5,134 @@ import Chore from "@/app/types/ClientChore";
 import styles from "./manage-chore-component.module.scss";
 
 import { Button, Card, Flex, InputLabel, Text, TextInput } from "@mantine/core";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import ManageChoreComboBox from "./ManageChoreComboBox";
 import User from "@/app/types/ClientUser";
 import UserDND from "../users-drag-and-drop/UserDND";
 import { useListState } from "@mantine/hooks";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import BareBonesChore from "@/app/types/BareBonesChore";
 
 type Props = {
   chore?: Chore | null;
   users: User[];
   title: string;
   buttonText: string;
+  onSubmit: (chore: BareBonesChore) => void;
 };
 
-const ManageChoreComponent = ({title, buttonText, chore, users }: Props) => {
+const ManageChoreComponent = ({onSubmit, title, buttonText, chore, users }: Props) => {
   // States for the chore
-  const [newName, setNewName] = useState(chore?.name);
-  const [newDescription, setNewDescription] = useState(chore?.description);
+  const [name, setName] = useState(chore ? chore.name : "");
+  const [description, setDescription] = useState(chore ? chore.description : "");
 
-  const [cycle, setCycle] = useState(chore?.expectedCycle);
+  const [cycle, setCycle] = useState(chore ? chore.expectedCycle : null);
 
-  const [newExpectedUser, setNewExpectedUser] = useState(chore?.expectedUser);
+  const [expectedUser, setExpectedUser] = useState(chore ? chore.expectedUser : "");
 
   const [order, orderHandlers] = useListState(chore ? chore.order : users);
 
+  const errorMessage = (message: string) => {
+    console.log("error message", message);
+    showErrorMessage("Error submiting form", message);
+  }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    
+    setName(name.trim());
+    
+    // Validates all the data for the chore
+    if (name.length === 0) {
+      errorMessage("Please enter a valid name");
+      return;
+    }
+
+    if (!description) {
+      errorMessage("Please enter a valid description");
+      return;
+    }
+
+    if (!cycle) {
+      errorMessage("Please select a valid cycle");
+      return;
+    }
+
+    if (!expectedUser) {
+      errorMessage("Please select a valid expected user");
+      return;
+    }
+
+    if (order.length === 0) {
+      errorMessage("Please select a valid order");
+      return;
+    }
+
+    const chore: BareBonesChore = {
+      name,
+      description,
+      expectedCycle: cycle,
+      expectedUser,
+      order,
+    };
+
+    onSubmit(chore);
+  } 
+
   return (
     <Card shadow="lg" className={styles.ManageChoreComponent}>
-      <Flex direction={"column"} gap="lg">
-        <Text >
-          {title}          
-        </Text>
-        <TextInput
-          label="Name"
-          placeholder="Enter chore name"
-          required
-          value={newName}
-          onChange={(event) => setNewName(event.currentTarget.value)}
-        />
+      <form onSubmit={handleSubmit}>
+        <Flex direction={"column"} gap="lg">
+          <Text>{title}</Text>
+          <TextInput
+            label="Name"
+            placeholder="Enter chore name"
+            required
+            value={name}
+            onChange={(event) => setName(event.currentTarget.value)}
+          />
 
-        <TextInput
-          label="Description"
-          placeholder="Enter chore description"
-          required
-          value={newDescription}
-          onChange={(event) => setNewDescription(event.currentTarget.value)}
-        />
-        {/* Expected cycle combo box */}
-        <Flex direction={"column"}>
-          <InputLabel required style={{ width: "100%" }}>
-            Expected cycle
-          </InputLabel>
-          <ManageChoreComboBox
-            values={getAllChoreCycles()}
-            labels={getAllChoreCycles()}
-            setValue={setCycle}
-            value={cycle}
-            placeholderText="Select Expected Cycle"
+          <TextInput
+            label="Description"
+            placeholder="Enter chore description"
+            required
+            value={description}
+            onChange={(event) => setDescription(event.currentTarget.value)}
           />
+          {/* Expected cycle combo box */}
+          <Flex direction={"column"}>
+            <InputLabel required style={{ width: "100%" }}>
+              Expected cycle
+            </InputLabel>
+            <ManageChoreComboBox
+              values={getAllChoreCycles()}
+              labels={getAllChoreCycles()}
+              setValue={setCycle}
+              value={cycle}
+              placeholderText="Select Expected Cycle"
+            />
+          </Flex>
+          <Flex direction={"column"}>
+            <InputLabel required style={{ width: "100%" }}>
+              Expected user
+            </InputLabel>
+            <ManageChoreComboBox
+              placeholderText="Select Current Chore Doer"
+              values={users.map((user) => user.email)}
+              labels={users.map((user) => user.name)}
+              value={expectedUser}
+              setValue={setExpectedUser}
+            />
+          </Flex>
+          <Flex direction={"column"}>
+            <InputLabel required>Select chore order:</InputLabel>
+            <UserDND state={order} handlers={orderHandlers} />
+          </Flex>
+          <Flex justify={"flex-end"}>
+            <Button type="submit">{buttonText}</Button>
+          </Flex>
         </Flex>
-        <Flex direction={"column"}>
-          <InputLabel required style={{ width: "100%" }}>
-            Expected user
-          </InputLabel>
-          <ManageChoreComboBox
-            placeholderText="Select Current Chore Doer"
-            values={users.map((user) => user.email)}
-            labels={users.map((user) => user.name)}
-            value={newExpectedUser}
-            setValue={setNewExpectedUser}
-          />
-        </Flex>
-        <Flex direction={"column"}>
-          <InputLabel required>
-          Select chore order:</InputLabel>
-          <UserDND state={order} handlers={orderHandlers} />
-        </Flex>
-        <Flex justify={"flex-end"}>
-          <Button type="submit">{buttonText}</Button>
-        </Flex>
-      </Flex>
+      </form>
     </Card>
   );
 };
