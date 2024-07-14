@@ -16,7 +16,7 @@ import {
   useCombobox,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import EditCoreComboBox from "./EditCoreComboBox";
+import EditCoreComboBox from "./EditChoreComboBox";
 import User from "@/app/types/ClientUser";
 
 type Props = {

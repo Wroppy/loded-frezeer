@@ -22,7 +22,7 @@ type Props = {
   setValue: (val: any) => void;
 };
 
-const EditCoreComboBox = ({
+const EditChoreComboBox = ({
   placeholderText,
   value,
   setValue,
@@ -68,4 +68,4 @@ const EditCoreComboBox = ({
   );
 };
 
-export default EditCoreComboBox;
+export default EditChoreComboBox;
