@@ -1,6 +1,10 @@
 import mongoose, { connect } from "mongoose";
 import { UserModel } from "./models/UserSchema";
-import { FlatTemplate, UserTemplate } from "./models/ModelTemplates";
+import {
+  FlatTemplate,
+  UserTemplate,
+  ChoreTemplate,
+} from "./models/ModelTemplates";
 import { comparePassword, hashPassword, copyObject } from "./Utils";
 import { User } from "./types/User";
 import { Flat } from "./types/Flat";
@@ -8,6 +12,8 @@ import { FlatModel } from "./models/FlatSchema";
 import { ShoppingItem } from "../types/ShoppingItem";
 import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import ClientUser from "../types/ClientUser";
+import { ChoreModel } from "./models/ChoreSchema";
+import ChoreCycles from "../Enums/ChoreCycles";
 
 export default class DatabaseManager {
   constructor() {
@@ -317,5 +323,62 @@ export default class DatabaseManager {
     }
 
     return tenants;
+  }
+
+  /**
+   * Given an email, name, description, expected cycle, starting user, and order, creates a new chore in the database
+   * and returns the chore
+   *
+   * @param email the email of the user
+   * @param name the name of the chore
+   * @param description the description of the chore
+   * @param expectedCycle the expected cycle of the chore
+   * @param expectedUser the expected user of the chore
+   * @param order the order of the chore
+   * @returns the chore
+   *
+   */
+  public async createChore(
+    email: string,
+    name: string,
+    description: string,
+    expectedCycle: ChoreCycles,
+    expectedUser: string,
+    order: string[]
+  ) {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    // Checks that the expected user is in the flat
+    if (!flat.tenants.includes(expectedUser)) {
+      throw new Error("Expected user is not in the flat");
+    }
+
+    // Checks that the order is not empty
+    if (order.length === 0) {
+      throw new Error("Order cannot be empty");
+    }
+
+    // Checks that all users in the order are in the flat
+    for (let user of order) {
+      if (!flat.tenants.includes(user)) {
+        throw new Error("User in order is not in the flat");
+      }
+    }
+
+    const choreTemplate = ChoreTemplate(
+      flat.flatId,
+      name,
+      description,
+      expectedCycle,
+      expectedUser,
+      order
+    );
+    const chore = new ChoreModel(choreTemplate);
+    await chore.save();
+    return chore;
   }
 }
