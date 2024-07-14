@@ -10,10 +10,12 @@ import {
   ComboboxOption,
   useCombobox,
 } from "@mantine/core";
+import { User } from "next-auth";
 import React from "react";
 
 type Props = {
   values: string[];
+  labels: string[];
 
   placeholderText: string;
   value: any;
@@ -25,6 +27,7 @@ const EditCoreComboBox = ({
   value,
   setValue,
   values,
+  labels,
 }: Props) => {
   const combobox = useCombobox();
 
@@ -47,7 +50,7 @@ const EditCoreComboBox = ({
           onClick={() => combobox.toggleDropdown()}
         >
           {" "}
-          {value || <InputPlaceholder>{placeholderText}</InputPlaceholder>}
+          {labels[values.findIndex((x) => x === value)] || <InputPlaceholder>{placeholderText}</InputPlaceholder>}
         </InputBase>
       </ComboboxTarget>
       <ComboboxDropdown>
@@ -55,7 +58,7 @@ const EditCoreComboBox = ({
           {values.map((value, key) => {
             return (
               <ComboboxOption key={key} value={value}>
-                {value}
+                {labels[key]}
               </ComboboxOption>
             );
           })}

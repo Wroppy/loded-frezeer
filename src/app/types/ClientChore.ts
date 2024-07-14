@@ -1,4 +1,5 @@
 import ChoreCycles from "../Enums/ChoreCycles";
+import User from "./ClientUser";
 
 type Chore = {
   id: string;
@@ -9,7 +10,7 @@ type Chore = {
   previousUser?: string;
   expectedUser: string;
   nextExpectedUser: string;
-  order: string[]
+  order: User[];
 };
 
 export default Chore;

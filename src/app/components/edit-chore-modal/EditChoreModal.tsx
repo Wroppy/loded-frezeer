@@ -17,12 +17,13 @@ import {
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import EditCoreComboBox from "./EditCoreComboBox";
+import User from "@/app/types/ClientUser";
 
 type Props = {
   chore: Chore | null;
   opened: boolean;
   onClose: () => void;
-  users: string[];
+  users: User[];
 };
 
 const EditChoreModal = ({ chore, opened, onClose, users }: Props) => {
@@ -71,6 +72,7 @@ const EditChoreModal = ({ chore, opened, onClose, users }: Props) => {
               </InputLabel>
               <EditCoreComboBox
                 values={getAllChoreCycles()}
+                labels={getAllChoreCycles()}
                 setValue={setCycle}
                 value={cycle}
                 placeholderText="Select Expected Cycle"
@@ -82,7 +84,8 @@ const EditChoreModal = ({ chore, opened, onClose, users }: Props) => {
               </InputLabel>
               <EditCoreComboBox
                 placeholderText="Select Current Chore Doer"
-                values={users}
+                values={users.map((user) => user.email)}
+                labels={users.map((user) => user.name)}
                 value={newExpectedUser}
                 setValue={setNewExpectedUser}
               />

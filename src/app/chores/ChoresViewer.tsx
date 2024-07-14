@@ -19,7 +19,11 @@ const CHORES: Chore[] = [
     nextExpectedUser: "Jane Doe",
     id: "1",
     previousUser: "Jack Doe",
-    order: ["Jane Joe", "Jake Doe", "John Doe"],
+    order: [
+      { name: "Jane Joe", email: "jane@email.com" },
+      { name: "Jake Doe", email: "jake@email.com" },
+      { name: "John Doe", email: "john@email.com" },
+    ],
   },
   {
     name: "Trash",
@@ -29,7 +33,11 @@ const CHORES: Chore[] = [
     expectedUser: "John Doe",
     nextExpectedUser: "Jane Doe",
     id: "2",
-    order: ["John Doe", "Jane Doe", "Jack Doe"],
+    order: [
+      { name: "John Doe", email: "john@email.com" },
+      { name: "Jane Joe", email: "jane@email.com" },
+      { name: "Jake Doe", email: "jake@email.com" },
+    ],
   },
 ];
 
@@ -39,7 +47,11 @@ const ChoresViewer = (props: Props) => {
   const [chores, setChores] = useState(CHORES);
   const [toEditChore, setToEditChore] = useState<Chore | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
-  const names = ["John Doe", "Jane Doe", "Jack Doe"];
+  const users = [
+    { name: "John Doe", email: "john@email.com" },
+    { name: "Jane Joe", email: "jane@email.com" },
+    { name: "Jake Doe", email: "jake@email.com" },
+  ];
   // Adds a new chore to the state
   const addCore = (chore: Chore) => {};
 
@@ -59,7 +71,7 @@ const ChoresViewer = (props: Props) => {
   return (
     <>
       <EditChoreModal
-        users={names}
+        users={users}
         chore={toEditChore}
         opened={opened}
         onClose={close}
