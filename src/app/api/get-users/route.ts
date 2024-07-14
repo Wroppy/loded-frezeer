@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
     const db = new DatabaseManager();
     const users = await db.getFlatTenants(email);
-    return NextResponse.json({ users });
+    return NextResponse.json({ users, error: "" });
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 400 });
