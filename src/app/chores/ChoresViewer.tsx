@@ -19,6 +19,7 @@ const CHORES: Chore[] = [
     nextExpectedUser: "Jane Doe",
     id: "1",
     previousUser: "Jack Doe",
+    order: ["Jane Joe", "Jake Doe", "John Doe"],
   },
   {
     name: "Trash",
@@ -28,6 +29,7 @@ const CHORES: Chore[] = [
     expectedUser: "John Doe",
     nextExpectedUser: "Jane Doe",
     id: "2",
+    order: ["John Doe", "Jane Doe", "Jack Doe"],
   },
 ];
 
@@ -56,7 +58,12 @@ const ChoresViewer = (props: Props) => {
 
   return (
     <>
-      <EditChoreModal users={names} chore={toEditChore} opened={opened} onClose={close} />
+      <EditChoreModal
+        users={names}
+        chore={toEditChore}
+        opened={opened}
+        onClose={close}
+      />
       <div className={styles.ChoresViewer}>
         {chores.map((chore) => (
           <ChoreView openModal={openModal} key={chore.id} chore={chore} />

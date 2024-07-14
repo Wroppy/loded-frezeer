@@ -9,6 +9,7 @@ type Chore = {
   previousUser?: string;
   expectedUser: string;
   nextExpectedUser: string;
+  order: string[]
 };
 
 export default Chore;
