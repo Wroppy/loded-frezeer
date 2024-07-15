@@ -456,4 +456,35 @@ export default class DatabaseManager {
     const user = await this.getUser(email);
     return user!.name;
   }
+
+  /**
+   * Given an email and a chore id, deletes the chore
+   * in the flat
+   *
+   * @param email the email of the user
+   * @param id the id of the chore
+   */
+  public async deleteChore(email: string, id: string) {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const chore = await ChoreModel.findOne({
+      id,
+    });
+
+    if (!chore) {
+      throw new Error("Chore not found");
+    }
+
+    if (chore.flatId !== flat.flatId) {
+      throw new Error("Chore not in flat");
+    }
+
+    ChoreModel.findOneAndDelete({ id }).exec();
+  
+    
+  }
 }
