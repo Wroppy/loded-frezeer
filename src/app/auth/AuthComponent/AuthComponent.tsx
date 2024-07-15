@@ -8,16 +8,27 @@ type Props = {
   onSubmit: (event: FormEvent) => void;
   children: ReactNode;
   heading: string;
+  buttonText: string;
+  RedirComponent?: ReactNode;
 };
 
-const AuthComponent = ({ onSubmit, children, heading }: Props) => {
+const AuthComponent = ({
+  RedirComponent,
+  buttonText,
+  onSubmit,
+  children,
+  heading,
+}: Props) => {
   return (
     <form onSubmit={onSubmit}>
       <Card shadow="lg" className={styles.AuthComponent}>
         <div className={styles.Heading}>{heading}</div>
         {children}
         <Flex justify="flex-end" className={styles.ButtonContainer}>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{buttonText}</Button>
+        </Flex>
+        <Flex style={{ marginBottom: "8px" }} justify="center">
+          {RedirComponent}
         </Flex>
       </Card>
     </form>

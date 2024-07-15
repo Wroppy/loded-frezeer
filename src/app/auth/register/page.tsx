@@ -9,6 +9,16 @@ import { postFetch } from "@/app/utils/postFetch";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
 import { RegisterResponse } from "@/app/types/RegisterResponse";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+
+const GoToSignInPage = () => {
+  return (
+    <div>
+      Already have an account? Sign in {" "}
+      <Link href="/auth/signin">here</Link>
+    </div>
+  );
+};
 
 type Props = {};
 
@@ -22,13 +32,17 @@ const RegisterPage = (props: Props) => {
     const password = (event.target as any).password.value as string;
 
     // Registers the user using credentials
-    const result = await postFetch("/api/register", { name, email, password }) as RegisterResponse;
+    const result = (await postFetch("/api/register", {
+      name,
+      email,
+      password,
+    })) as RegisterResponse;
 
     if (!result) {
       showErrorMessage("An error occurred", "Please try again.");
       return;
     }
-    
+
     if (result.error) {
       showErrorMessage(result.error, "Please try again.");
       return;
@@ -39,11 +53,15 @@ const RegisterPage = (props: Props) => {
       password,
       redirect: false,
     });
-
   };
 
   return (
-    <AuthComponent heading="Register" onSubmit={onSubmit}>
+    <AuthComponent
+      RedirComponent={<GoToSignInPage />}
+      buttonText="register"
+      heading="Register"
+      onSubmit={onSubmit}
+    >
       <NameInput />
       <EmailInput />
       <PasswordInput />
