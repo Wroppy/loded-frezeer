@@ -10,8 +10,8 @@ export async function POST(req: Request) {
   try {
     // Add chore to database
     const db = new DatabaseManager();
-    const user = await db.getClientChores(email);
-    return NextResponse.json({ user, error: null });
+    const chores = await db.getClientChores(email);
+    return NextResponse.json({ chores, error: null });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
