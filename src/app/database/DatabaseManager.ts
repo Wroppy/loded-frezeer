@@ -410,7 +410,6 @@ export default class DatabaseManager {
    */
   public async getClientChores(email: string): Promise<ClientChore[]> {
     const chores = await this.getServerChores(email);
-    console.log("test", typeof chores[0].lastCompleted);
     let clientChores: ClientChore[] = [];
 
     for (let chore of chores) {
@@ -537,5 +536,18 @@ export default class DatabaseManager {
       nextExpected: nextExpected.name,
       expected: nextExpectedUser.name,
     };
+  }
+
+  public async getChore(email: string, choreId: string): Promise<ClientChore> {
+    const chores = await this.getClientChores(email);
+    console.log("testing", choreId)
+    console.log(chores)
+    for (let chore of chores) {
+      if (chore.id === choreId) {
+        return chore;
+      }
+    }
+
+    throw new Error("Chore not found");
   }
 }
