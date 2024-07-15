@@ -15,6 +15,9 @@ const ChoreFoundPage = ({ users, email, chore }: Props) => {
     
   };
 
+  const expectedUserEmail = users.find((u) => u.name === chore.expectedUser)!;
+  chore = { ...chore, expectedUser: expectedUserEmail.email};
+
   return (
     <ManageChoreComponent
       onSubmit={editChore}
