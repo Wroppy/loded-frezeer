@@ -27,7 +27,7 @@ const AddChorePage = ({ users, email }: Props) => {
     })) as { error: string | null };
 
     if (res.error) {
-      showErrorMessage("An error occured dding the chore", res.error);
+      showErrorMessage("An error occurred adding the chore", res.error);
       setLoading(false);
       return;
     }
