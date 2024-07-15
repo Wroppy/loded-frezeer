@@ -7,8 +7,8 @@ type ServerChore = {
   description: string;
   expectedCycle: ChoreCycles;
   lastCompleted: Date;
-  previousUser: string | null;
-  expectedUser: string;
+  previousUser: string | null; // Name
+  expectedUser: string; // Email
   order: string[];
 };
 

@@ -435,7 +435,7 @@ export default class DatabaseManager {
         lastCompleted: chore.lastCompleted,
         previousUser: chore.previousUser,
         expectedUser: expectedUserObj!.name,
-        nextExpectedUser: await this.getNextExpectedChoreUser(chore),
+        nextExpectedUser: (await this.getNextExpectedChoreUser(chore)).name,
         order,
       });
     }
@@ -448,13 +448,15 @@ export default class DatabaseManager {
    * @param chore the chore
    * @returns the name of the next expected user
    */
-  private async getNextExpectedChoreUser(chore: ServerChore) {
+  private async getNextExpectedChoreUser(
+    chore: ServerChore
+  ): Promise<ClientUser> {
     // Adds 1 to the index of the expected user in the order
     let expectedUserIndex = chore.order.indexOf(chore.expectedUser);
     let nextExpectedUserIndex = (expectedUserIndex + 1) % chore.order.length;
     const email = chore.order[nextExpectedUserIndex];
     const user = await this.getUser(email);
-    return user!.name;
+    return { name: user!.name, email: user!.email };
   }
 
   /**
@@ -484,7 +486,52 @@ export default class DatabaseManager {
     }
 
     ChoreModel.findOneAndDelete({ id }).exec();
-  
-    
+  }
+
+  /**
+   * Given an email and a chore id, completes the chore
+   * in the flat
+   *
+   * @param email the email of the user
+   * @param id the id of the chore
+   * @returns the updated chore
+   */
+  public async completeChore(
+    email: string,
+    id: string
+  ): Promise<{ chore: ServerChore; nextExpected: string }> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const chore = (await ChoreModel.findOne({
+      id,
+    })) as ServerChore;
+
+    if (!chore) {
+      throw new Error("Chore not found");
+    }
+
+    if (chore.flatId !== flat.flatId) {
+      throw new Error("Chore not in flat");
+    }
+
+    // Gets the next expected user
+    let nextExpectedUser = await this.getNextExpectedChoreUser(chore);
+
+    const previousUser = await this.getUser(chore.expectedUser);
+
+    // Updates the chore
+    chore.previousUser = previousUser!.name;
+    chore.expectedUser = nextExpectedUser.email;
+    chore.lastCompleted = new Date();
+
+    await (chore as any).save();
+
+    // Gets the new next expected user
+    let nextExpected = await this.getNextExpectedChoreUser(chore);
+    return { chore, nextExpected: nextExpected.name };
   }
 }
