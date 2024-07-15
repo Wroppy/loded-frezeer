@@ -12,10 +12,11 @@ export const postFetch = async (url: string, data: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      cache: "no-store",
     });
     return response.json();
   } catch (error) {
     console.error(error);
-    return {error: "An error occurred while fetching the data"}
+    return { error: "An error occurred while fetching the data" };
   }
 };
