@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import ChoreNotFoundPage from "./ChoreNotFoundPage";
 import ChoreFoundPage from "./ChoreFoundPage";
+import styles from "./edit-chore.module.scss";
 
 type Props = {
   params: {
@@ -22,17 +23,16 @@ const EditChorePage = async ({ params }: Props) => {
     email: session!.user!.email,
     choreId,
   });
-  console.log(choreId)
-  console.log(res)
+
 
   return (
-    <>
+    <div className={styles.EditChorePage}>
       {res.error ? (
         <ChoreNotFoundPage id={choreId} />
       ) : (
         <ChoreFoundPage email={session!.user!.email!} chore={res.chore} />
       )}
-    </>
+    </div>
   );
 };
 
