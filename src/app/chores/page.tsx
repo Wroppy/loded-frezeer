@@ -31,6 +31,12 @@ const page = async (props: Props) => {
     email,
   })) as { chores: ClientChore[]; error: string };
 
+  // Converts the date strings to Date objects
+  chores.forEach((chore) => {
+    chore.lastCompleted = new Date(chore.lastCompleted);
+  });
+
+
   if (e) {
     return null;
   }

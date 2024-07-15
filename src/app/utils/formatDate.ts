@@ -1,4 +1,5 @@
 export default function formatDate(date: Date) {
+  console.log(typeof date);
   // Given the date, returns a string in the format of "DDth Month"
   const day = date.getDate();
   const endingNumber = day % 10;

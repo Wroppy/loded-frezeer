@@ -11,6 +11,7 @@ export async function POST(req: Request) {
     // Add chore to database
     const db = new DatabaseManager();
     const chores = await db.getClientChores(email);
+    console.log("testing", typeof chores[0].lastCompleted)
     return NextResponse.json({ chores, error: null });
   } catch (error) {
     if (error instanceof Error) {

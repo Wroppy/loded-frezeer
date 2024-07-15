@@ -410,7 +410,7 @@ export default class DatabaseManager {
    */
   public async getClientChores(email: string): Promise<ClientChore[]> {
     const chores = await this.getServerChores(email);
-
+    console.log("test", typeof chores[0].lastCompleted);
     let clientChores: ClientChore[] = [];
 
     for (let chore of chores) {
