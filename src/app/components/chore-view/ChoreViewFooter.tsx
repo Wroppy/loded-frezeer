@@ -20,7 +20,7 @@ const ChoreViewFooter = ({
   return (
     <Flex gap={8} justify={"flex-end"}>
       <Tooltip label="Mark as completed">
-        <ConfirmButton text="Are you sure?" onClick={onCompleteItem}>
+        <ConfirmButton color="green" text="Are you sure?" onClick={onCompleteItem}>
           <IconChecks style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ConfirmButton>
       </Tooltip>

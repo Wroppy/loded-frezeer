@@ -15,6 +15,7 @@ type Props = {
   children: ReactNode;
   disabled?: boolean;
   text?: string;
+  color?: string;
 };
 
 const ConfirmButton = ({
@@ -22,6 +23,7 @@ const ConfirmButton = ({
   onClick,
   children,
   disabled = false,
+  color="red",
 }: Props) => {
   return (
     <Popover withArrow>
@@ -34,7 +36,7 @@ const ConfirmButton = ({
         <Flex direction={"column"} gap="sm">
           {text}
           <Flex gap="md" justify={"center"}>
-            <Button variant="outline" onClick={onClick} color="green">
+            <Button variant="outline" onClick={onClick} color={color}>
               Confirm
             </Button>
             <Button variant="outline" color="gray">
