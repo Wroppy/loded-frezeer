@@ -12,6 +12,7 @@ import UserDND from "../users-drag-and-drop/UserDND";
 import { useListState } from "@mantine/hooks";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
 import BareBonesChore from "@/app/types/BareBonesChore";
+import Link from "next/link";
 
 type Props = {
   chore?: ClientChore | null;
@@ -21,27 +22,37 @@ type Props = {
   onSubmit: (chore: BareBonesChore) => void;
 };
 
-const ManageChoreComponent = ({onSubmit, title, buttonText, chore, users }: Props) => {
+const ManageChoreComponent = ({
+  onSubmit,
+  title,
+  buttonText,
+  chore,
+  users,
+}: Props) => {
   // States for the chore
   const [name, setName] = useState(chore ? chore.name : "");
-  const [description, setDescription] = useState(chore ? chore.description : "");
+  const [description, setDescription] = useState(
+    chore ? chore.description : ""
+  );
 
   const [cycle, setCycle] = useState(chore ? chore.expectedCycle : null);
 
-  const [expectedUser, setExpectedUser] = useState(chore ? chore.expectedUser : "");
+  const [expectedUser, setExpectedUser] = useState(
+    chore ? chore.expectedUser : ""
+  );
 
   const [order, orderHandlers] = useListState(chore ? chore.order : users);
 
   const errorMessage = (message: string) => {
     console.log("error message", message);
     showErrorMessage("Error submiting form", message);
-  }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
+
     setName(name.trim());
-    
+
     // Validates all the data for the chore
     if (name.length === 0) {
       errorMessage("Please enter a valid name");
@@ -77,7 +88,7 @@ const ManageChoreComponent = ({onSubmit, title, buttonText, chore, users }: Prop
     };
 
     onSubmit(chore);
-  } 
+  };
 
   return (
     <Card shadow="lg" className={styles.ManageChoreComponent}>
@@ -128,7 +139,15 @@ const ManageChoreComponent = ({onSubmit, title, buttonText, chore, users }: Prop
             <InputLabel required>Select chore order:</InputLabel>
             <UserDND state={order} handlers={orderHandlers} />
           </Flex>
-          <Flex justify={"flex-end"}>
+          <Flex justify={"flex-end"} gap={16}>
+            <Button
+              color="red"
+              variant="outline"
+              component={Link}
+              href="/chores"
+            >
+              Cancel
+            </Button>
             <Button type="submit">{buttonText}</Button>
           </Flex>
         </Flex>
