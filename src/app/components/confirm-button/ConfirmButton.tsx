@@ -16,6 +16,7 @@ type Props = {
   disabled?: boolean;
   text?: string;
   color?: string;
+  loading?: boolean;
 };
 
 const ConfirmButton = ({
@@ -23,12 +24,13 @@ const ConfirmButton = ({
   onClick,
   children,
   disabled = false,
-  color="red",
+  color = "red",
+  loading = false,
 }: Props) => {
   return (
     <Popover withArrow>
       <PopoverTarget>
-        <ActionIcon variant="outline" disabled={disabled}>
+        <ActionIcon loading={loading} variant="outline" disabled={disabled}>
           {children}
         </ActionIcon>
       </PopoverTarget>
@@ -36,10 +38,15 @@ const ConfirmButton = ({
         <Flex direction={"column"} gap="sm">
           {text}
           <Flex gap="md" justify={"center"}>
-            <Button variant="outline" onClick={onClick} color={color}>
+            <Button
+              loading={loading}
+              variant="outline"
+              onClick={onClick}
+              color={color}
+            >
               Confirm
             </Button>
-            <Button variant="outline" color="gray">
+            <Button loading={loading} variant="outline" color="gray">
               Cancel
             </Button>
           </Flex>

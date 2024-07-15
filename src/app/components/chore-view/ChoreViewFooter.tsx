@@ -11,13 +11,20 @@ type Props = {
   id: string;
   onDeleteItem: () => void;
   onCompleteItem: () => void;
+  loading: boolean;
 };
 
-const ChoreViewFooter = ({ id, onCompleteItem, onDeleteItem }: Props) => {
+const ChoreViewFooter = ({
+  loading,
+  id,
+  onCompleteItem,
+  onDeleteItem,
+}: Props) => {
   return (
     <Flex gap={8} justify={"flex-end"}>
       <Tooltip label="Mark as completed">
         <ConfirmButton
+          loading={loading}
           color="green"
           text="Are you sure?"
           onClick={onCompleteItem}
@@ -35,7 +42,11 @@ const ChoreViewFooter = ({ id, onCompleteItem, onDeleteItem }: Props) => {
         </ActionIcon>
       </Tooltip>
       <Tooltip label="Delete chore">
-        <ConfirmButton text="Are you sure?" onClick={onDeleteItem}>
+        <ConfirmButton
+          loading={loading}
+          text="Are you sure?"
+          onClick={onDeleteItem}
+        >
           <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ConfirmButton>
       </Tooltip>

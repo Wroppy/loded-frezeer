@@ -11,9 +11,10 @@ type Props = {
   chore: ClientChore;
   deleteChore: (chore: ClientChore) => void;
   completeChore: (chore: ClientChore) => void;
+  loading: boolean;
 };
 
-const ChoreView = ({ deleteChore, completeChore, chore }: Props) => {
+const ChoreView = ({ loading, deleteChore, completeChore, chore }: Props) => {
   const onDeleteItem = () => {
     deleteChore(chore);
   };
@@ -32,6 +33,7 @@ const ChoreView = ({ deleteChore, completeChore, chore }: Props) => {
       </Flex>
       {/* Buttons for editing, completing, or deleting chores */}
       <ChoreViewFooter
+        loading={loading}
         id={chore.id}
         onDeleteItem={onDeleteItem}
         onCompleteItem={onCompleteItem}
