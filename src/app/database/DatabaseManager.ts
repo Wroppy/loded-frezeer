@@ -16,6 +16,7 @@ import { ChoreModel } from "./models/ChoreSchema";
 import ChoreCycles from "../Enums/ChoreCycles";
 import ServerChore from "../types/ServerChore";
 import ClientChore from "../types/ClientChore";
+import BareBonesChore from "../types/BareBonesChore";
 
 export default class DatabaseManager {
   constructor() {
@@ -540,8 +541,8 @@ export default class DatabaseManager {
 
   public async getChore(email: string, choreId: string): Promise<ClientChore> {
     const chores = await this.getClientChores(email);
-    console.log("testing", choreId)
-    console.log(chores)
+    console.log("testing", choreId);
+    console.log(chores);
     for (let chore of chores) {
       if (chore.id === choreId) {
         return chore;
@@ -549,5 +550,55 @@ export default class DatabaseManager {
     }
 
     throw new Error("Chore not found");
+  }
+
+  public async editChore(
+    email: string,
+    id: string,
+    bareBonesChore: BareBonesChore
+  ) {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const chore = await ChoreModel.findOne({
+      id,
+    });
+
+    if (!chore) {
+      throw new Error("Chore not found");
+    }
+
+    if (chore.flatId !== flat.flatId) {
+      throw new Error("Chore not in flat");
+    }
+
+    // Checks that the expected user is in the flat
+    if (!flat.tenants.includes(bareBonesChore.expectedUser)) {
+      throw new Error("Expected user is not in the flat");
+    }
+
+    // Checks that the order is not empty
+    if (bareBonesChore.order.length === 0) {
+      throw new Error("Order cannot be empty");
+    }
+
+    // Checks that all users in the order are in the flat
+    for (let user of bareBonesChore.order) {
+      if (!flat.tenants.includes(user.email)) {
+        throw new Error("User in order is not in the flat");
+      }
+    }
+
+    chore.name = bareBonesChore.name;
+    chore.description = bareBonesChore.description;
+    chore.expectedCycle = bareBonesChore.expectedCycle;
+    chore.expectedUser = bareBonesChore.expectedUser;
+    chore.order = bareBonesChore.order.map((user) => user.email);
+
+    await (chore as any).markModified("order");
+    await (chore as any).save();
   }
 }
