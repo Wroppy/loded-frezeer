@@ -20,16 +20,13 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
   const [toEditChore, setToEditChore] = useState<ClientChore | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
-  // Adds a new chore to the state
-  const addCore = (chore: ClientChore) => {};
-
   // Changes the state of a chore to completed
   const completeChore = (chore: ClientChore) => {};
 
   // Deletes a chore from the state
-  const deleteChore = (chore: ClientChore) => {};
-
-  const updateChore = (chore: ClientChore) => {};
+  const deleteChore = (chore: ClientChore) => {
+    setChores(chores.filter((c) => c.id !== chore.id));
+  };
 
   const openModal = (chore: ClientChore) => {
     setToEditChore(chore);
@@ -40,7 +37,13 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
     <>
       <div className={styles.ChoresViewer}>
         {chores.map((chore) => (
-          <ChoreView openModal={openModal} key={chore.id} chore={chore} />
+          <ChoreView
+            deleteChore={deleteChore}
+            completeChore={completeChore}
+            openModal={openModal}
+            key={chore.id}
+            chore={chore}
+          />
         ))}
         <AddChoreBox />
       </div>

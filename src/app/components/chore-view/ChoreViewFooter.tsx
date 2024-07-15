@@ -8,13 +8,19 @@ import ClientChore from "@/app/types/ClientChore";
 
 type Props = {
   onEditItem: () => void;
+  onDeleteItem: () => void;
+  onCompleteItem: () => void;
 };
 
-const ChoreViewFooter = ({onEditItem}: Props) => {
+const ChoreViewFooter = ({
+  onEditItem,
+  onCompleteItem,
+  onDeleteItem,
+}: Props) => {
   return (
     <Flex gap={8} justify={"flex-end"}>
       <Tooltip label="Mark as completed">
-        <ConfirmButton text="Are you sure?">
+        <ConfirmButton text="Are you sure?" onClick={onCompleteItem}>
           <IconChecks style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ConfirmButton>
       </Tooltip>
@@ -24,7 +30,7 @@ const ChoreViewFooter = ({onEditItem}: Props) => {
         </ActionIcon>
       </Tooltip>
       <Tooltip label="Delete chore">
-        <ConfirmButton text="Are you sure?">
+        <ConfirmButton text="Are you sure?" onClick={onDeleteItem}>
           <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ConfirmButton>
       </Tooltip>

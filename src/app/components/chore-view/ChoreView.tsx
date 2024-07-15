@@ -10,14 +10,22 @@ import { Flex } from "@mantine/core";
 type Props = {
   chore: ClientChore;
   openModal: (chore: ClientChore) => void;
+  deleteChore: (chore: ClientChore) => void;
+  completeChore: (chore: ClientChore) => void;
 };
 
-const ChoreView = ({ chore, openModal }: Props) => {
+const ChoreView = ({ deleteChore, completeChore, chore, openModal }: Props) => {
   const onEditItem = () => {
     openModal(chore);
-  }
+  };
 
+  const onDeleteItem = () => {
+    deleteChore(chore);
+  };
 
+  const onCompleteItem = () => {
+    completeChore(chore);
+  };
 
   return (
     <ChoreBox className={styles.ChoreView}>
@@ -25,11 +33,14 @@ const ChoreView = ({ chore, openModal }: Props) => {
         <h2>{chore.name}</h2>
         <span>{chore.description}</span>
         <span>Expected cycle: {chore.expectedCycle}</span>
-        <ChoreTimeLine chore={chore}/>
-        
+        <ChoreTimeLine chore={chore} />
       </Flex>
-        {/* Buttons for editing, completing, or deleting chores */}
-        <ChoreViewFooter onEditItem={onEditItem}/>
+      {/* Buttons for editing, completing, or deleting chores */}
+      <ChoreViewFooter
+        onEditItem={onEditItem}
+        onDeleteItem={onDeleteItem}
+        onCompleteItem={onCompleteItem}
+      />
     </ChoreBox>
   );
 };
