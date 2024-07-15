@@ -20,7 +20,7 @@ const page = async (props: Props) => {
 
   // Gets the users
   const {users, error} = await postFetch("/api/get-users", {
-    email: session!.user!.email,
+    email: session!.user!.email!,
   }) as ResponseType;
   
   // Checks that the user is in a flat
@@ -30,7 +30,7 @@ const page = async (props: Props) => {
 
   return (
     <>
-      <AddChorePage users={users} />
+      <AddChorePage  email={session!.user!.email!} users={users} />
     </>
   );
 };

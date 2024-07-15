@@ -25,8 +25,7 @@ export async function POST(req: Request) {
       expectedUser,
       orderEmails
     );
-
-    return NextResponse.redirect(`${process.env.URL}/chores`);
+    return NextResponse.json({ error: null });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
