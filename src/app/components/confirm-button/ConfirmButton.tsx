@@ -8,7 +8,7 @@ import {
   PopoverDropdown,
   PopoverTarget,
 } from "@mantine/core";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 
 type Props = {
   onClick?: () => void;
@@ -27,10 +27,25 @@ const ConfirmButton = ({
   color = "red",
   loading = false,
 }: Props) => {
+  // State for the opened popover
+  const [opened, setOpened] = useState(false);
+
+  const handleOnClick = () => {
+    setOpened(false);
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <Popover withArrow>
+    <Popover withArrow opened={opened} onChange={setOpened}>
       <PopoverTarget>
-        <ActionIcon loading={loading} variant="outline" disabled={disabled}>
+        <ActionIcon
+          onClick={() => setOpened((o) => !o)}
+          loading={loading}
+          variant="outline"
+          disabled={disabled}
+        >
           {children}
         </ActionIcon>
       </PopoverTarget>
@@ -41,7 +56,7 @@ const ConfirmButton = ({
             <Button
               loading={loading}
               variant="outline"
-              onClick={onClick}
+              onClick={handleOnClick}
               color={color}
             >
               Confirm
