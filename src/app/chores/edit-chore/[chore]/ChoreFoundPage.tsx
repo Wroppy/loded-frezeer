@@ -1,10 +1,30 @@
+"use client";
+
+import ManageChoreComponent from "@/app/components/ManageChoreComponent/ManageChoreComponent";
+import BareBonesChore from "@/app/types/BareBonesChore";
 import ClientChore from "@/app/types/ClientChore";
-import React from "react";
+import ClientUser from "@/app/types/ClientUser";
+import React, { useState } from "react";
 
-type Props = { email: string; chore: ClientChore };
+type Props = { users: ClientUser[]; email: string; chore: ClientChore };
 
-const ChoreFoundPage = ({ email, chore }: Props) => {
-  return <div>{JSON.stringify(chore)}</div>;
+const ChoreFoundPage = ({ users, email, chore }: Props) => {
+  const [loading, setLoading] = useState(false);
+
+  const editChore = async (chore: BareBonesChore) => {
+    
+  };
+
+  return (
+    <ManageChoreComponent
+      onSubmit={editChore}
+      users={users}
+      chore={chore}
+      title={"Edit Chore"}
+      buttonText={"Edit Chore"}
+      loading={loading}
+    />
+  );
 };
 
 export default ChoreFoundPage;

@@ -5,6 +5,7 @@ import React from "react";
 import ChoreNotFoundPage from "./ChoreNotFoundPage";
 import ChoreFoundPage from "./ChoreFoundPage";
 import styles from "./edit-chore.module.scss";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -24,14 +25,32 @@ const EditChorePage = async ({ params }: Props) => {
     choreId,
   });
 
+  // If the chore is not found return the ChoreNotFoundPage
+  if (res.error) {
+    return (
+      <div className={styles.EditChorePage}>
+        <ChoreNotFoundPage id={choreId} />
+      </div>
+    );
+  }
+
+  // Gets the users in the flat
+  const usersRes = await postFetch("/api/get-users", {
+    email: session!.user!.email,
+  });
+
+  // If the user is not in a flat redirect to the flatmates page
+  if (usersRes.error) {
+    redirect("/flatmates");
+  }
 
   return (
     <div className={styles.EditChorePage}>
-      {res.error ? (
-        <ChoreNotFoundPage id={choreId} />
-      ) : (
-        <ChoreFoundPage email={session!.user!.email!} chore={res.chore} />
-      )}
+      <ChoreFoundPage
+        users={usersRes.users}
+        email={session!.user!.email!}
+        chore={res.chore}
+      />
     </div>
   );
 };

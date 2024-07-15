@@ -42,7 +42,7 @@ const ManageChoreComponent = ({
   const [expectedUser, setExpectedUser] = useState(
     chore ? chore.expectedUser : ""
   );
-
+  console.log(chore?.expectedUser)
   const [order, orderHandlers] = useListState(chore ? chore.order : users);
 
   const errorMessage = (message: string) => {
