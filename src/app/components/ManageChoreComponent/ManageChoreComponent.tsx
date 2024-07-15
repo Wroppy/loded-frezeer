@@ -4,7 +4,7 @@ import ChoreCycles, { getAllChoreCycles } from "@/app/Enums/ChoreCycles";
 import ClientChore from "@/app/types/ClientChore";
 import styles from "./manage-chore-component.module.scss";
 
-import { Button, Card, Flex, InputLabel, Text, TextInput } from "@mantine/core";
+import { Button, Card, Flex, InputLabel, LoadingOverlay, Text, TextInput } from "@mantine/core";
 import React, { FormEvent, useState } from "react";
 import ManageChoreComboBox from "./ManageChoreComboBox";
 import ClientUser from "@/app/types/ClientUser";
@@ -20,6 +20,7 @@ type Props = {
   title: string;
   buttonText: string;
   onSubmit: (chore: BareBonesChore) => void;
+  loading: boolean;
 };
 
 const ManageChoreComponent = ({
@@ -28,6 +29,7 @@ const ManageChoreComponent = ({
   buttonText,
   chore,
   users,
+  loading,
 }: Props) => {
   // States for the chore
   const [name, setName] = useState(chore ? chore.name : "");
@@ -91,68 +93,70 @@ const ManageChoreComponent = ({
   };
 
   return (
-    <Card shadow="lg" className={styles.ManageChoreComponent}>
-      <form onSubmit={handleSubmit}>
-        <Flex direction={"column"} gap="lg">
-          <Text>{title}</Text>
-          <TextInput
-            label="Name"
-            placeholder="Enter chore name"
-            required
-            value={name}
-            onChange={(event) => setName(event.currentTarget.value)}
-          />
+      <Card shadow="lg" className={styles.ManageChoreComponent}>
+    <LoadingOverlay visible={loading} />
 
-          <TextInput
-            label="Description"
-            placeholder="Enter chore description"
-            required
-            value={description}
-            onChange={(event) => setDescription(event.currentTarget.value)}
-          />
-          {/* Expected cycle combo box */}
-          <Flex direction={"column"}>
-            <InputLabel required style={{ width: "100%" }}>
-              Expected cycle
-            </InputLabel>
-            <ManageChoreComboBox
-              values={getAllChoreCycles()}
-              labels={getAllChoreCycles()}
-              setValue={setCycle}
-              value={cycle}
-              placeholderText="Select Expected Cycle"
+        <form onSubmit={handleSubmit}>
+          <Flex direction={"column"} gap="lg">
+            <Text>{title}</Text>
+            <TextInput
+              label="Name"
+              placeholder="Enter chore name"
+              required
+              value={name}
+              onChange={(event) => setName(event.currentTarget.value)}
             />
-          </Flex>
-          <Flex direction={"column"}>
-            <InputLabel required style={{ width: "100%" }}>
-              Expected user
-            </InputLabel>
-            <ManageChoreComboBox
-              placeholderText="Select Current Chore Doer"
-              values={users.map((user) => user.email)}
-              labels={users.map((user) => user.name)}
-              value={expectedUser}
-              setValue={setExpectedUser}
+
+            <TextInput
+              label="Description"
+              placeholder="Enter chore description"
+              required
+              value={description}
+              onChange={(event) => setDescription(event.currentTarget.value)}
             />
+            {/* Expected cycle combo box */}
+            <Flex direction={"column"}>
+              <InputLabel required style={{ width: "100%" }}>
+                Expected cycle
+              </InputLabel>
+              <ManageChoreComboBox
+                values={getAllChoreCycles()}
+                labels={getAllChoreCycles()}
+                setValue={setCycle}
+                value={cycle}
+                placeholderText="Select Expected Cycle"
+              />
+            </Flex>
+            <Flex direction={"column"}>
+              <InputLabel required style={{ width: "100%" }}>
+                Expected user
+              </InputLabel>
+              <ManageChoreComboBox
+                placeholderText="Select Current Chore Doer"
+                values={users.map((user) => user.email)}
+                labels={users.map((user) => user.name)}
+                value={expectedUser}
+                setValue={setExpectedUser}
+              />
+            </Flex>
+            <Flex direction={"column"}>
+              <InputLabel required>Select chore order:</InputLabel>
+              <UserDND state={order} handlers={orderHandlers} />
+            </Flex>
+            <Flex justify={"flex-end"} gap={16}>
+              <Button
+                color="red"
+                variant="outline"
+                component={Link}
+                href="/chores"
+              >
+                Cancel
+              </Button>
+              <Button type="submit">{buttonText}</Button>
+            </Flex>
           </Flex>
-          <Flex direction={"column"}>
-            <InputLabel required>Select chore order:</InputLabel>
-            <UserDND state={order} handlers={orderHandlers} />
-          </Flex>
-          <Flex justify={"flex-end"} gap={16}>
-            <Button
-              color="red"
-              variant="outline"
-              component={Link}
-              href="/chores"
-            >
-              Cancel
-            </Button>
-            <Button type="submit">{buttonText}</Button>
-          </Flex>
-        </Flex>
-      </form>
-    </Card>
+        </form>
+      </Card>
   );
 };
 
