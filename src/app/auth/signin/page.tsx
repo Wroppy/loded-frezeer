@@ -21,7 +21,10 @@ const GoToRegisterPage = () => {
 };
 
 const SignInPage = (props: Props) => {
+  const [loading, setLoading] = React.useState(false);
+
   const router = useRouter();
+
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -29,6 +32,7 @@ const SignInPage = (props: Props) => {
     const email = (event.target as any).email.value as string;
     const password = (event.target as any).password.value as string;
 
+    setLoading(true);
     // Signs in the user using credentials
     let result = await signIn("credentials", {
       email,
@@ -37,6 +41,7 @@ const SignInPage = (props: Props) => {
     });
 
     if (!result!.ok) {
+      setLoading(false);
       showErrorMessage("Invalid Credentials", "Please try again.");
     }
 
@@ -45,6 +50,7 @@ const SignInPage = (props: Props) => {
 
   return (
     <AuthComponent
+      loading={loading}
       RedirComponent={<GoToRegisterPage />}
       buttonText="sign in "
       heading="Sign In"

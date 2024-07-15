@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Flex } from "@mantine/core";
+import { Button, Card, Flex, LoadingOverlay } from "@mantine/core";
 import { FormEvent, ReactNode } from "react";
 import styles from "./auth-component.module.scss";
 
@@ -10,6 +10,7 @@ type Props = {
   heading: string;
   buttonText: string;
   RedirComponent?: ReactNode;
+  loading: boolean;
 };
 
 const AuthComponent = ({
@@ -18,20 +19,24 @@ const AuthComponent = ({
   onSubmit,
   children,
   heading,
+  loading,
 }: Props) => {
   return (
-    <form onSubmit={onSubmit}>
-      <Card shadow="lg" className={styles.AuthComponent}>
-        <div className={styles.Heading}>{heading}</div>
-        {children}
-        <Flex justify="flex-end" className={styles.ButtonContainer}>
-          <Button type="submit">{buttonText}</Button>
-        </Flex>
-        <Flex style={{ marginBottom: "8px" }} justify="center">
-          {RedirComponent}
-        </Flex>
-      </Card>
-    </form>
+    <>
+      <form onSubmit={onSubmit}>
+        <Card shadow="lg" className={styles.AuthComponent}>
+          <LoadingOverlay visible={loading} />
+          <div className={styles.Heading}>{heading}</div>
+          {children}
+          <Flex justify="flex-end" className={styles.ButtonContainer}>
+            <Button type="submit">{buttonText}</Button>
+          </Flex>
+          <Flex style={{ marginBottom: "8px" }} justify="center">
+            {RedirComponent}
+          </Flex>
+        </Card>
+      </form>
+    </>
   );
 };
 

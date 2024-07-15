@@ -10,12 +10,12 @@ import { showErrorMessage } from "@/app/utils/showErrorMessage";
 import { RegisterResponse } from "@/app/types/RegisterResponse";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const GoToSignInPage = () => {
   return (
     <div>
-      Already have an account? Sign in {" "}
-      <Link href="/auth/signin">here</Link>
+      Already have an account? Sign in <Link href="/auth/signin">here</Link>
     </div>
   );
 };
@@ -23,6 +23,9 @@ const GoToSignInPage = () => {
 type Props = {};
 
 const RegisterPage = (props: Props) => {
+  const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -31,6 +34,7 @@ const RegisterPage = (props: Props) => {
     const email = (event.target as any).email.value as string;
     const password = (event.target as any).password.value as string;
 
+    setLoading(true);
     // Registers the user using credentials
     const result = (await postFetch("/api/register", {
       name,
@@ -40,11 +44,13 @@ const RegisterPage = (props: Props) => {
 
     if (!result) {
       showErrorMessage("An error occurred", "Please try again.");
+      setLoading(false);
       return;
     }
 
     if (result.error) {
       showErrorMessage(result.error, "Please try again.");
+      setLoading(false);
       return;
     }
 
@@ -53,10 +59,13 @@ const RegisterPage = (props: Props) => {
       password,
       redirect: false,
     });
+
+    router.push("/");
   };
 
   return (
     <AuthComponent
+      loading={loading}
       RedirComponent={<GoToSignInPage />}
       buttonText="register"
       heading="Register"
