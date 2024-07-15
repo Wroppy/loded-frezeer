@@ -499,7 +499,7 @@ export default class DatabaseManager {
   public async completeChore(
     email: string,
     id: string
-  ): Promise<{ chore: ServerChore; nextExpected: string }> {
+  ): Promise<{ chore: ServerChore; nextExpected: string; expected: string }> {
     const flat = await this.getUserFlat(email);
 
     if (!flat) {
@@ -532,6 +532,10 @@ export default class DatabaseManager {
 
     // Gets the new next expected user
     let nextExpected = await this.getNextExpectedChoreUser(chore);
-    return { chore, nextExpected: nextExpected.name };
+    return {
+      chore,
+      nextExpected: nextExpected.name,
+      expected: nextExpectedUser.name,
+    };
   }
 }

@@ -12,12 +12,12 @@ export async function POST(req: Request) {
 
     // completes the chore from the database
     const db = new DatabaseManager();
-    const { chore, nextExpected } = await db.completeChore(email, choreId);
+    const { chore, nextExpected, expected } = await db.completeChore(email, choreId);
 
     return NextResponse.json({
       lastCompleted: chore.lastCompleted,
       previousUser: chore.previousUser,
-      expectedUser: chore.expectedUser,
+      expectedUser: expected,
       nextExpectedUser: nextExpected,
     });
   } catch (error) {
