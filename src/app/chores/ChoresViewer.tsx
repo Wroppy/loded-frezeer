@@ -19,8 +19,6 @@ type Props = {
 
 const ChoresViewer = ({ chores: c, email, users }: Props) => {
   const [chores, setChores] = useState(c);
-  const [toEditChore, setToEditChore] = useState<ClientChore | null>(null);
-  const [opened, { open, close }] = useDisclosure(false);
 
   // Changes the state of a chore to completed
   const completeChore = async (chore: ClientChore) => {
@@ -53,8 +51,6 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
         return c;
       })
     );
-
-
   };
 
   // Deletes a chore from the state
@@ -75,11 +71,6 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
     setChores(chores.filter((c) => c.id !== chore.id));
   };
 
-  const openModal = (chore: ClientChore) => {
-    setToEditChore(chore);
-    open();
-  };
-
   return (
     <>
       <div className={styles.ChoresViewer}>
@@ -87,7 +78,6 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
           <ChoreView
             deleteChore={deleteChore}
             completeChore={completeChore}
-            openModal={openModal}
             key={chore.id}
             chore={chore}
           />
