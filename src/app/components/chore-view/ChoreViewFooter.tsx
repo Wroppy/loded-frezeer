@@ -4,7 +4,7 @@ import { ActionIcon, Flex, Tooltip } from "@mantine/core";
 import { IconChecks, IconEdit, IconTrash } from "@tabler/icons-react";
 import React from "react";
 import ConfirmButton from "../confirm-button/ConfirmButton";
-import Chore from "@/app/types/ClientChore";
+import ClientChore from "@/app/types/ClientChore";
 
 type Props = {
   onEditItem: () => void;

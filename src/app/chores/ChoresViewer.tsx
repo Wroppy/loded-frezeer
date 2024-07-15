@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import styles from "./chore-page.module.scss";
-import Chore from "../types/ClientChore";
+import ClientChore from "../types/ClientChore";
 import ChoreCycles from "../Enums/ChoreCycles";
 import ChoreView from "../components/chore-view/ChoreView";
 import AddChoreBox from "../components/add-chore-box/AddChoreBox";
 import { useDisclosure } from "@mantine/hooks";
 
-const CHORES: Chore[] = [
+const CHORES: ClientChore[] = [
   {
     name: "Clean the house",
     description: "Vacuum and mop the floors",
@@ -44,7 +44,7 @@ type Props = {};
 
 const ChoresViewer = (props: Props) => {
   const [chores, setChores] = useState(CHORES);
-  const [toEditChore, setToEditChore] = useState<Chore | null>(null);
+  const [toEditChore, setToEditChore] = useState<ClientChore | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const users = [
     { name: "John Doe", email: "john@email.com" },
@@ -52,17 +52,17 @@ const ChoresViewer = (props: Props) => {
     { name: "Jake Doe", email: "jake@email.com" },
   ];
   // Adds a new chore to the state
-  const addCore = (chore: Chore) => {};
+  const addCore = (chore: ClientChore) => {};
 
   // Changes the state of a chore to completed
-  const completeChore = (chore: Chore) => {};
+  const completeChore = (chore: ClientChore) => {};
 
   // Deletes a chore from the state
-  const deleteChore = (chore: Chore) => {};
+  const deleteChore = (chore: ClientChore) => {};
 
-  const updateChore = (chore: Chore) => {};
+  const updateChore = (chore: ClientChore) => {};
 
-  const openModal = (chore: Chore) => {
+  const openModal = (chore: ClientChore) => {
     setToEditChore(chore);
     open();
   };

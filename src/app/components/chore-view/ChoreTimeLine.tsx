@@ -1,10 +1,10 @@
-import Chore from "@/app/types/ClientChore";
+import ClientChore from "@/app/types/ClientChore";
 import formatDate from "@/app/utils/formatDate";
 import { Timeline, TimelineItem, Text } from "@mantine/core";
 import React from "react";
 
 type Props = {
-  chore: Chore;
+  chore: ClientChore;
 };
 
 const ChoreTimeLine = ({ chore }: Props) => {

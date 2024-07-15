@@ -14,6 +14,8 @@ import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import ClientUser from "../types/ClientUser";
 import { ChoreModel } from "./models/ChoreSchema";
 import ChoreCycles from "../Enums/ChoreCycles";
+import ServerChore from "../types/ServerChore";
+import ClientChore from "../types/ClientChore";
 
 export default class DatabaseManager {
   constructor() {
@@ -380,5 +382,78 @@ export default class DatabaseManager {
     const chore = new ChoreModel(choreTemplate);
     await chore.save();
     return chore;
+  }
+
+  /**
+   * Given an email, returns the chores of the flat the user is in
+   */
+  public async getServerChores(email: string): Promise<ServerChore[]> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const chores = (await ChoreModel.find({
+      flatId: flat.flatId,
+    })) as ServerChore[];
+
+    return chores;
+  }
+
+  /**
+   * Given an email, returns the chores of the flat the user is in
+   * with the names of the users instead of emails
+   *
+   * @param email the email of the user requesting the chores
+   * @returns  the chores of the flat the user is in
+   */
+  public async getClientChores(email: string): Promise<ClientChore[]> {
+    const chores = await this.getServerChores(email);
+
+    let clientChores: ClientChore[] = [];
+
+    for (let chore of chores) {
+      let order: ClientUser[] = [];
+
+      // Gets the names of the users in the order of the chore and adds them to the order
+      for (let user of chore.order) {
+        let userObj = await this.getUser(user);
+        order.push({
+          name: userObj!.name,
+          email: userObj!.email,
+        });
+      }
+
+      let expectedUserObj = await this.getUser(chore.expectedUser);
+
+      clientChores.push({
+        id: chore.id,
+        name: chore.name,
+        description: chore.description,
+        expectedCycle: chore.expectedCycle,
+        lastCompleted: chore.lastCompleted,
+        previousUser: chore.previousUser,
+        expectedUser: expectedUserObj!.name,
+        nextExpectedUser: await this.getNextExpectedChoreUser(chore),
+        order,
+      });
+    }
+
+    return clientChores;
+  }
+
+  /**
+   * Given the chore gets the next expected user
+   * @param chore the chore
+   * @returns the name of the next expected user
+   */
+  private async getNextExpectedChoreUser(chore: ServerChore) {
+    // Adds 1 to the index of the expected user in the order
+    let expectedUserIndex = chore.order.indexOf(chore.expectedUser);
+    let nextExpectedUserIndex = (expectedUserIndex + 1) % chore.order.length;
+    const email = chore.order[nextExpectedUserIndex];
+    const user = await this.getUser(email);
+    return user!.name;
   }
 }

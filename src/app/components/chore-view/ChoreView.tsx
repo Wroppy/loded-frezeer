@@ -1,4 +1,4 @@
-import Chore from "@/app/types/ClientChore";
+import ClientChore from "@/app/types/ClientChore";
 
 import React from "react";
 import ChoreBox from "../chore-box/ChoreBox";
@@ -8,8 +8,8 @@ import ChoreTimeLine from "./ChoreTimeLine";
 import { Flex } from "@mantine/core";
 
 type Props = {
-  chore: Chore;
-  openModal: (chore: Chore) => void;
+  chore: ClientChore;
+  openModal: (chore: ClientChore) => void;
 };
 
 const ChoreView = ({ chore, openModal }: Props) => {

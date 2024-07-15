@@ -1,7 +1,7 @@
 "use client";
 
 import ChoreCycles, { getAllChoreCycles } from "@/app/Enums/ChoreCycles";
-import Chore from "@/app/types/ClientChore";
+import ClientChore from "@/app/types/ClientChore";
 import styles from "./manage-chore-component.module.scss";
 
 import { Button, Card, Flex, InputLabel, Text, TextInput } from "@mantine/core";
@@ -14,7 +14,7 @@ import { showErrorMessage } from "@/app/utils/showErrorMessage";
 import BareBonesChore from "@/app/types/BareBonesChore";
 
 type Props = {
-  chore?: Chore | null;
+  chore?: ClientChore | null;
   users: ClientUser[];
   title: string;
   buttonText: string;
