@@ -23,7 +23,39 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   // Changes the state of a chore to completed
-  const completeChore = (chore: ClientChore) => {};
+  const completeChore = async (chore: ClientChore) => {
+    // Sends a request to the server to complete the chore
+    const res = await postFetch("/api/chores/complete-chore", {
+      email,
+      choreId: chore.id,
+    });
+
+    // If there was an error, return
+    if (res.error) {
+      showErrorMessage("An error occured while completing the chore", res.error);
+      return;
+    }
+
+    const { lastCompleted, previousUser, expectedUser, nextExpectedUser } = res;
+
+    // Updates the state of the chore
+    setChores(
+      chores.map((c) => {
+        if (c.id === chore.id) {
+          return {
+            ...c,
+            lastCompleted: new Date(lastCompleted),
+            previousUser,
+            expectedUser,
+            nextExpectedUser,
+          };
+        }
+        return c;
+      })
+    );
+
+
+  };
 
   // Deletes a chore from the state
   const deleteChore = async (chore: ClientChore) => {
@@ -39,7 +71,7 @@ const ChoresViewer = ({ chores: c, email, users }: Props) => {
       showErrorMessage("An error occured while deleting the chore", res.error);
       return;
     }
-    
+
     setChores(chores.filter((c) => c.id !== chore.id));
   };
 
