@@ -34,7 +34,7 @@ const ConfirmButton = ({
         <Flex direction={"column"} gap="sm">
           {text}
           <Flex gap="md" justify={"center"}>
-            <Button variant="outline" onClick={onClick} color="red">
+            <Button variant="outline" onClick={onClick} color="green">
               Confirm
             </Button>
             <Button variant="outline" color="gray">
