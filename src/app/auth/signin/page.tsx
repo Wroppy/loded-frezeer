@@ -43,6 +43,7 @@ const SignInPage = (props: Props) => {
     if (!result!.ok) {
       setLoading(false);
       showErrorMessage("Invalid Credentials", "Please try again.");
+      return;
     }
 
     router.push("/");
