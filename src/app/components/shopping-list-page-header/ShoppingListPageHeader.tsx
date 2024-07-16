@@ -64,7 +64,7 @@ const ShoppingListHeader = ({ names }: Props) => {
     // Reset the form
     setItemName("");
     setQuantity(1);
-    setItemFor([]);
+    setItemFor([name]);
   };
 
   const { width } = useViewportSize();
