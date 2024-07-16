@@ -13,6 +13,7 @@ import { IconDumpling, IconHash } from "@tabler/icons-react";
 import { ShoppingListContext } from "@/app/context/ShoppingListContext";
 import { ShoppingListContextType } from "@/app/types/ShoppingListContextType";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import { useViewportSize } from "@mantine/hooks";
 
 type Props = { names: string[] };
 
@@ -25,7 +26,6 @@ const ShoppingListHeader = ({ names }: Props) => {
   const [quantity, setQuantity] = useState<string | number>(1);
   const [itemFor, setItemFor] = useState<string[]>([name]); // Default to the user's name
   const [loading, setLoading] = useState(false);
-
 
   const showShoppingListError = (message: string) => {
     showErrorMessage("Error creating a new shopping list item", message);
@@ -67,6 +67,8 @@ const ShoppingListHeader = ({ names }: Props) => {
     setItemFor([]);
   };
 
+  const { width } = useViewportSize();
+
   return (
     <form onSubmit={handleAddItem} className={styles.ShoppingListPageHeader}>
       <TextInput
@@ -86,7 +88,7 @@ const ShoppingListHeader = ({ names }: Props) => {
         clearable
         onChange={setItemFor}
         placeholder="For?"
-        style={{ width: "300px" }}
+        style={{ width: width <= 800 ? "100%" : "300px" }}
       />
       <NumberInput
         value={quantity}
@@ -95,7 +97,7 @@ const ShoppingListHeader = ({ names }: Props) => {
         placeholder="Quantity"
         min={1}
         max={20}
-        style={{ width: "120px" }}
+        style={{ width: width <= 800 ? "100%" : "120px" }}
       />
       <Button disabled={loading} type="submit" variant="light">
         Add

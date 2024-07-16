@@ -37,3 +37,19 @@
   z-index: 2;
   position: sticky;
 }
+
+// When the screen is smaller than 800px, changes the layout
+@media (max-width: 800px) {
+  .ShoppingList {
+    padding: 0 16px;
+  }
+
+  .ShoppingListPageHeader {
+    padding: 16px;
+    flex-direction: column;
+  }
+
+  .ShoppingListFooter {
+    padding: 16px 0px 16px 16px;
+  }
+}
