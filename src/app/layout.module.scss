@@ -1,0 +1,9 @@
+.App {
+  height: 100%;
+  overflow: hidden;
+}
+
+.ChildrenContainer {
+  flex-grow: 1;
+  overflow: auto;
+}

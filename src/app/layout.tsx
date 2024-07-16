@@ -15,7 +15,7 @@ import "./globals.scss";
 import { theme } from "./theme/theme";
 import { Notifications } from "@mantine/notifications";
 import NavBar from "./components/navbar/NavBar";
-
+import styles from "./layout.module.scss";
 export const metadata: Metadata = {
   title: "Loded Frezeer",
   description: "An in-flat web app for managing flat chores, bills, and more.",
@@ -33,10 +33,10 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider defaultColorScheme="dark" theme={theme}>
-          <Flex direction="column" style={{height: "100%"}}>
-          <Notifications />
-          <NavBar /> 
-          {children}
+          <Flex className={styles.App} direction="column">
+            <Notifications />
+            <NavBar />
+            <Flex className={styles.ChildrenContainer}>{children}</Flex>
           </Flex>
         </MantineProvider>
       </body>
