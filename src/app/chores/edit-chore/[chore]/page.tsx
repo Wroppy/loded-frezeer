@@ -27,11 +27,7 @@ const EditChorePage = async ({ params }: Props) => {
 
   // If the chore is not found return the ChoreNotFoundPage
   if (res.error) {
-    return (
-      <div className={styles.EditChorePage}>
-        <ChoreNotFoundPage id={choreId} />
-      </div>
-    );
+    return <ChoreNotFoundPage id={choreId} />;
   }
 
   // Gets the users in the flat
@@ -45,13 +41,11 @@ const EditChorePage = async ({ params }: Props) => {
   }
 
   return (
-    <div className={styles.EditChorePage}>
-      <ChoreFoundPage
-        users={usersRes.users}
-        email={session!.user!.email!}
-        chore={res.chore}
-      />
-    </div>
+    <ChoreFoundPage
+      users={usersRes.users}
+      email={session!.user!.email!}
+      chore={res.chore}
+    />
   );
 };
 
