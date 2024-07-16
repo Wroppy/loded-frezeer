@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import React from "react";
 import { checkAuth } from "../utils/checkAuth";
-import ShoppingListPage from "./shoppingListPage";
+import ShoppingListPage from "./ShoppingListPage";
 import { postFetch } from "../utils/postFetch";
 import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 
