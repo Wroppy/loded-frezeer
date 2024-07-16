@@ -11,7 +11,6 @@ import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import { postFetch } from "../utils/postFetch";
 import { showErrorMessage } from "../utils/showErrorMessage";
 import { showSuccessMessage } from "../utils/showSucessMessage";
-import { set } from "mongoose";
 
 const ShoppingListPage = ({
   userName,

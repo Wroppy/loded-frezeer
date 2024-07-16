@@ -11,9 +11,6 @@ const page = async (props: Props) => {
   // Makes sure the user is logged in
   const session = await getServerSession();
 
-  // Checks that the user is logged in
-  checkAuth(session);
-  console.log({ email: session!.user!.email });
   let pageProps = (await postFetch("/api/shoppinglist/get-page-props", {
     email: session!.user!.email!,
   })) as ShoppingListPageProps;

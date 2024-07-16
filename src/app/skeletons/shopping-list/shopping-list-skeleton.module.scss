@@ -1,0 +1,49 @@
+
+
+.ShoppingListHeading {
+  gap: 16px;
+  padding: 32px 32px 16px 32px;
+  width: 100%;
+}
+
+.ShoppingListSearch,
+.ShoppingListForSelect,
+.ShoppingListQuantity,
+.ShoppingListAddButton {
+  height: 36px;
+}
+
+
+.ShoppingListSearch {
+  flex-grow: 1;
+}
+
+.ShoppingListForSelect {
+  width: calc(300px * 1.5);
+}
+
+.ShoppingListQuantity {
+  width: calc(120px * 1.5);
+}
+
+.ShoppingListAddButton {
+  width: calc(64px * 1.5);
+}
+
+.ShoppingListFooter {
+  padding: 16px 32px 32px 32px;
+  height: 84px;
+}
+
+.ShoppingListFooterButton {
+  width: calc(126.47px);
+}
+
+.ShoppingListBody {
+  flex-grow: 1;
+}
+
+.ShoppingListBodySkeleton {
+  margin: 0 32px;
+  width: 100%;
+}
