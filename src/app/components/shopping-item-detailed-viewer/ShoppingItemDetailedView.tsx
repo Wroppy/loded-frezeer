@@ -8,6 +8,8 @@ import { ActionIcon, Flex } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import ShoppingItemDetailedViewFooter from "./shopping-item-detailed-view-footer/ShoppingItemDetailedViewFooter";
 import DetailedViewBody from "./DetailedViewBody";
+import DetailedViewDrawer from "./DetailedViewDrawer";
+import { useViewportSize } from "@mantine/hooks";
 
 type Props = {};
 
@@ -16,20 +18,31 @@ const ShoppingItemDetailedView = (props: Props) => {
     ShoppingListContext
   ) as ShoppingListContextType;
 
+  const { width } = useViewportSize();
+
   return (
     <>
       {selectedItem && (
-        <div className={styles.ShoppingItemDetailedView}>
-          {/* Exit button  */}
+        <>
+          <DetailedViewDrawer visible={width <= 800} />
+          <div
+            className={styles.ShoppingItemDetailedView}
+            style={{ display: width > 800 ? "flex" : "none" }}
+          >
+            {/* Exit button  */}
 
-          <Flex justify="end" style={{ width: "100%" }}>
-            <ActionIcon variant="outline" onClick={() => setSelectedItem(null)}>
-              <IconX style={{ width: "70%", height: "70%" }} stroke={1.5} />
-            </ActionIcon>
-          </Flex>
-          <DetailedViewBody />
-          <ShoppingItemDetailedViewFooter />
-        </div>
+            <Flex justify="end" style={{ width: "100%" }}>
+              <ActionIcon
+                variant="outline"
+                onClick={() => setSelectedItem(null)}
+              >
+                <IconX style={{ width: "70%", height: "70%" }} stroke={1.5} />
+              </ActionIcon>
+            </Flex>
+            <DetailedViewBody />
+            <ShoppingItemDetailedViewFooter />
+          </div>
+        </>
       )}
     </>
   );

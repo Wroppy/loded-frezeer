@@ -12,6 +12,9 @@ type ShoppingListContextType = {
   email: string;
   name: string;
   tenantNames: string[];
+  drawerOpened: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 };
 
 export { type ShoppingListContextType };

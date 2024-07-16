@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./shopping-list-page.module.scss";
 import ShoppingList from "../components/shopping-list/ShoppingList";
 import ShoppingListPageHeader from "../components/shopping-list-page-header/ShoppingListPageHeader";
@@ -11,6 +11,7 @@ import { ShoppingListPageProps } from "../types/ShoppingListPageProps";
 import { postFetch } from "../utils/postFetch";
 import { showErrorMessage } from "../utils/showErrorMessage";
 import { showSuccessMessage } from "../utils/showSucessMessage";
+import { useDisclosure } from "@mantine/hooks";
 
 const ShoppingListPage = ({
   userName,
@@ -67,7 +68,7 @@ const ShoppingListPage = ({
     setShoppingList(newShoppingList);
 
     // If the selected item is the one being updated, update it
-    if (selectedItem && selectedItem.id === newItem.id) {
+    if (selectedItemPriv && selectedItemPriv.id === newItem.id) {
       setSelectedItem(newItem);
     }
   };
@@ -87,23 +88,45 @@ const ShoppingListPage = ({
     setShoppingList(newShoppingList);
 
     // If the selected item is the one being updated, update it
-    if (selectedItem) {
-      const newItem = newItems.find((item) => item.id === selectedItem.id);
+    if (selectedItemPriv) {
+      const newItem = newItems.find((item) => item.id === selectedItemPriv.id);
       if (newItem) {
         setSelectedItem(newItem);
       }
     }
   };
 
-  const [selectedItem, setSelectedItem] = useState<ShoppingItem | null>(null);
+  const [selectedItemPriv, setSelectedItemPriv] = useState<ShoppingItem | null>(
+    null
+  );
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const setSelectedItem = (item: ShoppingItem | null) => {
+    setSelectedItemPriv(item);
+    if (item) {
+      open();
+    } else {
+      close();
+    }
+  };
 
   const clearSelectedItem = () => {
     setSelectedItem(null);
   };
 
-  React.useEffect(() => {
-    console.log(shoppingList);
-  }, [shoppingList]);
+  const openDrawer = () => {
+    open();
+  };
+
+  const closeDrawer = () => {
+    close();
+    clearSelectedItem();
+  };
+
+  useEffect(() => {
+    console.log(selectedItemPriv);
+    
+  }, [selectedItemPriv]);
 
   return (
     <ShoppingListContext.Provider
@@ -115,10 +138,13 @@ const ShoppingListPage = ({
         addItem,
         removeItem,
         updateItem,
-        selectedItem,
+        selectedItem: selectedItemPriv,
         setSelectedItem,
         clearSelectedItem,
         tenantNames: names,
+        drawerOpened: opened,
+        openDrawer,
+        closeDrawer,
       }}
     >
       <div className={styles.ShoppingListPage}>
