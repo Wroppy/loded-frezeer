@@ -6,8 +6,9 @@
 /* Changes flex direction when the page is small  */
 @media (max-width: 800px) {
   .ChoresViewer {
-    flex-direction: column;
     align-items: center;
+    justify-content: center !important;
+    
   }
 }
 
@@ -21,4 +22,12 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 32px;
+}
+
+@media (max-width: 800px) {
+  .SkeletonChores {
+    flex-direction: row; // Skeleton reverses it ?
+    align-items: center;
+    justify-content: center;
+  }
 }
