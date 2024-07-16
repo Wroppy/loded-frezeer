@@ -28,3 +28,8 @@ body {
 :where([data-mantine-color-scheme='dark']) .m_26063560 {
   border-color: var(--mantine-color-dark-2);
 }
+
+a:visited {
+  text-decoration: none;
+  color: initial;
+}
