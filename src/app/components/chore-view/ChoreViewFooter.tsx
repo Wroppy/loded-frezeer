@@ -4,8 +4,7 @@ import { ActionIcon, Flex, Tooltip } from "@mantine/core";
 import { IconChecks, IconEdit, IconTrash } from "@tabler/icons-react";
 import React from "react";
 import ConfirmButton from "../confirm-button/ConfirmButton";
-import ClientChore from "@/app/types/ClientChore";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {
   id: string;
@@ -20,6 +19,12 @@ const ChoreViewFooter = ({
   onCompleteItem,
   onDeleteItem,
 }: Props) => {
+  const router = useRouter();
+
+  const handleEditChore = () => {
+    router.push(`/chores/edit-chore/${id}`);
+  };
+
   return (
     <Flex gap={8} justify={"flex-end"}>
       <Tooltip label="Mark as completed">
@@ -33,11 +38,7 @@ const ChoreViewFooter = ({
         </ConfirmButton>
       </Tooltip>
       <Tooltip label="Edit chore">
-        <ActionIcon
-          variant="outline"
-          component={Link}
-          href={`/chores/edit-chore/${id}`}
-        >
+        <ActionIcon variant="outline" onClick={handleEditChore}>
           <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ActionIcon>
       </Tooltip>
