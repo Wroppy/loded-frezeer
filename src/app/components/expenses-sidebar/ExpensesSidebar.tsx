@@ -1,8 +1,12 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import styles from "./expenses-siderbar.module.scss";
-import { NavLink, Text } from "@mantine/core";
-import { IconUser } from "@tabler/icons-react";
+import { ActionIcon, NavLink, Text } from "@mantine/core";
+import { IconArrowLeft, IconArrowRight, IconUser } from "@tabler/icons-react";
 import ClientUser from "@/app/types/ClientUser";
+import FullSidebar from "./FullSidebar";
+import CollapsedSidebar from "./CollapsedSidebar";
 
 type Props = {};
 
@@ -29,18 +33,26 @@ const ExpensesSidebar = (props: Props) => {
       email: "",
     },
   ];
+
+  const [open, setOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setOpen(!open);
+  };
+
   return (
-    <div className={styles.ExpensesSidebar}>
-      <div className={styles.ExpensesSidebarHeader}>
-        <IconUser className={styles.ExpensesSidebarUserIcon} />
-        <Text c="blue">Users</Text>
+    <div
+    style={{
+      maxWidth: open ? "200px" : "50px",
+    }} className={styles.ExpensesSidebar}>
+      <div className={styles.ExpensesBody}>
+      <FullSidebar users={users} visible={open} />
+      <CollapsedSidebar visible={!open} />
       </div>
-      <div>
-        {users.map((user) => (
-          <div key={user.email} className={styles.ExpensesSidebarUser}>
-            <NavLink className={styles.ExpensesUserLink} label={user.name}/>
-          </div>
-        ))}
+      <div className={styles.ExpensesFooter}>
+        <ActionIcon onClick={toggleSidebar}>
+          {open ? <IconArrowLeft /> : <IconArrowRight />}
+        </ActionIcon>
       </div>
     </div>
   );

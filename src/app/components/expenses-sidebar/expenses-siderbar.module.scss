@@ -1,11 +1,12 @@
 .ExpensesSidebar {
-  max-width: 200px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .ExpensesSidebarHeader {
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px 13px;
   display: flex;
   gap: 4px;
 }
@@ -17,3 +18,17 @@
 .ExpensesUserLink {
   padding: 8px 16px;
 }
+
+.ExpensesFooter {
+  padding: 8px 13px;
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+
+}
+
+.ExpensesBody {
+  flex-grow: 1;
+}
+
+

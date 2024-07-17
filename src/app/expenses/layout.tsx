@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./expenses.module.scss";
 import ExpensesSidebar from "../components/expenses-sidebar/ExpensesSidebar";
-import { Divider } from "@mantine/core";
+import { ActionIcon, Divider } from "@mantine/core";
 type Props = { children: React.ReactNode };
 
 const layout = ({ children }: Props) => {
@@ -10,6 +10,7 @@ const layout = ({ children }: Props) => {
       <ExpensesSidebar />
       <Divider orientation="vertical" />
       <div className={styles.ExpensesMainContent}>{children}</div>
+
     </div>
   );
 };
