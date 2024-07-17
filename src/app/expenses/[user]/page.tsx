@@ -7,8 +7,8 @@ type Props = {
 };
 
 const page = ({ params }: Props) => {
-  const { user: targetUser } = params;
-
+  const targetUser = params.user.replace("-", "@");
+  
   return <div>{targetUser}</div>;
 };
 
