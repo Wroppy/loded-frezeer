@@ -8,32 +8,9 @@ import ClientUser from "@/app/types/ClientUser";
 import FullSidebar from "./FullSidebar";
 import CollapsedSidebar from "./CollapsedSidebar";
 
-type Props = {};
+type Props = { users: ClientUser[] };
 
-const ExpensesSidebar = (props: Props) => {
-  const users: ClientUser[] = [
-    {
-      name: "John Doe",
-      email: "",
-    },
-    {
-      name: "Jane Doe",
-      email: "",
-    },
-    {
-      name: "Alice",
-      email: "",
-    },
-    {
-      name: "Bob",
-      email: "",
-    },
-    {
-      name: "Charlie",
-      email: "",
-    },
-  ];
-
+const ExpensesSidebar = ({ users }: Props) => {
   const [open, setOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -42,12 +19,14 @@ const ExpensesSidebar = (props: Props) => {
 
   return (
     <div
-    style={{
-      maxWidth: open ? "200px" : "50px",
-    }} className={styles.ExpensesSidebar}>
+      style={{
+        maxWidth: open ? "200px" : "50px",
+      }}
+      className={styles.ExpensesSidebar}
+    >
       <div className={styles.ExpensesBody}>
-      <FullSidebar users={users} visible={open} />
-      <CollapsedSidebar visible={!open} />
+        <FullSidebar users={users} visible={open} />
+        <CollapsedSidebar visible={!open} />
       </div>
       <div className={styles.ExpensesFooter}>
         <ActionIcon onClick={toggleSidebar}>
