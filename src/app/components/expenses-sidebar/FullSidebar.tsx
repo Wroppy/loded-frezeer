@@ -3,6 +3,7 @@ import { NavLink, Text } from "@mantine/core";
 import { IconUser } from "@tabler/icons-react";
 import React from "react";
 import styles from "./expenses-siderbar.module.scss";
+import Link from "next/link";
 
 type Props = { users: ClientUser[]; visible: boolean };
 
@@ -18,11 +19,12 @@ const FullSidebar = ({ users, visible }: Props) => {
         <Text c="blue">Users</Text>
       </div>
       <div>
-        {users.map((user) => (
-          <div key={user.email} className={styles.ExpensesSidebarUser}>
-            <NavLink className={styles.ExpensesUserLink} label={user.name} />
-          </div>
-        ))}
+        {users.map((user) => {
+          const link = `/expenses/${user.email.replace("@", "-")}`;
+          return (<div key={user.email} className={styles.ExpensesSidebarUser}>
+            <NavLink component={Link} href={link} className={styles.ExpensesUserLink} label={user.name} />
+          </div>)
+})}
       </div>
     </div>
   );
