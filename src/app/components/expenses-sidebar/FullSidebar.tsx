@@ -14,6 +14,7 @@ const FullSidebar = ({ users, visible }: Props) => {
         display: visible ? "block" : "none",
       }}
     >
+      <NavLink component={Link} href="/expenses" className={styles.ExpensesUserLink} label="All" />
       <div className={styles.ExpensesSidebarHeader}>
         <IconUser className={styles.ExpensesSidebarUserIcon} />
         <Text c="blue">Users</Text>
