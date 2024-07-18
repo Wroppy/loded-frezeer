@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Loded Frezeer
 
-## Getting Started
+Welcome to Loded Frezeer, a website for managing the shared expenses, chores and shopping lists for my current university flat, and yes, we do have a loaded freezer.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Expense Tracking
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Keep track of shared expenses such as soap, toiletries, general cooking supplies, etc
+- Easily add, edit, and categorize expenses for transparency and accountability.
+- Get an overview of who owes what and to who.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Chore Management
 
-## Learn More
+- Assign and track household chores among roommates.
+- Set recurring tasks and deadlines to ensure chores are completed on time.
 
-To learn more about Next.js, take a look at the following resources:
+### Shopping List
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Create a collaborative shopping list for essential items needed for the flat.
+- Add items as they run out or as needed, ensuring nothing is forgotten during the next shopping trip.
+- Check off items as they are purchased or replenished.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Automatic Splitting and Payment Groups
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Automatically calculate and split shared expenses among roommates based on predefined rules or custom allocations.
+- Set up payment groups to facilitate easy transactions and settlements.
+- Keep track of who has paid their share and who still owes money.
