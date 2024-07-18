@@ -329,6 +329,25 @@ export default class DatabaseManager {
   }
 
   /**
+   * Given an email, returns the client user object
+   *
+   * @param email the email of the user
+   * @returns the client user object
+   */
+  public async getClientUser(email: string): Promise<ClientUser> {
+    const user = await this.getUser(email);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      name: user.name,
+      email: user.email,
+    };
+  }
+
+  /**
    * Given an email, name, description, expected cycle, starting user, and order, creates a new chore in the database
    * and returns the chore
    *
