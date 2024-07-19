@@ -1,6 +1,6 @@
 "use client";
 
-import ManageChoreComponent from "@/app/components/ManageChoreComponent/ManageChoreComponent";
+import ManageChoreComponent from "@/app/components/manage-chore-component/ManageChoreComponent";
 import BareBonesChore from "@/app/types/BareBonesChore";
 import ClientChore from "@/app/types/ClientChore";
 import ClientUser from "@/app/types/ClientUser";

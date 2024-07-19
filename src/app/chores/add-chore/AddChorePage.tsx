@@ -1,7 +1,7 @@
 "use client";
 
 import BareBonesChore from "@/app/types/BareBonesChore";
-import ManageChoreComponent from "@/app/components/ManageChoreComponent/ManageChoreComponent";
+import ManageChoreComponent from "@/app/components/manage-chore-component/ManageChoreComponent";
 import { Flex } from "@mantine/core";
 import React, { useState } from "react";
 import ClientUser from "@/app/types/ClientUser";
