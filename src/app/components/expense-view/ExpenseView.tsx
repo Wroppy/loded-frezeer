@@ -22,7 +22,7 @@ const toClassName = (status: ExpenseStatus) => {
   }
 };
 
-const ExpenseView = ({ expense, email }: Props) => {
+const ExpenseView = ({ expense }: Props) => {
   return (
     <TableTr key={expense.id}>
       <TableTd>

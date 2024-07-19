@@ -9,6 +9,7 @@ import { toTwoDp } from "@/app/utils/toTwoDp";
 import ExpenseStatus from "@/app/Enums/ExpenseStatus";
 import ExpenseView from "@/app/components/expense-view/ExpenseView";
 import { getServerSession } from "next-auth";
+import OutgoingExpensesTable from "@/app/components/outgoing-expenses-table/OutgoingExpensesTable";
 
 type Props = {
   params: {
@@ -20,46 +21,10 @@ const page = async ({ params }: Props) => {
   const targetUser = params.user.replace("-", "@");
   const email = (await getServerSession())!.user!.email!;
 
-  const expenses: Expense[] = [
-    {
-      id: "1",
-      description: "Pizza",
-      amount: 10,
-      date: new Date(),
-      from: { email: "wxwong806@gmail.com", name: "Weyman" },
-      to: { email: "wxwong807@gmail.com", name: "Bob" },
-      status: ExpenseStatus.Pending,
-    },
-    {
-      id: "2",
-      description: "Burger",
-      amount: 5,
-      date: new Date(),
-      from: { email: "wxwong807@gmail.com", name: "Bob" },
-      to: { email: "wxwong806@gmail.com", name: "Weyman" },
-      status: ExpenseStatus.Paid,
-    },
-    {
-      id: "3",
-      description: "Sushi",
-      amount: 999,
-      date: new Date(),
-      from: { email: "wxwong807@gmail.com", name: "Bob" },
-      to: { email: "wxwong806@gmail.com", name: "Weyman" },
-      status: ExpenseStatus.Partial,
-    },
-  ];
-
   return (
     <div className={styles.UserExpenses}>
-      <Suspense>
-        <UserExpensesHeading targetUser={targetUser} />
-      </Suspense>
-      <ExpenseTable heading="Expenses" moneyColumnText="Amount">
-        {expenses.map((expense) => (
-          <ExpenseView expense={expense} key={expense.id} email={email} />
-        ))}
-      </ExpenseTable>
+      <UserExpensesHeading targetUser={targetUser} />
+      <OutgoingExpensesTable targetUser={targetUser} />
     </div>
   );
 };
