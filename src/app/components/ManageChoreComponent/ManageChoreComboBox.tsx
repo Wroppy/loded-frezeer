@@ -10,7 +10,6 @@ import {
   ComboboxOption,
   useCombobox,
 } from "@mantine/core";
-import { User } from "next-auth";
 import React from "react";
 
 type Props = {
