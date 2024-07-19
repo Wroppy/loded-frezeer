@@ -61,7 +61,7 @@ const ConfirmButton = ({
             >
               Confirm
             </Button>
-            <Button loading={loading} variant="outline" color="gray">
+            <Button onClick={() => setOpened(false)} loading={loading} variant="outline" color="gray">
               Cancel
             </Button>
           </Flex>
