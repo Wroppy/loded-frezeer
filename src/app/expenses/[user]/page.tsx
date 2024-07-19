@@ -7,6 +7,8 @@ import UserExpensesHeading from "./UserExpensesHeading";
 import ExpenseTable from "@/app/components/expense-table/ExpenseTable";
 import { toTwoDp } from "@/app/utils/toTwoDp";
 import ExpenseStatus from "@/app/Enums/ExpenseStatus";
+import ExpenseView from "@/app/components/expense-view/ExpenseView";
+import { getServerSession } from "next-auth";
 
 type Props = {
   params: {
@@ -14,8 +16,9 @@ type Props = {
   };
 };
 
-const page = ({ params }: Props) => {
+const page = async ({ params }: Props) => {
   const targetUser = params.user.replace("-", "@");
+  const email = (await getServerSession())!.user!.email!;
 
   const expenses: Expense[] = [
     {
@@ -34,7 +37,7 @@ const page = ({ params }: Props) => {
       date: new Date(),
       from: { email: "wxwong807@gmail.com", name: "Bob" },
       to: { email: "wxwong806@gmail.com", name: "Weyman" },
-      status: ExpenseStatus.Approved,
+      status: ExpenseStatus.Paid,
     },
     {
       id: "3",
@@ -54,10 +57,7 @@ const page = ({ params }: Props) => {
       </Suspense>
       <ExpenseTable heading="Expenses" moneyColumnText="Amount">
         {expenses.map((expense) => (
-          <TableTr key={expense.id}>
-            <TableTd>{expense.description}</TableTd>
-            <TableTd>${toTwoDp(expense.amount)}</TableTd>
-          </TableTr>
+          <ExpenseView expense={expense} key={expense.id} email={email} />
         ))}
       </ExpenseTable>
     </div>

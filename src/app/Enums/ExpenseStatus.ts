@@ -1,6 +1,6 @@
 enum ExpenseStatus {
     Pending = "Pending",
-    Approved = "Approved",
+    Paid = "Paid",
     Partial = "Partial",
 }
 

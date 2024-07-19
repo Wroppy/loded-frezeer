@@ -1,4 +1,14 @@
-import { Flex, Table, TableTbody, TableTh, TableThead } from "@mantine/core";
+import ExpenseStatus from "@/app/Enums/ExpenseStatus";
+import {
+  Flex,
+  Table,
+  TableTbody,
+  TableTh,
+  TableThead,
+  TableTr,
+  ThemeIcon,
+} from "@mantine/core";
+import { IconPointFilled } from "@tabler/icons-react";
 import { ReactNode } from "react";
 
 type Props = {
@@ -13,8 +23,13 @@ const ExpenseTable = ({ heading, moneyColumnText, children }: Props) => {
       <h3>{heading}</h3>
       <Table>
         <TableThead>
-          <TableTh>User</TableTh>
-          <TableTh style={{width: "75px"}}align="right">{moneyColumnText}</TableTh>
+          <TableTr>
+            <TableTh style={{ width: "100px" }}>Status</TableTh>
+            <TableTh>User</TableTh>
+            <TableTh style={{ width: "75px" }} align="right">
+              {moneyColumnText}
+            </TableTh>
+          </TableTr>
         </TableThead>
         <TableTbody>{children}</TableTbody>
       </Table>
