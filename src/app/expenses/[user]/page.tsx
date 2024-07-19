@@ -1,9 +1,11 @@
 import Expense from "@/app/types/Expense";
 import React, { Suspense } from "react";
 import styles from "./user-expenses.module.scss";
-import { ActionIcon, Tooltip } from "@mantine/core";
+import { ActionIcon, TableTd, TableTr, Tooltip } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import UserExpensesHeading from "./UserExpensesHeading";
+import ExpenseTable from "@/app/components/expense-table/ExpenseTable";
+import { toTwoDp } from "@/app/utils/toTwoDp";
 
 type Props = {
   params: {
@@ -31,6 +33,14 @@ const page = ({ params }: Props) => {
       from: { email: "wxwong807@gmail.com", name: "Bob" },
       to: { email: "wxwong806@gmail.com", name: "Weyman" },
     },
+    {
+      id: "3",  
+      description: "Sushi",
+      amount: 999,
+      date: new Date(),
+      from: { email: "wxwong807@gmail.com", name: "Bob" },
+      to: { email: "wxwong806@gmail.com", name: "Weyman" },
+    },
   ];
 
   return (
@@ -38,6 +48,14 @@ const page = ({ params }: Props) => {
       <Suspense>
         <UserExpensesHeading targetUser={targetUser} />
       </Suspense>
+      <ExpenseTable heading="Expenses" moneyColumnText="Amount">
+        {expenses.map((expense) => (
+          <TableTr key={expense.id}>
+            <TableTd>{expense.description}</TableTd>
+            <TableTd>${toTwoDp(expense.amount)}</TableTd>
+          </TableTr>
+        ))}
+      </ExpenseTable>
     </div>
   );
 };
