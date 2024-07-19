@@ -37,7 +37,7 @@ const AddChorePage = ({ users, email }: Props) => {
   };
 
   return (
-    <Flex justify={"center"} align={"center"} style={{ height: "100%" }}>
+    <Flex justify={"center"} align={"center"} style={{ width: "100%", height: "100%" }}>
       <ManageChoreComponent
         loading={loading}
         onSubmit={onSubmit}
