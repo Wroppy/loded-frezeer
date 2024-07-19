@@ -1,3 +1,4 @@
+import ExpenseStatus from "../Enums/ExpenseStatus";
 import ClientUser from "./ClientUser";
 
 type Expense = {
@@ -7,7 +8,7 @@ type Expense = {
   amount: number;
   description: string;
   date: Date;
-}
+  status: ExpenseStatus;
+};
 
 export default Expense;
-
