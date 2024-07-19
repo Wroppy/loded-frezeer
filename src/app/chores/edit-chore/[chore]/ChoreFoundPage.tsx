@@ -41,7 +41,7 @@ const ChoreFoundPage = ({ users, email, chore }: Props) => {
       users={users}
       chore={chore}
       title={"Edit Chore"}
-      buttonText={"Edit Chore"}
+      buttonText={"Save Chore"}
       loading={loading}
     />
   );
