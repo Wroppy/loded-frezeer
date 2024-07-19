@@ -38,7 +38,7 @@ const ChoreViewFooter = ({
         </ConfirmButton>
       </Tooltip>
       <Tooltip label="Edit chore">
-        <ActionIcon variant="outline" onClick={handleEditChore}>
+        <ActionIcon variant="outline" onClick={handleEditChore} loading={loading}>
           <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ActionIcon>
       </Tooltip>
