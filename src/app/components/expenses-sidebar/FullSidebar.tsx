@@ -21,7 +21,7 @@ const FullSidebar = ({ users, visible }: Props) => {
       </div>
       <div>
         {users.map((user) => {
-          const link = `/expenses/${user.email.replace("@", "-")}`;
+          const link = `/expenses/user/${user.email.replace("@", "-")}`;
           return (<div key={user.email} className={styles.ExpensesSidebarUser}>
             <NavLink component={Link} href={link} className={styles.ExpensesUserLink} label={user.name} />
           </div>)
