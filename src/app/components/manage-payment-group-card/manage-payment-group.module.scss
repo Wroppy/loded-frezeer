@@ -1,0 +1,29 @@
+.ManagePaymentGroupCardParent {
+  width: 700px;
+
+  .ManagePaymentGroupCard {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+    
+    .ManagePaymentGroupHeader {
+      font-size: 1.25rem;
+    }
+
+    .ManagePaymentGroupBody {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+    }
+
+    .ManagePaymentGroupFooter {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+
+    }
+  }
+}
