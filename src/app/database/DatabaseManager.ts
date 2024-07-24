@@ -19,6 +19,7 @@ import ServerChore from "../types/ServerChore";
 import ClientChore from "../types/ClientChore";
 import BareBonesChore from "../types/BareBonesChore";
 import { PaymentGroupModel } from "./models/PaymentGroupSchema";
+import PaymentGroup from "../types/PaymentGroup";
 
 export default class DatabaseManager {
   constructor() {
@@ -649,5 +650,28 @@ export default class DatabaseManager {
     const group = new PaymentGroupModel(paymentGroup);
 
     await group.save();
+  }
+
+  public async getPaymentGroups(email: string): Promise<PaymentGroup[]> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const groups = (await PaymentGroupModel.find()) as PaymentGroup[];
+
+    let userGroups: PaymentGroup[] = [];
+
+    for (let group of groups) {
+      for (let user of group.users) {
+        if (user.email === email) {
+          userGroups.push({name: group.name, users: group.users, id: group.id});
+          break;
+        }
+      }
+    }
+
+    return userGroups;
   }
 }
