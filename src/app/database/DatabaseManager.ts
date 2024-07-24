@@ -666,12 +666,63 @@ export default class DatabaseManager {
     for (let group of groups) {
       for (let user of group.users) {
         if (user.email === email) {
-          userGroups.push({name: group.name, users: group.users, id: group.id});
+          userGroups.push({
+            name: group.name,
+            users: group.users,
+            id: group.id,
+          });
           break;
         }
       }
     }
 
     return userGroups;
+  }
+
+  public async editPaymentGroup(
+    id: string,
+    name: string,
+    users: ClientUser[],
+    email: string
+  ) {
+    // Validates that the user is in a flat
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    // Checks that all users in the payment group are in the flat
+    for (let user of users) {
+      if (!flat.tenants.includes(user.email)) {
+        throw new Error("User in payment group is not in the flat");
+      }
+    }
+
+    // Finds the payment group
+    const group = await PaymentGroupModel.findOne({ id });
+
+    if (!group) {
+      throw new Error("Payment group not found");
+    }
+
+    // Checks that the user is in the payment group
+    let userInGroup = false;
+    for (let user of group.users) {
+      if (user.email === email) {
+        userInGroup = true;
+        break;
+      }
+    }
+
+    if (!userInGroup) {
+      throw new Error("User not in payment group");
+    }
+
+    // Updates the payment group
+    group.name = name;
+    group.users = users;
+    await (group as any).markModified("users");
+    await (group as any).save();
   }
 }
