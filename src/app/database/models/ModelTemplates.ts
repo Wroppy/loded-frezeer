@@ -4,6 +4,8 @@ import { User } from "../types/User";
 import { getRandomId } from "../Utils";
 import ServerChore from "@/app/types/ServerChore";
 import ChoreCycles from "@/app/Enums/ChoreCycles";
+import PaymentGroup from "@/app/types/PaymentGroup";
+import ClientUser from "@/app/types/ClientUser";
 
 export const UserTemplate = (
   name: string,
@@ -64,5 +66,16 @@ export const ChoreTemplate = (
     previousUser: null,
     expectedUser,
     order,
+  };
+};
+
+export const PaymentGroupTemplate = (
+  name: string,
+  users: ClientUser[]
+): PaymentGroup => {
+  return {
+    name,
+    users,
+    id: getRandomId(),
   };
 };

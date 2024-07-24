@@ -4,6 +4,7 @@ import {
   FlatTemplate,
   UserTemplate,
   ChoreTemplate,
+  PaymentGroupTemplate,
 } from "./models/ModelTemplates";
 import { comparePassword, hashPassword, copyObject } from "./Utils";
 import { User } from "./types/User";
@@ -17,6 +18,7 @@ import ChoreCycles from "../Enums/ChoreCycles";
 import ServerChore from "../types/ServerChore";
 import ClientChore from "../types/ClientChore";
 import BareBonesChore from "../types/BareBonesChore";
+import { PaymentGroupModel } from "./models/PaymentGroupSchema";
 
 export default class DatabaseManager {
   constructor() {
@@ -619,5 +621,33 @@ export default class DatabaseManager {
 
     await (chore as any).markModified("order");
     await (chore as any).save();
+  }
+
+  public async addPaymentGroup(
+    email: string,
+    name: string,
+    users: ClientUser[]
+  ) {
+    if (users.length === 0) {
+      throw new Error("Payment group must have users");
+    }
+
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    // Checks that all users in the payment group are in the flat
+    for (let user of users) {
+      if (!flat.tenants.includes(user.email)) {
+        throw new Error("User in payment group is not in the flat");
+      }
+    }
+
+    const paymentGroup = PaymentGroupTemplate(name, users);
+    const group = new PaymentGroupModel(paymentGroup);
+
+    await group.save();
   }
 }
