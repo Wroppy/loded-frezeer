@@ -4,8 +4,7 @@ import ClientUser from "@/app/types/ClientUser";
 import PaymentGroup from "@/app/types/PaymentGroup";
 import { postFetch } from "@/app/utils/postFetch";
 import { Button, Card, MultiSelect, Select, TextInput } from "@mantine/core";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import styles from "./manage-payment-group.module.scss";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
@@ -17,6 +16,7 @@ type Props = {
   users: ClientUser[];
   redirectUrl: string;
   fetchUrl: string;
+  email: string;
 };
 
 const ManagePaymentGroupCard = ({
@@ -26,11 +26,15 @@ const ManagePaymentGroupCard = ({
   paymentGroup,
   redirectUrl,
   fetchUrl,
+  email,
 }: Props) => {
+  // States for the payment group
   const [name, setName] = useState(paymentGroup?.name || "");
   const [selectedUsers, setSelectedUsers] = useState<ClientUser[]>(
     paymentGroup?.users || []
   );
+
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -38,16 +42,37 @@ const ManagePaymentGroupCard = ({
     setName(name.trim());
 
     if (!name) {
-      showErrorMessage("An Error occurred while creating a payment group", "The name field is required");
+      showErrorMessage(
+        "An Error occurred while creating a payment group",
+        "The name field is required"
+      );
       return;
     }
 
     if (selectedUsers.length === 0) {
-      showErrorMessage("An Error occurred while creating a payment group", "At least one user must be selected");
+      showErrorMessage(
+        "An Error occurred while creating a payment group",
+        "At least one user must be selected"
+      );
       return;
     }
 
-    console.log(name, selectedUsers);
+    const res = await postFetch(fetchUrl, {
+      email,
+      name,
+      users: selectedUsers,
+      id: paymentGroup?.id,
+    });
+
+    if (res.error) {
+      showErrorMessage(
+        "An Error occurred while creating a payment group",
+        res.error
+      );
+      return;
+    }
+
+    router.push(redirectUrl);
   };
 
   return (

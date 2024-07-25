@@ -1,5 +1,4 @@
 import ManagePaymentGroupCard from "@/app/components/manage-payment-group-card/ManagePaymentGroupCard";
-import ClientUser from "@/app/types/ClientUser";
 import { postFetch } from "@/app/utils/postFetch";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -19,11 +18,12 @@ const page = async (props: Props) => {
 
   const { users } = res;
 
-  const url = "";
+  const url = "/api/payment-group/add";
   const redirectUrl = "/expenses/payment-group";
 
   return (
     <ManagePaymentGroupCard
+      email={email}
       title="Create Payment Group"
       buttonText="Create"
       users={users}
