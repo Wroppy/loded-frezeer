@@ -29,7 +29,7 @@ const ExpensesSidebar = ({ users }: Props) => {
         <CollapsedSidebar visible={!open} />
       </div>
       <div className={styles.ExpensesFooter}>
-        <ActionIcon onClick={toggleSidebar}>
+        <ActionIcon variant="outline" onClick={toggleSidebar}>
           {open ? <IconArrowLeft /> : <IconArrowRight />}
         </ActionIcon>
       </div>
