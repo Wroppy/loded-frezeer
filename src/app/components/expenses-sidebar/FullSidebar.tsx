@@ -14,18 +14,30 @@ const FullSidebar = ({ users, visible }: Props) => {
         display: visible ? "block" : "none",
       }}
     >
-      <NavLink component={Link} href="/expenses" className={styles.ExpensesUserLink} label="All" />
       <div className={styles.ExpensesSidebarHeader}>
         <IconUser className={styles.ExpensesSidebarUserIcon} />
         <Text c="blue">Users</Text>
       </div>
       <div>
+        <NavLink
+          component={Link}
+          href="/expenses"
+          className={styles.ExpensesUserLink}
+          label="All"
+        />
         {users.map((user) => {
           const link = `/expenses/user/${user.email.replace("@", "-")}`;
-          return (<div key={user.email} className={styles.ExpensesSidebarUser}>
-            <NavLink component={Link} href={link} className={styles.ExpensesUserLink} label={user.name} />
-          </div>)
-})}
+          return (
+            <div key={user.email} className={styles.ExpensesSidebarUser}>
+              <NavLink
+                component={Link}
+                href={link}
+                className={styles.ExpensesUserLink}
+                label={user.name}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
