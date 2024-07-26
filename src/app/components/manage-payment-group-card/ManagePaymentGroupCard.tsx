@@ -104,7 +104,7 @@ const ManagePaymentGroupCard = ({
           />
         </div>
         <div className={styles.ManagePaymentGroupFooter}>
-          <Button variant="outline" color="red">
+          <Button variant="outline" color="red" onClick={() => router.push("/expenses/payment-group")}>
             Cancel
           </Button>
           <Button type="submit">{buttonText}</Button>
