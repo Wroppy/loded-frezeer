@@ -42,6 +42,14 @@ const NavBarDrawer = ({ opened, close }: Props) => {
     return validLinks.some((link) => path.startsWith(link)) || path === "/";
   };
 
+  const isButtonActive = (href: string): boolean => {
+    if (href === "/") {
+      return path === "/";
+    }
+
+    return path.startsWith(href);
+  }
+
   return (
     <Drawer opened={opened} onClose={close} title={"Loded Frezeer"}>
       <Flex
@@ -58,7 +66,7 @@ const NavBarDrawer = ({ opened, close }: Props) => {
               href={href}
               label={title}
               variant="light"
-              active={path === href}
+              active={isButtonActive(href)}
               disabled={!isPathValid()}
               component={Link}
             />
