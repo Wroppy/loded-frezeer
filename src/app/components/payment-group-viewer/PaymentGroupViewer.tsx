@@ -17,11 +17,16 @@ const PaymentGroupViewer = async (props: Props) => {
     redirect("/flatmates");
   }
 
-  const { groups } = res as { groups: PaymentGroup[] };
+
+  let { groups } = res as { groups: PaymentGroup[] };
   return (
     <div className={styles.PaymentGroupViewer}>
       {groups.map((group, i) => (
-        <PaymentGroupView key={i} paymentGroup={group} />
+        <PaymentGroupView
+          email={email}
+          key={i}
+          paymentGroup={group}
+        />
       ))}
     </div>
   );

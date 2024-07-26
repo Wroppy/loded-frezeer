@@ -1,18 +1,40 @@
 "use client";
 
 import PaymentGroup from "@/app/types/PaymentGroup";
-import { ActionIcon, Card, Flex } from "@mantine/core";
+import { ActionIcon, Card, Flex, useRadioCardContext } from "@mantine/core";
 import React, { useState } from "react";
 import styles from "./payment-group-view.module.scss";
 import ConfirmButton from "../confirm-button/ConfirmButton";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { postFetch } from "@/app/utils/postFetch";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import { useRouter } from "next/navigation";
 
 type Props = {
   paymentGroup: PaymentGroup;
+  email: string;
 };
 
-const PaymentGroupView = ({ paymentGroup }: Props) => {
+const PaymentGroupView = ({ paymentGroup, email }: Props) => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const onDelete = async () => {
+    setLoading(true);
+
+    const res = await postFetch("/api/payment-group/delete", {
+      id: paymentGroup.id,
+      email,
+    });
+
+    if (res.error) {
+      showErrorMessage("Failed to delete payment group", res.error);
+      return;
+    }
+
+    setLoading(false);
+    router.refresh();
+  };
 
   return (
     <Card className={styles.PaymentGroupView}>
@@ -25,10 +47,10 @@ const PaymentGroupView = ({ paymentGroup }: Props) => {
           ))}
         </div>
         <Flex justify={"flex-end"} gap="sm">
-          <ConfirmButton text="Are you sure?" loading={loading} color="green">
+          <ActionIcon variant="outline" loading={loading}>
             <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
-          </ConfirmButton>
-          <ConfirmButton text="Are you sure?" loading={loading}>
+          </ActionIcon>
+          <ConfirmButton onClick={onDelete} text="Are you sure?" loading={loading}>
             <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
           </ConfirmButton>
         </Flex>
