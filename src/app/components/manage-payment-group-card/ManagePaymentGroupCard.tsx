@@ -73,6 +73,7 @@ const ManagePaymentGroupCard = ({
     }
 
     router.push(redirectUrl);
+    router.refresh();
   };
 
   return (
