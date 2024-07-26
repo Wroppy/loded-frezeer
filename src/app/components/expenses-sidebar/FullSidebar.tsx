@@ -1,9 +1,9 @@
 import ClientUser from "@/app/types/ClientUser";
-import { NavLink, Text } from "@mantine/core";
+import { Text } from "@mantine/core";
 import { IconUser } from "@tabler/icons-react";
 import React from "react";
 import styles from "./expenses-siderbar.module.scss";
-import Link from "next/link";
+import SidebarNavLink from "./SidebarNavLink";
 
 type Props = { users: ClientUser[]; visible: boolean };
 
@@ -19,22 +19,12 @@ const FullSidebar = ({ users, visible }: Props) => {
         <Text c="blue">Users</Text>
       </div>
       <div>
-        <NavLink
-          component={Link}
-          href="/expenses"
-          className={styles.ExpensesUserLink}
-          label="All"
-        />
+        <SidebarNavLink href="/expenses" label="All Users" />
         {users.map((user) => {
           const link = `/expenses/user/${user.email.replace("@", "-")}`;
           return (
             <div key={user.email} className={styles.ExpensesSidebarUser}>
-              <NavLink
-                component={Link}
-                href={link}
-                className={styles.ExpensesUserLink}
-                label={user.name}
-              />
+              <SidebarNavLink href={link} label={user.name} />
             </div>
           );
         })}
