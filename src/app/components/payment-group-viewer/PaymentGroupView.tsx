@@ -36,6 +36,10 @@ const PaymentGroupView = ({ paymentGroup, email }: Props) => {
     router.refresh();
   };
 
+  const onEdit = () => {
+    router.push(`/expenses/payment-group/edit/${paymentGroup.id}`);
+  }
+
   return (
     <Card className={styles.PaymentGroupView}>
       <h2>{paymentGroup.name}</h2>
@@ -48,7 +52,7 @@ const PaymentGroupView = ({ paymentGroup, email }: Props) => {
         </div>
       </div>
       <Flex justify={"flex-end"} gap="sm">
-        <ActionIcon variant="outline" loading={loading}>
+        <ActionIcon variant="outline" loading={loading} onClick={onEdit}>
           <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
         </ActionIcon>
         <ConfirmButton
