@@ -1,5 +1,5 @@
 import PaymentGroupViewer from "@/app/components/payment-group-viewer/PaymentGroupViewer";
-import React from "react";
+import React, { Suspense } from "react";
 import styles from "./payment-group-page.module.scss";
 import PaymentGroupPageHeader from "./PaymentGroupPageHeader";
 
@@ -9,7 +9,9 @@ const page = async (props: Props) => {
   return (
     <div className={styles.PaymentGroupPage}>
       <PaymentGroupPageHeader />
-      <PaymentGroupViewer />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaymentGroupViewer />
+      </Suspense>
     </div>
   );
 };
