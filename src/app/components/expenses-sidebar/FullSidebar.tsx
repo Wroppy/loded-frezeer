@@ -1,9 +1,9 @@
 import ClientUser from "@/app/types/ClientUser";
-import { Text } from "@mantine/core";
 import { IconUser } from "@tabler/icons-react";
 import React from "react";
 import styles from "./expenses-siderbar.module.scss";
 import SidebarNavLink from "./SidebarNavLink";
+import ExpensesSidebarHeading from "./ExpensesSidebarHeading";
 
 type Props = { users: ClientUser[]; visible: boolean };
 
@@ -14,10 +14,7 @@ const FullSidebar = ({ users, visible }: Props) => {
         display: visible ? "block" : "none",
       }}
     >
-      <div className={styles.ExpensesSidebarHeader}>
-        <IconUser className={styles.ExpensesSidebarUserIcon} />
-        <Text c="blue">Users</Text>
-      </div>
+      <ExpensesSidebarHeading text="Users" Icon={IconUser} />
       <div>
         <SidebarNavLink href="/expenses" label="All Users" />
         {users.map((user) => {
