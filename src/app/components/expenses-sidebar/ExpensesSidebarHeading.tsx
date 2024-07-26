@@ -11,7 +11,7 @@ const ExpensesSidebarHeading = ({ text, Icon }: Props) => {
   return (
     <div className={styles.ExpensesSidebarHeader}>
       <Icon className={styles.ExpensesSidebarUserIcon} />
-      <Text c="blue">Users</Text>
+      <Text c="blue">{text}</Text>
     </div>
   );
 };

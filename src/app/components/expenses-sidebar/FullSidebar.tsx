@@ -1,5 +1,5 @@
 import ClientUser from "@/app/types/ClientUser";
-import { IconUser } from "@tabler/icons-react";
+import { IconCashBanknote, IconUser } from "@tabler/icons-react";
 import React from "react";
 import styles from "./expenses-siderbar.module.scss";
 import SidebarNavLink from "./SidebarNavLink";
@@ -14,6 +14,13 @@ const FullSidebar = ({ users, visible }: Props) => {
         display: visible ? "block" : "none",
       }}
     >
+      {/* Payment Group headings */}
+      <ExpensesSidebarHeading text="Payment Groups" Icon={IconCashBanknote} />
+      <div>
+        <SidebarNavLink href="/expenses/payment-group" label="All Payment Groups" />
+        <SidebarNavLink href="/expenses/payment-group/add" label="Create Payment Group" />
+      </div>
+      {/* Expenses Headings */}
       <ExpensesSidebarHeading text="Users" Icon={IconUser} />
       <div>
         <SidebarNavLink href="/expenses" label="All Users" />
