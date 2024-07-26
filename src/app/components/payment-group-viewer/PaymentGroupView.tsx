@@ -39,22 +39,26 @@ const PaymentGroupView = ({ paymentGroup, email }: Props) => {
   return (
     <Card className={styles.PaymentGroupView}>
       <h2>{paymentGroup.name}</h2>
-      <div>
+      <div className={styles.UsersListView}>
         <h4>Members:</h4>
-        <div className={styles.UsersListView}>
+        <div className={styles.UserContainer}>
           {paymentGroup.users.map((user, index) => (
             <div key={index}>{user.name}</div>
           ))}
         </div>
-        <Flex justify={"flex-end"} gap="sm">
-          <ActionIcon variant="outline" loading={loading}>
-            <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
-          </ActionIcon>
-          <ConfirmButton onClick={onDelete} text="Are you sure?" loading={loading}>
-            <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
-          </ConfirmButton>
-        </Flex>
       </div>
+      <Flex justify={"flex-end"} gap="sm">
+        <ActionIcon variant="outline" loading={loading}>
+          <IconEdit style={{ width: "70%", height: "70%" }} stroke={1.5} />
+        </ActionIcon>
+        <ConfirmButton
+          onClick={onDelete}
+          text="Are you sure?"
+          loading={loading}
+        >
+          <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
+        </ConfirmButton>
+      </Flex>
     </Card>
   );
 };

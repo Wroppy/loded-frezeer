@@ -9,10 +9,15 @@
 
 .PaymentGroupView {
   display: flex;
-   max-width: 300px;
-   width: 100%;
-   
-   .UsersListView {
+  max-width: 300px;
+  width: 100%;
+  flex-direction: column;
+
+  .UsersListView {
+    flex-grow: 1;
+  }
+
+  .UserContainer {
     padding-left: 16px;
-   }
+  }
 }
