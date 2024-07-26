@@ -725,4 +725,36 @@ export default class DatabaseManager {
     await (group as any).markModified("users");
     await (group as any).save();
   }
+
+  public async deletePaymentGroup(id: string, email: string) {
+    // Validates that the user is in a flat
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    // Finds the payment group
+    const group = await PaymentGroupModel.findOne({ id });
+
+    if (!group) {
+      throw new Error("Payment group not found");
+    }
+
+    // Checks that the user is in the payment group
+    let userInGroup = false;
+    for (let user of group.users) {
+      if (user.email === email) {
+        userInGroup = true;
+        break;
+      }
+    }
+
+    if (!userInGroup) {
+      throw new Error("User not in payment group");
+    }
+
+    // Deletes the payment group
+    PaymentGroupModel.findOneAndDelete({ id }).exec();
+  }
 }
