@@ -5,12 +5,6 @@ Welcome to Loded Frezeer, a website for managing the shared expenses, chores and
 
 ## Features
 
-### Expense Tracking
-
-- Keep track of shared expenses such as soap, toiletries, general cooking supplies, etc
-- Easily add, edit, and categorize expenses for transparency and accountability.
-- Get an overview of who owes what and to who.
-
 ### Chore Management
 
 - Assign and track household chores among roommates.
