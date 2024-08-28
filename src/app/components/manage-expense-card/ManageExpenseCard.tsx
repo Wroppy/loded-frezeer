@@ -1,15 +1,24 @@
 "use client";
 
-import { Card, NumberInput, rem, TextInput } from "@mantine/core";
+import {
+  Card,
+  ComboboxItem,
+  NumberInput,
+  rem,
+  Select,
+  TextInput,
+} from "@mantine/core";
 import React, { useState } from "react";
-import styles from "./add-expense.module.scss";
+import styles from "./manage-expense-card.module.scss";
 import { IconCurrencyDollar } from "@tabler/icons-react";
+import PaymentGroup from "@/app/types/PaymentGroup";
 
-type Props = {};
+type Props = { paymentGroups: PaymentGroup[] };
 
-const AddExpenseCard = (props: Props) => {
+const ManageExpenseCard = ({ paymentGroups }: Props) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<string | number>(0);
+  const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
 
   return (
     <Card className={styles.AddExpenseCard}>
@@ -41,9 +50,19 @@ const AddExpenseCard = (props: Props) => {
             />
           }
         />
+
+        <Select
+          label="Payment Group"
+          placeholder="Select payment group"
+          data={paymentGroups.map((g) => ({ value: g.id, label: g.name }))}
+          value={paymentGroup ? paymentGroup.value : null}
+          onChange={(value, option) => setPaymentGroup(option)}
+        />
+
+        {/* Payment Split */}
       </div>
     </Card>
   );
 };
 
-export default AddExpenseCard;
+export default ManageExpenseCard;

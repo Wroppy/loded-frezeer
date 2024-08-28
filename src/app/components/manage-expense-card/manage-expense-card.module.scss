@@ -1,0 +1,18 @@
+.AddExpenseCard {
+  max-width: 700px;
+  width: 100%;
+
+  .AddExpenseHeading {
+    font-size: 1.25rem;
+  }
+
+  .AddExpenseBody {
+  }
+}
+
+.AddExpenseBody,
+.AddExpenseCard {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
