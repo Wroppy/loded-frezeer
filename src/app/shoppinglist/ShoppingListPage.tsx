@@ -125,7 +125,6 @@ const ShoppingListPage = ({
 
   useEffect(() => {
     console.log(selectedItemPriv);
-    
   }, [selectedItemPriv]);
 
   return (
