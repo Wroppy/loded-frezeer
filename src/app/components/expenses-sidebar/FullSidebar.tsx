@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./expenses-siderbar.module.scss";
 import SidebarNavLink from "./SidebarNavLink";
 import ExpensesSidebarHeading from "./ExpensesSidebarHeading";
+import AddExpenseButton from "./AddExpenseButton";
 
 type Props = { users: ClientUser[]; visible: boolean };
 
@@ -14,11 +15,21 @@ const FullSidebar = ({ users, visible }: Props) => {
         display: visible ? "block" : "none",
       }}
     >
+      {/* Add expense link */}
+      <div>
+        <AddExpenseButton />
+      </div>
       {/* Payment Group headings */}
       <ExpensesSidebarHeading text="Payment Groups" Icon={IconCashBanknote} />
       <div>
-        <SidebarNavLink href="/expenses/payment-group" label="All Payment Groups" />
-        <SidebarNavLink href="/expenses/payment-group/add" label="Create Payment Group" />
+        <SidebarNavLink
+          href="/expenses/payment-group"
+          label="All Payment Groups"
+        />
+        <SidebarNavLink
+          href="/expenses/payment-group/add"
+          label="Create Payment Group"
+        />
       </div>
       {/* Expenses Headings */}
       <ExpensesSidebarHeading text="Users" Icon={IconUser} />
