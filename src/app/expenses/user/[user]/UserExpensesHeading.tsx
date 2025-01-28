@@ -1,4 +1,4 @@
-import { Tooltip, ActionIcon, Skeleton } from "@mantine/core";
+import { Tooltip, ActionIcon, Skeleton, Button } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import React, { Suspense } from "react";
 import styles from "./user-expenses.module.scss";
@@ -7,6 +7,8 @@ import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
 import ClientUser from "@/app/types/ClientUser";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+
 type Props = {
   targetUser: string;
 };
@@ -25,14 +27,18 @@ const NameHeading = async ({ targetUser }: Props) => {
 };
 
 const UserExpensesHeading = ({ targetUser }: Props) => {
+  const addExpenseRedirect = () => {
+
+  }
+
   return (
     <div className={styles.UserExpensesHeading}>
-      <Suspense fallback={<Skeleton height={50}/>}>
+      <Suspense fallback={<Skeleton height={50} />}>
         <NameHeading targetUser={targetUser} />
       </Suspense>
 
       <Tooltip label="Add Expense" position="left">
-        <ActionIcon variant="outline">
+        <ActionIcon variant="outline" component={Link} href="/expenses/add-expense">
           <IconPlus />
         </ActionIcon>
       </Tooltip>
