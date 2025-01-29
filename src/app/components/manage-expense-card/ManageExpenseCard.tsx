@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Button,
   Card,
   ComboboxItem,
   NumberInput,
@@ -19,6 +20,10 @@ const ManageExpenseCard = ({ paymentGroups }: Props) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<string | number>(0);
   const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
+
+  const addExpense = async () => {
+    console.log("Adding Expense");
+  };
 
   return (
     <Card className={styles.AddExpenseCard}>
@@ -60,6 +65,11 @@ const ManageExpenseCard = ({ paymentGroups }: Props) => {
         />
 
         {/* Payment Split */}
+      </div>
+      <div className={styles.addExpenseFooter}>
+        <Button variant="outline" onClick={addExpense}>
+          Create Expense
+        </Button>
       </div>
     </Card>
   );
