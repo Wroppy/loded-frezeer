@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   ComboboxItem,
+  LoadingOverlay,
   NumberInput,
   rem,
   Select,
@@ -13,6 +14,7 @@ import React, { useState } from "react";
 import styles from "./manage-expense-card.module.scss";
 import { IconCurrencyDollar } from "@tabler/icons-react";
 import PaymentGroup from "@/app/types/PaymentGroup";
+import { useDisclosure } from "@mantine/hooks";
 
 type Props = { paymentGroups: PaymentGroup[] };
 
@@ -20,13 +22,18 @@ const ManageExpenseCard = ({ paymentGroups }: Props) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<string | number>(0);
   const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
+  const [loading, { open: setLoadingTrue, close: setLoadingFalse }] =
+    useDisclosure(false);
 
   const addExpense = async () => {
-    console.log("Adding Expense");
+    setLoadingTrue();
+
+    (setTimeout(() => {setLoadingFalse()}, 2000)) // Removing loading animation after 2 seconds for debugging
   };
 
   return (
     <Card className={styles.AddExpenseCard}>
+      <LoadingOverlay visible={loading} zIndex={1000} />
       <div className={styles.AddExpenseHeading}>Add Expense</div>
       <div className={styles.AddExpenseBody}>
         <TextInput
