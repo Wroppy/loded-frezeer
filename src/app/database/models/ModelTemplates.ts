@@ -6,6 +6,7 @@ import ServerChore from "@/app/types/ServerChore";
 import ChoreCycles from "@/app/Enums/ChoreCycles";
 import PaymentGroup from "@/app/types/PaymentGroup";
 import ClientUser from "@/app/types/ClientUser";
+import ExpenseStatus from "@/app/Enums/ExpenseStatus";
 
 export const UserTemplate = (
   name: string,
@@ -77,5 +78,25 @@ export const PaymentGroupTemplate = (
     name,
     users,
     id: getRandomId(),
+  };
+};
+
+export const ServerExpenseTemplate = (
+  from: ClientUser,
+  to: ClientUser[],
+  amount: number,
+  description: string,
+  date: Date,
+  flatId: string
+) => {
+  return {
+    id: getRandomId(),
+    from,
+    to,
+    amount,
+    description,
+    date,
+    status: ExpenseStatus.Pending,
+    flatId,
   };
 };

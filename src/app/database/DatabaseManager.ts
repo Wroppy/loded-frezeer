@@ -5,6 +5,7 @@ import {
   UserTemplate,
   ChoreTemplate,
   PaymentGroupTemplate,
+  ServerExpenseTemplate,
 } from "./models/ModelTemplates";
 import { comparePassword, hashPassword, copyObject } from "./Utils";
 import { User } from "./types/User";
@@ -20,6 +21,7 @@ import ClientChore from "../types/ClientChore";
 import BareBonesChore from "../types/BareBonesChore";
 import { PaymentGroupModel } from "./models/PaymentGroupSchema";
 import PaymentGroup from "../types/PaymentGroup";
+import { ExpenseModel } from "./models/ExpenseSchema";
 
 export default class DatabaseManager {
   constructor() {
@@ -756,5 +758,41 @@ export default class DatabaseManager {
 
     // Deletes the payment group
     PaymentGroupModel.findOneAndDelete({ id }).exec();
+  }
+
+  public async createExpense(
+    from: ClientUser,
+    to: ClientUser[],
+    amount: number,
+    description: string
+  ) {
+    const flat = await this.getUserFlat(from.email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+    
+    const flatId = flat.flatId;
+
+    // Checks that the users in the expense are in the flat
+    for (let user of to) {
+      if (!flat.tenants.includes(user.email)) {
+        throw new Error("User in expense is not in the flat");
+      }
+    }
+
+    // Creates the expense
+    const expense = ServerExpenseTemplate(
+      from,
+      to,
+      amount,
+      description,
+      new Date(),
+      flatId
+    );
+    console.log("hay");
+    // Saves the expense
+    const mongoExpense = new ExpenseModel(expense);
+    await mongoExpense.save();
   }
 }
