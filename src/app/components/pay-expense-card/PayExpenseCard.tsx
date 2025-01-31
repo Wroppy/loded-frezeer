@@ -3,7 +3,7 @@ import ClientExpense from "@/app/types/ClientExpense";
 import { postFetch } from "@/app/utils/postFetch";
 import { Button, Card, ComboboxItem, Select } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-
+import styles from "./pay-expense-card.module.scss";
 type Props = {
   targetUser: string;
   email: string;
@@ -36,8 +36,8 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
   const [expenses, setExpenses] = useState<SelectItem[]>([]);
 
   return (
-    <Card>
-      <div>
+    <Card className={styles.PayExpenseCard}>
+      <div className={styles.ExpenseSelect}>
         <Select
           value={selectedExpense ? selectedExpense.value : null}
           data={expenses}
@@ -45,11 +45,10 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
           placeholder="Select expense"
           clearable
           allowDeselect
+          comboboxProps={{ position: "top" }}
         />
       </div>
-      <div>
-        <Button>Pay</Button>
-      </div>
+      <Button className={styles.PayButton}>Pay</Button>
     </Card>
   );
 };
