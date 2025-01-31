@@ -28,7 +28,13 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
   const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
   const [loading, { open: setLoadingTrue, close: setLoadingFalse }] =
     useDisclosure(false);
-  
+
+  const resetInputs = () => {
+    setName("");
+    setAmount(0);
+    setPaymentGroup(null);
+  };
+
   const validateInputs = (): boolean => {
     if (!name) {
       showErrorMessage("Error", "Please enter a name for the expense");
@@ -70,6 +76,7 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
       showErrorMessage("Error", "An error occurred while creating the expense");
     } else {
       showSuccessMessage("Success", "Expense created successfully");
+      resetInputs();
     }
 
     setLoadingFalse();
