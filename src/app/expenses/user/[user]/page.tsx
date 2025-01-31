@@ -20,7 +20,7 @@ type Props = {
 const page = async ({ params }: Props) => {
   const targetUser = params.user.replace("-", "@");
   const email = (await getServerSession())!.user!.email!;
-
+  
   return (
     <div className={styles.UserExpenses}>
       <UserExpensesHeading targetUser={targetUser} />
