@@ -828,6 +828,9 @@ export default class DatabaseManager {
       if (expense.payer.email !== payerEmail) {
         continue;
       }
+      if (expense.payee.email !== payeeEmail) {
+        continue;
+      }
 
       userExpenses.push({
         id: expense.id,
