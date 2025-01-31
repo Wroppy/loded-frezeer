@@ -8,12 +8,12 @@ export async function POST(req: Request) {
 
   const db = new DatabaseManager();
   try {
-    const from = await db.getUser(email);
-    if (!from) {
+    const payee = await db.getClientUser(email);
+    if (!payee) {
       throw new Error("User not found");
     }
 
-    await db.createExpense(from, to, amount, description);
+    await db.createExpense(payee, to, amount, description);
   } catch (e) {
     console.log("Error", e);
     return NextResponse.json(
