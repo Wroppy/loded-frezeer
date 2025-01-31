@@ -17,6 +17,7 @@ import PaymentGroup from "@/app/types/PaymentGroup";
 import { useDisclosure } from "@mantine/hooks";
 import { CreateExpensePostBody } from "@/app/types/CreateExpenseRoute";
 import { postFetch } from "@/app/utils/postFetch";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
 
 type Props = { paymentGroups: PaymentGroup[]; email: string };
 
@@ -26,7 +27,6 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
   const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
   const [loading, { open: setLoadingTrue, close: setLoadingFalse }] =
     useDisclosure(false);
-
 
   const addExpense = async () => {
     setLoadingTrue();
@@ -42,10 +42,10 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
     const res = await postFetch("/api/expense/create-expense", body);
     if (res.error) {
       console.error(res.error);
+      showErrorMessage("Error", "An error occurred while creating the expense");
     }
 
     setLoadingFalse();
-    
   };
 
   return (
