@@ -40,7 +40,7 @@ const OutgoingExpensesTable = async (props: Props) => {
   ];
 
   return (
-    <ExpenseTable heading="Expenses to pay" moneyColumnText="Amount">
+    <ExpenseTable heading="Expenses to pay">
       {expenses.map((expense) => (
         <ExpenseView expense={expense} key={expense.id} email={email} />
       ))}

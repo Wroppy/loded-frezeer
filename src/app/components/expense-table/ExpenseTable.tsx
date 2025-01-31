@@ -13,11 +13,10 @@ import { ReactNode } from "react";
 
 type Props = {
   heading: string;
-  moneyColumnText: string;
   children: ReactNode;
 };
 
-const ExpenseTable = ({ heading, moneyColumnText, children }: Props) => {
+const ExpenseTable = ({ heading, children }: Props) => {
   return (
     <Flex direction={"column"}>
       <h3>{heading}</h3>
@@ -27,7 +26,7 @@ const ExpenseTable = ({ heading, moneyColumnText, children }: Props) => {
             <TableTh style={{ width: "100px" }}>Status</TableTh>
             <TableTh>Name</TableTh>
             <TableTh style={{ width: "75px" }} align="right">
-              {moneyColumnText}
+              Amount
             </TableTh>
           </TableTr>
         </TableThead>
