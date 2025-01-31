@@ -3,13 +3,13 @@ import React from "react";
 import ExpenseTable from "../expense-table/ExpenseTable";
 import ExpenseView from "../expense-view/ExpenseView";
 import ExpenseStatus from "@/app/Enums/ExpenseStatus";
-import Expense from "@/app/types/Expense";
+import ClientExpense from "@/app/types/ClientExpense";
 
 type Props = { targetUser: string };
 
 const OutgoingExpensesTable = async (props: Props) => {
   const email = (await getServerSession())!.user!.email!;
-  const expenses: Expense[] = [
+  const expenses: ClientExpense[] = [
     {
       id: "1",
       description: "Pizza",

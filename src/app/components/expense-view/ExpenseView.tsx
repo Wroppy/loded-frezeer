@@ -1,5 +1,5 @@
 import ExpenseStatus from "@/app/Enums/ExpenseStatus";
-import Expense from "@/app/types/Expense";
+import ClientExpense from "@/app/types/ClientExpense";
 import { toTwoDp } from "@/app/utils/toTwoDp";
 import { TableTr, TableTd, Flex } from "@mantine/core";
 import { IconPointFilled } from "@tabler/icons-react";
@@ -7,7 +7,7 @@ import React from "react";
 import styles from "./expense-view.module.scss";
 
 type Props = {
-  expense: Expense;
+  expense: ClientExpense;
   email: string;
 };
 

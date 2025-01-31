@@ -1,4 +1,4 @@
-import Expense from "@/app/types/Expense";
+import ClientExpense from "@/app/types/ClientExpense";
 import React, { Suspense } from "react";
 import styles from "./user-expenses.module.scss";
 import { ActionIcon, TableTd, TableTr, Tooltip } from "@mantine/core";

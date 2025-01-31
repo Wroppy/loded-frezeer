@@ -1,7 +1,7 @@
 import ExpenseStatus from "../Enums/ExpenseStatus";
 import ClientUser from "./ClientUser";
 
-type Expense = {
+type ClientExpense = {
   id: string;
   from: ClientUser;
   to: ClientUser;
@@ -11,4 +11,4 @@ type Expense = {
   status: ExpenseStatus;
 };
 
-export default Expense;
+export default ClientExpense;
