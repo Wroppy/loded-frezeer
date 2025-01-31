@@ -25,7 +25,7 @@ const ExpenseTable = ({ heading, moneyColumnText, children }: Props) => {
         <TableThead>
           <TableTr>
             <TableTh style={{ width: "100px" }}>Status</TableTh>
-            <TableTh>User</TableTh>
+            <TableTh>Name</TableTh>
             <TableTh style={{ width: "75px" }} align="right">
               {moneyColumnText}
             </TableTh>
