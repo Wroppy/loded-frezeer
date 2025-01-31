@@ -1,16 +1,10 @@
-import ClientExpense from "@/app/types/ClientExpense";
 import React, { Suspense } from "react";
 import styles from "./user-expenses.module.scss";
-import { ActionIcon, Card, TableTd, TableTr, Tooltip } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
 import UserExpensesHeading from "./UserExpensesHeading";
-import ExpenseTable from "@/app/components/expense-table/ExpenseTable";
-import { toTwoDp } from "@/app/utils/toTwoDp";
-import ExpenseStatus from "@/app/Enums/ExpenseStatus";
-import ExpenseView from "@/app/components/expense-view/ExpenseView";
 import { getServerSession } from "next-auth";
 import OutgoingExpensesTable from "@/app/components/outgoing-expenses-table/OutgoingExpensesTable";
 import IncomingExpensesTable from "@/app/components/incoming-expenses-table/IncomingExpensesTable";
+import PayExpenseCard from "@/app/components/pay-expense-card/PayExpenseCard";
 
 type Props = {
   params: {
@@ -26,13 +20,11 @@ const page = async ({ params }: Props) => {
     <div className={styles.UserExpenses}>
       <UserExpensesHeading targetUser={targetUser} />
       <div className={styles.ExpensesTables}>
-      <OutgoingExpensesTable targetUser={targetUser} />
-      <IncomingExpensesTable targetUser={targetUser} />
+        <OutgoingExpensesTable targetUser={targetUser} />
+        <IncomingExpensesTable targetUser={targetUser} />
       </div>
       <div className={styles.UserExpensesFooter}>
-        <Card>
-          Board
-        </Card>
+        <PayExpenseCard targetUser={targetUser} email={email} />
       </div>
     </div>
   );
