@@ -25,8 +25,13 @@ const page = async ({ params }: Props) => {
   return (
     <div className={styles.UserExpenses}>
       <UserExpensesHeading targetUser={targetUser} />
+      <div className={styles.ExpensesTables}>
       <OutgoingExpensesTable targetUser={targetUser} />
       <IncomingExpensesTable targetUser={targetUser} />
+      </div>
+      <div className={styles.UserExpensesFooter}>
+
+      </div>
     </div>
   );
 };
