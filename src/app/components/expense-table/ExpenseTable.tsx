@@ -18,7 +18,7 @@ type Props = {
 
 const ExpenseTable = ({ heading, children }: Props) => {
   return (
-    <Flex direction={"column"}>
+    <Flex direction={"column"} style={{ marginBottom: "20px" }}>
       <h3>{heading}</h3>
       <Table>
         <TableThead>
