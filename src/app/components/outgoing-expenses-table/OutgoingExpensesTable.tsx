@@ -6,6 +6,7 @@ import ExpenseStatus from "@/app/Enums/ExpenseStatus";
 import ClientExpense from "@/app/types/ClientExpense";
 import { postFetch } from "@/app/utils/postFetch";
 import { GetTargetExpenseBody } from "@/app/types/GetTargetExpenseRoute";
+import EmptyTableRow from "../no-items-table-row/EmptyTableRow";
 
 type Props = { targetUser: string };
 
@@ -14,10 +15,9 @@ const OutgoingExpensesTable = async ({ targetUser }: Props) => {
 
   const getExpenses = async () => {
     const response = await postFetch(`/api/expense/get-target-expense`, {
-      targetEmail: targetUser,
-      email,
+      targetEmail: email,
+      email: targetUser,
     } as GetTargetExpenseBody);
-    console.log(response);
 
     if (response.error) {
       return [];
@@ -30,9 +30,13 @@ const OutgoingExpensesTable = async ({ targetUser }: Props) => {
 
   return (
     <ExpenseTable heading="Expenses to pay">
-      {expenses.map((expense) => (
-        <ExpenseView expense={expense} key={expense.id} email={email} />
-      ))}
+      {expenses.length === 0 ? (<EmptyTableRow text="No expenses to pay" span={3} />
+        
+      ) : (
+        expenses.map((expense) => (
+          <ExpenseView expense={expense} key={expense.id} email={email} />
+        ))
+      )}
     </ExpenseTable>
   );
 };
