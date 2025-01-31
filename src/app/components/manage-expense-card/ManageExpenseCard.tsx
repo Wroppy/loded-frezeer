@@ -18,6 +18,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { CreateExpensePostBody } from "@/app/types/CreateExpenseRoute";
 import { postFetch } from "@/app/utils/postFetch";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import { showSuccessMessage } from "@/app/utils/showSucessMessage";
 
 type Props = { paymentGroups: PaymentGroup[]; email: string };
 
@@ -27,9 +28,33 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
   const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
   const [loading, { open: setLoadingTrue, close: setLoadingFalse }] =
     useDisclosure(false);
+  
+  const validateInputs = (): boolean => {
+    if (!name) {
+      showErrorMessage("Error", "Please enter a name for the expense");
+      return false;
+    }
+
+    if (!amount || Number(amount) <= 0) {
+      showErrorMessage("Error", "Please enter an amount for the expense");
+      return false;
+    }
+
+    if (!paymentGroup) {
+      showErrorMessage("Error", "Please select a payment group");
+      return false;
+    }
+
+    return true;
+  };
 
   const addExpense = async () => {
     setLoadingTrue();
+
+    if (!validateInputs()) {
+      setLoadingFalse();
+      return;
+    }
 
     // Send data to server
     const body: CreateExpensePostBody = {
@@ -43,6 +68,8 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
     if (res.error) {
       console.error(res.error);
       showErrorMessage("Error", "An error occurred while creating the expense");
+    } else {
+      showSuccessMessage("Success", "Expense created successfully");
     }
 
     setLoadingFalse();
