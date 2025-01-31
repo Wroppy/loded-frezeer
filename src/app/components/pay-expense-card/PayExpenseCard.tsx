@@ -48,7 +48,9 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
           comboboxProps={{ position: "top" }}
         />
       </div>
-      <Button className={styles.PayButton}>Pay</Button>
+      <Button
+        disabled={!selectedExpense}
+      className={styles.PayButton}>Pay</Button>
     </Card>
   );
 };
