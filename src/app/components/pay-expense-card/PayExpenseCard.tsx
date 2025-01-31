@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./pay-expense-card.module.scss";
 import { showSuccessMessage } from "@/app/utils/showSucessMessage";
 import { showErrorMessage } from "@/app/utils/showErrorMessage";
+import { useRouter } from "next/navigation";
 type Props = {
   targetUser: string;
   email: string;
@@ -46,6 +47,7 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
         if (res.success) {
           showSuccessMessage("Success", "Expense paid successfully");
           setSelectedExpense(null);
+          router.refresh();
         } else {
           showErrorMessage("Error", "Failed to pay expense");
         }
@@ -59,6 +61,7 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
   );
   const [expenses, setExpenses] = useState<SelectItem[]>([]);
   const [loadingExpenses, setLoadingExpenses] = useState(true);
+  const router = useRouter();
 
   return (
     <Card className={styles.PayExpenseCard}>
