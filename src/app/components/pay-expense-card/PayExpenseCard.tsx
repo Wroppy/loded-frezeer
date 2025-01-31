@@ -25,7 +25,7 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
     }).then((res) => {
       const e = res.expenses as ClientExpense[];
 
-      const selectValues = e.map((expense) => ({
+      const selectValues = e.filter(e => e.status !== "Paid").map((expense) => ({
         value: expense.id,
         label: expense.description,
       }));
