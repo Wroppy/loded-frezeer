@@ -22,6 +22,8 @@ import BareBonesChore from "../types/BareBonesChore";
 import { PaymentGroupModel } from "./models/PaymentGroupSchema";
 import PaymentGroup from "../types/PaymentGroup";
 import { ExpenseModel } from "./models/ExpenseSchema";
+import { ServerExpense } from "./types/ServerExpense";
+import ClientExpense from "../types/ClientExpense";
 
 export default class DatabaseManager {
   constructor() {
@@ -771,7 +773,7 @@ export default class DatabaseManager {
     if (!flat) {
       throw new Error("User is not in a flat");
     }
-    
+
     const flatId = flat.flatId;
 
     // Checks that the users in the expense are in the flat
@@ -794,5 +796,52 @@ export default class DatabaseManager {
     // Saves the expense
     const mongoExpense = new ExpenseModel(expense);
     await mongoExpense.save();
+  }
+
+  public async getExpenses(
+    email: string,
+    targetEmail: string
+  ): Promise<ClientExpense[]> {
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const targetUser = await this.getClientUser(targetEmail);
+
+    if (!targetUser) {
+      throw new Error("Target user not found");
+    }
+
+    const expenses = (await ExpenseModel.find({
+      flatId: flat.flatId,
+    })) as ServerExpense[];
+
+    let userExpenses: ClientExpense[] = [];
+
+    for (let expense of expenses) {
+      if (expense.from.email !== email) {
+        continue;
+      }
+      // If the target email is not in the to list, continue
+      if (!expense.to.map((user) => user.email).includes(targetEmail)) {
+        continue;
+      }
+
+      let userExpense: ClientExpense = {
+        id: expense.id,
+        from: expense.from,
+        to: targetUser,
+        amount: expense.amount,
+        description: expense.description,
+        date: expense.date,
+        status: expense.status,
+      };
+
+      userExpenses.push(userExpense);
+    }
+
+    return userExpenses;
   }
 }
