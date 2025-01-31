@@ -15,20 +15,37 @@ import styles from "./manage-expense-card.module.scss";
 import { IconCurrencyDollar } from "@tabler/icons-react";
 import PaymentGroup from "@/app/types/PaymentGroup";
 import { useDisclosure } from "@mantine/hooks";
+import { CreateExpensePostBody } from "@/app/types/CreateExpenseRoute";
+import { postFetch } from "@/app/utils/postFetch";
 
-type Props = { paymentGroups: PaymentGroup[] };
+type Props = { paymentGroups: PaymentGroup[]; email: string };
 
-const ManageExpenseCard = ({ paymentGroups }: Props) => {
+const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<string | number>(0);
   const [paymentGroup, setPaymentGroup] = useState<ComboboxItem | null>(null);
   const [loading, { open: setLoadingTrue, close: setLoadingFalse }] =
     useDisclosure(false);
 
+
   const addExpense = async () => {
     setLoadingTrue();
 
-    (setTimeout(() => {setLoadingFalse()}, 2000)) // Removing loading animation after 2 seconds for debugging
+    // Send data to server
+    const body: CreateExpensePostBody = {
+      to: paymentGroups.find((g) => g.id === paymentGroup?.value)!.users,
+      amount: Number(amount),
+      description: name,
+      email,
+    };
+
+    const res = await postFetch("/api/expense/create-expense", body);
+    if (res.error) {
+      console.error(res.error);
+    }
+
+    setLoadingFalse();
+    
   };
 
   return (

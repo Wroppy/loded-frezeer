@@ -12,14 +12,14 @@ const page = async (props: Props) => {
 
   const groupRes = await postFetch("/api/payment-group/get", { email });
   if (groupRes.error) {
-    return (<div>{groupRes.error}</div>);
+    return <div>{groupRes.error}</div>;
   }
 
   const { groups } = groupRes as { groups: PaymentGroup[] };
 
   return (
     <div className={styles.AddExpensePage}>
-      <ManageExpenseCard paymentGroups={groups} />
+      <ManageExpenseCard paymentGroups={groups} email={email} />
     </div>
   );
 };
