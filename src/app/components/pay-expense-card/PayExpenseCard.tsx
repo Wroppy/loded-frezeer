@@ -49,8 +49,12 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
         />
       </div>
       <Button
+        variant="outline"
         disabled={!selectedExpense}
-      className={styles.PayButton}>Pay</Button>
+        className={styles.PayButton}
+      >
+        Pay
+      </Button>
     </Card>
   );
 };
