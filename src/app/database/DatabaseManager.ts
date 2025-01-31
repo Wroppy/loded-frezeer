@@ -784,6 +784,9 @@ export default class DatabaseManager {
     }
 
     for (let payer of payers) {
+      if (payer.email === payee.email) {
+        continue;
+      }
       // Creates the expense
       const expenseTemplate = ServerExpenseTemplate(
         payee,
@@ -799,19 +802,18 @@ export default class DatabaseManager {
   }
 
   public async getExpenses(
-    email: string,
-    targetEmail: string
+    payeeEmail: string,
+    payerEmail: string
   ): Promise<ClientExpense[]> {
-    return [];
-    const flat = await this.getUserFlat(email);
+    const flat = await this.getUserFlat(payeeEmail);
 
     if (!flat) {
       throw new Error("User is not in a flat");
     }
 
-    const targetUser = await this.getClientUser(targetEmail);
+    const payerUser = await this.getClientUser(payerEmail);
 
-    if (!targetUser) {
+    if (!payerUser) {
       throw new Error("Target user not found");
     }
 
@@ -821,26 +823,27 @@ export default class DatabaseManager {
 
     let userExpenses: ClientExpense[] = [];
 
+    // Deletes flatId from the expense
     for (let expense of expenses) {
-      if (expense.from.email !== email) {
-        continue;
-      }
-      // If the target email is not in the to list, continue
-      if (!expense.to.map((user) => user.email).includes(targetEmail)) {
+      if (expense.payer.email !== payerEmail) {
         continue;
       }
 
-      let userExpense: ClientExpense = {
+      userExpenses.push({
         id: expense.id,
-        from: expense.from,
-        to: targetUser,
+        payee: {
+          name: expense.payee.name,
+          email: expense.payee.email,
+        },
+        payer: {
+          name: expense.payer.name,
+          email: expense.payer.email,
+        },
         amount: expense.amount,
         description: expense.description,
         date: expense.date,
         status: expense.status,
-      };
-
-      userExpenses.push(userExpense);
+      });
     }
 
     return userExpenses;

@@ -4,7 +4,7 @@ import { CreateExpensePostBody } from "@/app/types/CreateExpenseRoute";
 
 export async function POST(req: Request) {
   const body = (await req.json()) as CreateExpensePostBody;
-  const { to, amount, description, email } = body;
+  const { payers, amount, description, email } = body;
 
   const db = new DatabaseManager();
   try {
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       throw new Error("User not found");
     }
 
-    await db.createExpense(payee, to, amount, description);
+    await db.createExpense(payee, payers, amount, description);
   } catch (e) {
     console.log("Error", e);
     return NextResponse.json(

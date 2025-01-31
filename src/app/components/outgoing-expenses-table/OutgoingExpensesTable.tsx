@@ -15,8 +15,8 @@ const OutgoingExpensesTable = async ({ targetUser }: Props) => {
 
   const getExpenses = async () => {
     const response = await postFetch(`/api/expense/get-target-expense`, {
-      payeeEmail: email,
-      payerEmail: targetUser,
+      payerEmail: email,
+      payeeEmail: targetUser,
     } as GetTargetExpenseBody);
 
     if (response.error) {
