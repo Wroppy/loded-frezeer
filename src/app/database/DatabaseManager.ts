@@ -848,4 +848,37 @@ export default class DatabaseManager {
 
     return userExpenses;
   }
+
+  public async payExpense(
+    payerEmail: string,
+    payeeEmail: string,
+    expenseId: string
+  ) {
+    const flat = await this.getUserFlat(payeeEmail);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const expense = await ExpenseModel.findOne({ id: expenseId });
+
+    if (!expense) {
+      throw new Error("Expense not found");
+    }
+
+    if (expense.payee.email !== payeeEmail) {
+      throw new Error("User is not the payee");
+    }
+
+    if (expense.payer.email !== payerEmail) {
+      throw new Error("User is not the payer");
+    }
+
+    if (expense.status === "Paid") {
+      throw new Error("Expense already paid");
+    }
+
+    expense.status = "Paid";
+    await (expense as any).save();
+  }
 }

@@ -4,6 +4,8 @@ import { postFetch } from "@/app/utils/postFetch";
 import { Button, Card, ComboboxItem, Select } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import styles from "./pay-expense-card.module.scss";
+import { showSuccessMessage } from "@/app/utils/showSucessMessage";
+import { showErrorMessage } from "@/app/utils/showErrorMessage";
 type Props = {
   targetUser: string;
   email: string;
@@ -31,6 +33,27 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
     });
   }, []);
 
+  const payExpense = () => {
+    if (!selectedExpense) return;
+
+    setLoadingExpenses(true);
+    console.log("expenseId: ", selectedExpense.value),
+      postFetch("/api/expense/pay-expense", {
+        expenseId: selectedExpense.value,
+        payerEmail: email,
+        payeeEmail: targetUser,
+      }).then((res) => {
+        if (res.success) {
+          showSuccessMessage("Success", "Expense paid successfully");
+          setSelectedExpense(null);
+        } else {
+          showErrorMessage("Error", "Failed to pay expense");
+        }
+
+        setLoadingExpenses(false);
+      });
+  };
+
   const [selectedExpense, setSelectedExpense] = useState<ComboboxItem | null>(
     null
   );
@@ -57,6 +80,7 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
         />
       </div>
       <Button
+        onClick={payExpense}
         variant="outline"
         disabled={!selectedExpense}
         className={styles.PayButton}
