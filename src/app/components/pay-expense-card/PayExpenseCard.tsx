@@ -27,6 +27,7 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
         label: expense.description,
       }));
       setExpenses(selectValues);
+      setLoadingExpenses(false);
     });
   }, []);
 
@@ -34,6 +35,7 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
     null
   );
   const [expenses, setExpenses] = useState<SelectItem[]>([]);
+  const [loadingExpenses, setLoadingExpenses] = useState(true);
 
   return (
     <Card className={styles.PayExpenseCard}>
@@ -41,8 +43,14 @@ const PayExpenseCard = ({ targetUser, email }: Props) => {
         <Select
           value={selectedExpense ? selectedExpense.value : null}
           data={expenses}
+          disabled={loadingExpenses}
+          readOnly={loadingExpenses || !expenses.length}
           onChange={(_, option) => setSelectedExpense(option)}
-          placeholder="Select expense"
+          placeholder={
+            !loadingExpenses && !expenses.length
+              ? "No Expenses"
+              : "Select expense"
+          }
           clearable
           allowDeselect
           comboboxProps={{ position: "top" }}
