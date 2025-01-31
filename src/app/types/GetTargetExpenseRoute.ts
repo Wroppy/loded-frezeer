@@ -1,8 +1,8 @@
 import ClientExpense from "./ClientExpense";
 
 type GetTargetExpenseBody = {
-  email: string;
-  targetEmail: string;
+  payerEmail: string;
+  payeeEmail: string;
 };
 
 type GetTargetExpenseResponse = {

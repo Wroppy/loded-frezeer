@@ -64,7 +64,7 @@ const ManageExpenseCard = ({ paymentGroups, email }: Props) => {
 
     // Send data to server
     const body: CreateExpensePostBody = {
-      to: paymentGroups.find((g) => g.id === paymentGroup?.value)!.users,
+      payers: paymentGroups.find((g) => g.id === paymentGroup?.value)!.users,
       amount: Number(amount),
       description: name,
       email,

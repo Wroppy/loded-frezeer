@@ -16,8 +16,8 @@ const IncomingExpensesTable = async ({ targetUser }: Props) => {
 
   const getExpenses = async () => {
     const response = await postFetch(`/api/expense/get-target-expense`, {
-      targetEmail: targetUser,
-      email,
+      payeeEmail: email,
+      payerEmail: targetUser,
     } as GetTargetExpenseBody);
 
     if (response.error) {
@@ -31,13 +31,13 @@ const IncomingExpensesTable = async ({ targetUser }: Props) => {
 
   return (
     <ExpenseTable heading="Expenses to receive">
-      {
-        expenses.length === 0 ? (
-          <EmptyTableRow text="No expenses to receive" span={3} />
-        ) :
-      expenses.map((expense) => (
-        <ExpenseView expense={expense} key={expense.id} email={email} />
-      ))}
+      {expenses.length === 0 ? (
+        <EmptyTableRow text="No expenses to receive" span={3} />
+      ) : (
+        expenses.map((expense) => (
+          <ExpenseView expense={expense} key={expense.id} email={email} />
+        ))
+      )}
     </ExpenseTable>
   );
 };

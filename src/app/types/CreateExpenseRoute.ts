@@ -1,7 +1,7 @@
 import ClientUser from "./ClientUser";
 
 type CreateExpensePostBody = {
-  to: ClientUser[];
+  payers: ClientUser[];
   amount: number;
   description: string;
   email: string;
