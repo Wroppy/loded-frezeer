@@ -1,7 +1,7 @@
 import ClientExpense from "@/app/types/ClientExpense";
 import React, { Suspense } from "react";
 import styles from "./user-expenses.module.scss";
-import { ActionIcon, TableTd, TableTr, Tooltip } from "@mantine/core";
+import { ActionIcon, Card, TableTd, TableTr, Tooltip } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import UserExpensesHeading from "./UserExpensesHeading";
 import ExpenseTable from "@/app/components/expense-table/ExpenseTable";
@@ -30,7 +30,9 @@ const page = async ({ params }: Props) => {
       <IncomingExpensesTable targetUser={targetUser} />
       </div>
       <div className={styles.UserExpensesFooter}>
-
+        <Card>
+          Board
+        </Card>
       </div>
     </div>
   );
