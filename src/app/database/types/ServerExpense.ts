@@ -4,8 +4,8 @@ import ClientUser from "@/app/types/ClientUser";
 type ServerExpense = {
   id: string; // Unique identifier for the expense
   flatId: string; // The id of the flat the expense belongs to
-  from: ClientUser; // The id of the user who paid the expense
-  to: ClientUser[];
+  payer: ClientUser; // The user who is to pay the expense
+  payee: ClientUser; // The user who is to receive the expense
   amount: number;
   description: string; // The description of the expense
   date: Date;

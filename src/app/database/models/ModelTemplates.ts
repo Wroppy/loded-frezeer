@@ -7,6 +7,7 @@ import ChoreCycles from "@/app/Enums/ChoreCycles";
 import PaymentGroup from "@/app/types/PaymentGroup";
 import ClientUser from "@/app/types/ClientUser";
 import ExpenseStatus from "@/app/Enums/ExpenseStatus";
+import { ServerExpense } from "../types/ServerExpense";
 
 export const UserTemplate = (
   name: string,
@@ -82,17 +83,17 @@ export const PaymentGroupTemplate = (
 };
 
 export const ServerExpenseTemplate = (
-  from: ClientUser,
-  to: ClientUser[],
+  payee: ClientUser,
+  payer: ClientUser,
   amount: number,
   description: string,
   date: Date,
   flatId: string
-) => {
+): ServerExpense => {
   return {
     id: getRandomId(),
-    from,
-    to,
+    payee,
+    payer,
     amount,
     description,
     date,

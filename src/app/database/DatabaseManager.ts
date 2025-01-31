@@ -763,12 +763,12 @@ export default class DatabaseManager {
   }
 
   public async createExpense(
-    from: ClientUser,
-    to: ClientUser[],
+    payee: ClientUser,
+    payers: ClientUser[],
     amount: number,
     description: string
   ) {
-    const flat = await this.getUserFlat(from.email);
+    const flat = await this.getUserFlat(payee.email);
 
     if (!flat) {
       throw new Error("User is not in a flat");
@@ -777,31 +777,32 @@ export default class DatabaseManager {
     const flatId = flat.flatId;
 
     // Checks that the users in the expense are in the flat
-    for (let user of to) {
+    for (let user of payers) {
       if (!flat.tenants.includes(user.email)) {
         throw new Error("User in expense is not in the flat");
       }
     }
 
-    // Creates the expense
-    const expense = ServerExpenseTemplate(
-      from,
-      to,
-      amount,
-      description,
-      new Date(),
-      flatId
-    );
-    console.log("hay");
-    // Saves the expense
-    const mongoExpense = new ExpenseModel(expense);
-    await mongoExpense.save();
+    for (let payer of payers) {
+      // Creates the expense
+      const expenseTemplate = ServerExpenseTemplate(
+        payee,
+        payer,
+        amount,
+        description,
+        new Date(),
+        flatId
+      );
+      const expense = new ExpenseModel(expenseTemplate);
+      await expense.save();
+    }
   }
 
   public async getExpenses(
     email: string,
     targetEmail: string
   ): Promise<ClientExpense[]> {
+    return [];
     const flat = await this.getUserFlat(email);
 
     if (!flat) {
