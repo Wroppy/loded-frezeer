@@ -15,7 +15,7 @@ const Summary = ({ chore }: { chore: ClientChore }) => {
   console.log(chore)
   chore.lastCompleted = new Date(chore.lastCompleted);
   return (
-    <Card>
+    <Card className={styles.ChoreSummaryCard}>
       <h2 className={styles.choreHeading}>{chore.name}</h2>
       <div className={styles.choreDescription}>{chore.description}</div>
       <div className={styles.choreTimeline}>
@@ -28,7 +28,7 @@ const Summary = ({ chore }: { chore: ClientChore }) => {
 const ChoreSummary = ({ chores }: Props) => {
   return (
     <div className={styles.ChoresSummary}>
-      <div>Chores Summary</div>
+      <h2>Chores Summary</h2>
       <div className={styles.ChoresSummaryContent}>
         {chores.map((chore) => (
           <Summary key={chore.id} chore={chore} />
