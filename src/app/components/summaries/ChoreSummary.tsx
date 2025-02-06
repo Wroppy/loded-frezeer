@@ -35,7 +35,6 @@ const EmptyChores = () => {
 };
 
 const ChoreSummary = ({ chores }: Props) => {
-  chores = [];
   return (
     <div className={styles.ChoresSummary}>
       <h2>Chores Summary</h2>

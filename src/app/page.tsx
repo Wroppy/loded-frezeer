@@ -22,12 +22,12 @@ export default async function Home() {
     return <div>Failed to load dashboard data</div>;
   }
 
-  const {chores} = response;
+  const {chores, userShoppingList} = response;
 
   return (
     <main className={styles.main}>
       <ChoreSummary chores={chores}/>
-      <ShoppingListSummary />
+      <ShoppingListSummary items={userShoppingList} />
       <ExpenseSummary />
     </main>
   );
