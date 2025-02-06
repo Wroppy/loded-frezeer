@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Summary = ({ chore }: { chore: ClientChore }) => {
-  console.log(chore)
+  console.log(chore);
   chore.lastCompleted = new Date(chore.lastCompleted);
   return (
     <Card className={styles.ChoreSummaryCard}>
@@ -25,14 +25,26 @@ const Summary = ({ chore }: { chore: ClientChore }) => {
   );
 };
 
+const EmptyChores = () => {
+  return (
+    <div className={styles.EmptyChores}>
+      <h3>No Chores</h3>
+      <p>There are no chores to display</p>
+    </div>
+  );
+};
+
 const ChoreSummary = ({ chores }: Props) => {
+  chores = [];
   return (
     <div className={styles.ChoresSummary}>
       <h2>Chores Summary</h2>
       <div className={styles.ChoresSummaryContent}>
-        {chores.map((chore) => (
-          <Summary key={chore.id} chore={chore} />
-        ))}
+        {chores.length === 0 ? (
+          <EmptyChores />
+        ) : (
+          chores.map((chore) => <Summary key={chore.id} chore={chore} />)
+        )}
       </div>
     </div>
   );

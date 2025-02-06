@@ -1,11 +1,12 @@
 .ChoresSummary {
   width: 100%;
-  
+  .EmptyChores {
+  }
   .ChoresSummaryContent {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    
+
     .ChoreSummaryCard {
       * {
         font-size: 12px;
