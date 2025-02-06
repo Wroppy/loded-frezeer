@@ -922,4 +922,34 @@ export default class DatabaseManager {
       expensesToReceive,
     };
   }
+
+  public async getDashboardData(email: string) {
+    const user = await this.getUser(email);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const flat = await this.getUserFlat(email);
+
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const chores = await this.getClientChores(email);
+    const shoppingList = await this.getShoppingPageProps(email);
+    const expenses = await this.getExpensesSummary(email);
+
+    // Filters the shopping list to only show items that the user added, or that are not bought
+    let userShoppingList = shoppingList.shoppingList.filter(
+      (item) => item.addedBy === email || !item.boughtBy
+    );
+
+    return {
+      user: { name: user.name },
+      chores,
+      userShoppingList,
+      expenses: expenses.expensesToPay,
+    };
+  }
 }
