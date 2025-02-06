@@ -2,6 +2,7 @@ import { ShoppingItem } from "@/app/types/ShoppingItem";
 import React from "react";
 import styles from "./summaries.module.scss";
 import { Table, TableData } from "@mantine/core";
+import Link from "next/link";
 
 type Props = { items: ShoppingItem[] };
 
@@ -27,7 +28,16 @@ const ShoppingList = ({ items }: Props) => {
     body: items.map((i) => [i.itemName, i.quantity]),
   };
 
-  return <Table data={tableData} />;
+  return (
+    <>
+      <Table data={tableData} />
+      {items.length >= 5 && (
+        <div className={styles.TableFooter}>
+          View the full shopping list <Link href="/shoppinglist">here</Link>
+        </div>
+      )}
+    </>
+  );
 };
 
 const ShoppingListSummary = ({ items }: Props) => {
