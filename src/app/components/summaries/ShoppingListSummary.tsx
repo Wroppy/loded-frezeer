@@ -15,6 +15,13 @@ const EmptyItems = () => {
 };
 
 const ShoppingList = ({ items }: Props) => {
+  items.reverse();
+
+  // Limit the number of items displayed to 5
+  if (items.length > 5) {
+    items = items.slice(0, 5);
+  }
+
   const tableData: TableData = {
     head: ["Name", "Quantity"],
     body: items.map((i) => [i.itemName, i.quantity]),
