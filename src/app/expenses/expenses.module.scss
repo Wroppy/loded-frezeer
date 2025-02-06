@@ -20,6 +20,10 @@
 
     .ExpenseSummaryTable {
       height: 50%;
+
+      .TableNoData {
+        text-align: center;
+      }
     }
   }
 }
