@@ -66,7 +66,7 @@ const ExpensesPage = async ({ expensesToPay, expensesToReceive }: Props) => {
         <h1>Dashboard</h1>
       </div>
       <div className={styles.ExpensesPageContent}>
-        <ExpenseSummaryTable expenses={[]} heading="Expenses To Pay" />
+        <ExpenseSummaryTable expenses={expensesToPay} heading="Expenses To Pay" />
         <ExpenseSummaryTable
           expenses={expensesToReceive}
           heading="Expenses to Receive"

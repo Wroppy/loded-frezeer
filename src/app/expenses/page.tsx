@@ -1,15 +1,18 @@
 import React from "react";
 import ExpensesPage from "./ExpensesPage";
-
+import { postFetch } from "../utils/postFetch";
+import { getServerSession } from "next-auth";
+import { ExpenseStatisticsPostResponse } from "../types/ExpenseStatisticsRoute";
 type Props = {};
 
 const page = async (props: Props) => {
-  const content = {
-    expensesToPay: [{ name: "Alice", amount: 100 }],
-    expensesToReceive: [{ name: "Bob", amount: 50 }],
-  };
+  const email = (await getServerSession())!.user!.email!;
 
-  return <ExpensesPage {...content} />;
+  const res = (await postFetch("/api/expense/get-summary", {
+    email,
+  })) as ExpenseStatisticsPostResponse;
+
+  return <ExpensesPage {...res} />;
 };
 
 export default page;
