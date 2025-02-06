@@ -24,6 +24,8 @@ import PaymentGroup from "../types/PaymentGroup";
 import { ExpenseModel } from "./models/ExpenseSchema";
 import { ServerExpense } from "./types/ServerExpense";
 import ClientExpense from "../types/ClientExpense";
+import { ExpenseStatisticsPostResponse } from "../types/ExpenseStatisticsRoute";
+import UserExpenseSummary from "../types/UserExpenseSummary";
 
 export default class DatabaseManager {
   constructor() {
@@ -883,5 +885,41 @@ export default class DatabaseManager {
 
     expense.status = "Paid";
     await (expense as any).save();
+  }
+
+  public async getExpensesSummary(
+    email: string
+  ): Promise<ExpenseStatisticsPostResponse> {
+    // Checks that the user is in a flat
+    const flat = await this.getUserFlat(email);
+    if (!flat) {
+      throw new Error("User is not in a flat");
+    }
+
+    const expenses = (await ExpenseModel.find({
+      flatId: flat.flatId,
+    })) as ServerExpense[];
+
+    let expensesToPay: UserExpenseSummary[] = [];
+    let expensesToReceive: UserExpenseSummary[] = [];
+
+    for (let expense of expenses) {
+      if (expense.payee.email === email) {
+        expensesToReceive.push({
+          name: expense.payer.name,
+          amount: expense.amount,
+        });
+      } else if (expense.payer.email === email) {
+        expensesToPay.push({
+          name: expense.payee.name,
+          amount: expense.amount,
+        });
+      }
+    }
+
+    return {
+      expensesToPay,
+      expensesToReceive,
+    };
   }
 }
