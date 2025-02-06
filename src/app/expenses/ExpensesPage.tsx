@@ -15,11 +15,41 @@ type Props = {
   expensesToReceive: UserExpenseSummary[];
 };
 
+type ExpenseSummaryTableProps = {
+  expenses: UserExpenseSummary[];
+};
+const ExpenseSummaryTable = ({ expenses }: ExpenseSummaryTableProps) => {
+  return (
+    <div className={styles.ExpenseSummaryTable}>
+      <Table>
+        <TableThead>
+          <TableTr>
+            <TableTh>Name</TableTh>
+            <TableTh>Amount</TableTh>
+          </TableTr>
+        </TableThead>
+        <TableTbody>
+          {expenses.map((expense) => (
+            <TableTr key={expense.name}>
+              <TableTd>{expense.name}</TableTd>
+              <TableTd>{expense.amount}</TableTd>
+            </TableTr>
+          ))}
+        </TableTbody>
+      </Table>
+    </div>
+  );
+};
+
 const ExpensesPage = async ({ expensesToPay, expensesToReceive }: Props) => {
   return (
     <div className={styles.ExpensesPage}>
       <div>
         <h1>Dashboard</h1>
+      </div>
+      <div className={styles.ExpensesPageContent}>
+        <ExpenseSummaryTable expenses={expensesToPay} />
+        <ExpenseSummaryTable expenses={expensesToReceive} />
       </div>
     </div>
   );
