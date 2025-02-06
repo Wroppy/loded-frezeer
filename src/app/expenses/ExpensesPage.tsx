@@ -9,6 +9,7 @@ import {
   TableTr,
 } from "@mantine/core";
 import UserExpenseSummary from "../types/UserExpenseSummary";
+import { toTwoDp } from "../utils/toTwoDp";
 
 type Props = {
   expensesToPay: UserExpenseSummary[];
@@ -32,19 +33,23 @@ const ExpenseSummaryTable = ({
         <TableThead>
           <TableTr>
             <TableTh>Name</TableTh>
-            <TableTh>Amount</TableTh>
+            <TableTh className={styles.ExpensesSummaryAmount}>Amount</TableTh>
           </TableTr>
         </TableThead>
         <TableTbody>
           {expenses.length === 0 ? (
             <TableTr>
-              <TableTd className={styles.TableNoData} colSpan={2}>No Expenses</TableTd>
+              <TableTd className={styles.TableNoData} colSpan={2}>
+                No Expenses
+              </TableTd>
             </TableTr>
           ) : (
             expenses.map((expense) => (
               <TableTr key={expense.name}>
                 <TableTd>{expense.name}</TableTd>
-                <TableTd>{expense.amount}</TableTd>
+                <TableTd className={styles.ExpensesSummaryAmount}>
+                  ${toTwoDp(expense.amount)}
+                </TableTd>
               </TableTr>
             ))
           )}
