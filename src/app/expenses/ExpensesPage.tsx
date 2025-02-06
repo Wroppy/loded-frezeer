@@ -17,10 +17,16 @@ type Props = {
 
 type ExpenseSummaryTableProps = {
   expenses: UserExpenseSummary[];
+  heading: string;
 };
-const ExpenseSummaryTable = ({ expenses }: ExpenseSummaryTableProps) => {
+const ExpenseSummaryTable = ({ expenses, heading }: ExpenseSummaryTableProps) => {
   return (
     <div className={styles.ExpenseSummaryTable}>
+      <div>
+        <h2>
+          {heading}
+        </h2>
+      </div>
       <Table>
         <TableThead>
           <TableTr>
@@ -48,8 +54,8 @@ const ExpensesPage = async ({ expensesToPay, expensesToReceive }: Props) => {
         <h1>Dashboard</h1>
       </div>
       <div className={styles.ExpensesPageContent}>
-        <ExpenseSummaryTable expenses={expensesToPay} />
-        <ExpenseSummaryTable expenses={expensesToReceive} />
+        <ExpenseSummaryTable expenses={expensesToPay} heading="Expenses To Pay"/>
+        <ExpenseSummaryTable expenses={expensesToReceive} heading="Expenses to Receive"/>
       </div>
     </div>
   );
