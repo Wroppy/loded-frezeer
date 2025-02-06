@@ -20,7 +20,7 @@ type ExpenseSummaryTableProps = {
   expenses: UserExpenseSummary[];
   heading: string;
 };
-const ExpenseSummaryTable = ({
+export const ExpenseSummaryTable = ({
   expenses,
   heading,
 }: ExpenseSummaryTableProps) => {
