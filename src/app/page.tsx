@@ -13,7 +13,7 @@ export default async function Home() {
   const email = session?.user?.email;
 
   if (!email) {
-    redirect("/login");
+    redirect("/auth/signin");
     return null;
   }
 
