@@ -1,6 +1,6 @@
-## Loded Frezeer
+## Loaded Freezer
 
-Welcome to Loded Frezeer, a website for managing the shared expenses, chores and shopping lists for my current university flat, and yes, we do have a loaded freezer.
+Welcome to Loaded Freezer, a website for managing the shared expenses, chores and shopping lists for my current university flat, and yes, we do have a loaded freezer.
 
 
 ## Features
